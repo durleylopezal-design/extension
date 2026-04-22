@@ -10,31 +10,44 @@
             theme: {
                 extend: {
                     colors: {
-                        /* Azul institucional — color principal UCLA */
+                        /* Teal institucional — color principal #0080a4 */
                         brand: {
-                            50:  '#e6eef5',
-                            100: '#ccdde9',
-                            200: '#99bbd3',
-                            300: '#6699be',
-                            400: '#3377a8',
-                            500: '#005a91',
-                            600: '#003366',
-                            700: '#002952',
-                            800: '#001f3d',
-                            900: '#001429',
+                            50:  '#e5f4f8',
+                            100: '#cce9f1',
+                            200: '#99d3e3',
+                            300: '#66bdd5',
+                            400: '#33a7c7',
+                            500: '#0080a4',
+                            600: '#006683',
+                            700: '#004d62',
+                            800: '#003342',
+                            900: '#001a21',
                         },
-                        /* Amarillo institucional — color secundario UCLA */
+                        /* Naranja institucional — color acento #f38e0e */
                         accent: {
-                            50:  '#fffbeb',
-                            100: '#fef3c7',
-                            200: '#fde68a',
-                            300: '#fcd34d',
-                            400: '#fbbf24',
-                            500: '#F5B800',
-                            600: '#d49a00',
-                            700: '#a37600',
-                            800: '#735300',
-                            900: '#422f00',
+                            50:  '#fef6ea',
+                            100: '#fde9c7',
+                            200: '#fbd38f',
+                            300: '#f9bd57',
+                            400: '#f7a72f',
+                            500: '#f38e0e',
+                            600: '#c9720b',
+                            700: '#975608',
+                            800: '#643905',
+                            900: '#321d03',
+                        },
+                        /* Gris neutro institucional — #b2babc */
+                        neutral: {
+                            50:  '#f0f2f3',
+                            100: '#e1e5e6',
+                            200: '#c3cbcd',
+                            300: '#b2babc',
+                            400: '#8e999b',
+                            500: '#7a8689',
+                            600: '#5e686a',
+                            700: '#464e50',
+                            800: '#2e3435',
+                            900: '#171a1b',
                         }
                     }
                 }
@@ -47,33 +60,40 @@
     <style>
         /* ============================================================
            VARIABLES DE COLOR — Universidad Católica Luis Amigó (UCLA)
+           Paleta institucional oficial:
+             Teal   #0080a4  |  Gris  #b2babc  |  Naranja  #f38e0e
            ============================================================ */
         :root {
-            /* Azul institucional (principal) */
-            --color-primary:        #003366;
-            --color-primary-light:  #005a91;
-            --color-primary-dark:   #001f3d;
-            --color-primary-50:     #e6eef5;
-            --color-primary-100:    #ccdde9;
+            /* Teal institucional (principal) — #0080a4 */
+            --color-primary:        #0080a4;
+            --color-primary-light:  #00a3d0;
+            --color-primary-dark:   #005f7a;
+            --color-primary-50:     #e5f4f8;
+            --color-primary-100:    #cce9f1;
 
-            /* Amarillo institucional (secundario) */
-            --color-accent:         #F5B800;
-            --color-accent-light:   #fcd34d;
-            --color-accent-dark:    #d49a00;
-            --color-accent-50:      #fffbeb;
-            --color-accent-100:     #fef3c7;
+            /* Naranja institucional (acento) — #f38e0e */
+            --color-accent:         #f38e0e;
+            --color-accent-light:   #f5a945;
+            --color-accent-dark:    #c97208;
+            --color-accent-50:      #fef6ea;
+            --color-accent-100:     #fde9c7;
 
-            /* Neutros */
+            /* Gris neutro institucional — #b2babc */
+            --color-neutral:        #b2babc;
+            --color-neutral-light:  #d5dadb;
+            --color-neutral-dark:   #7a8689;
+
+            /* Superficies */
             --color-surface:        #ffffff;
-            --color-bg:             #f3f6fa;
-            --color-text:           #1e293b;
-            --color-text-muted:     #64748b;
-            --color-border:         #e2e8f0;
+            --color-bg:             #f0f4f5;
+            --color-text:           #1a2e35;
+            --color-text-muted:     #7a8689;
+            --color-border:         #d5dadb;
 
-            /* Semánticos */
+            /* Semánticos (mínimos, solo para alertas funcionales) */
             --color-success:        #059669;
             --color-danger:         #dc2626;
-            --color-warning:        #d97706;
+            --color-warning:        #f38e0e;
         }
 
         * { font-family: 'Inter', sans-serif; }
@@ -84,16 +104,16 @@
         .sidebar-item:hover { background: rgba(255,255,255,0.12); transform: translateX(5px); }
 
         .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 51, 102, 0.12); }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 128, 164, 0.12); }
 
         /* Gradientes institucionales */
-        .gradient-bg      { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%); }
+        .gradient-bg      { background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%); }
         .gradient-card-1  { background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%); }
         .gradient-card-2  { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%); }
-        .gradient-card-3  { background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); }
-        .gradient-card-4  { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .gradient-card-3  { background: linear-gradient(135deg, var(--color-neutral) 0%, var(--color-neutral-dark) 100%); }
+        .gradient-card-4  { background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%); }
        
-        .kanban-column { min-height: 500px; background: #f3f4f6; border-radius: 12px; }
+        .kanban-column { min-height: 500px; background: var(--color-neutral-light, #e1e5e6); border-radius: 12px; }
         .kanban-card { cursor: move; transition: all 0.2s; }
         .kanban-card:hover { transform: scale(1.02); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
        
@@ -115,16 +135,16 @@
             font-size: 0.75rem;
             font-weight: 600;
         }
-        .status-recibida { background: #dbeafe; color: #1e40af; }
-        .status-analisis { background: #fef3c7; color: #92400e; }
-        .status-propuesta { background: #fce7f3; color: #be185d; }
-        .status-negociacion { background: #e0e7ff; color: #3730a3; }
-        .status-ganada { background: #d1fae5; color: #065f46; }
-        .status-perdida { background: #fee2e2; color: #991b1b; }
-       
-        .priority-high { border-left: 4px solid #ef4444; }
-        .priority-medium { border-left: 4px solid #f59e0b; }
-        .priority-low { border-left: 4px solid #10b981; }
+        .status-recibida   { background: #cce9f1; color: #005f7a; }
+        .status-analisis   { background: #fde9c7; color: #c97208; }
+        .status-propuesta  { background: #e5f4f8; color: #0080a4; }
+        .status-negociacion{ background: #e1e5e6; color: #464e50; }
+        .status-ganada     { background: #d1fae5; color: #065f46; }
+        .status-perdida    { background: #fee2e2; color: #991b1b; }
+
+        .priority-high   { border-left: 4px solid #f38e0e; }
+        .priority-medium { border-left: 4px solid #b2babc; }
+        .priority-low    { border-left: 4px solid #0080a4; }
        
         .chart-container { position: relative; height: 300px; }
        
@@ -197,7 +217,7 @@
         .app-header {
             background: #ffffff;
             border-bottom: 3px solid var(--color-primary);
-            box-shadow: 0 2px 8px rgba(0, 51, 102, 0.08);
+            box-shadow: 0 2px 8px rgba(0, 128, 164, 0.08);
         }
 
         /* Barra de acento amarilla en top del header */
@@ -217,7 +237,7 @@
         }
         .kpi-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 16px 30px -8px rgba(0, 51, 102, 0.15);
+            box-shadow: 0 16px 30px -8px rgba(0, 128, 164, 0.15);
             border-top-color: var(--color-accent);
         }
 
@@ -248,11 +268,11 @@
             border-radius: 8px;
             padding: 8px 20px;
             transition: all 0.25s ease;
-            box-shadow: 0 2px 8px rgba(0, 51, 102, 0.25);
+            box-shadow: 0 2px 8px rgba(0, 128, 164, 0.25);
         }
         .btn-primary:hover {
             background: var(--color-primary-light);
-            box-shadow: 0 4px 14px rgba(0, 51, 102, 0.35);
+            box-shadow: 0 4px 14px rgba(0, 128, 164, 0.35);
             transform: translateY(-1px);
         }
 
@@ -264,11 +284,11 @@
             border-radius: 8px;
             padding: 8px 20px;
             transition: all 0.25s ease;
-            box-shadow: 0 2px 8px rgba(245, 184, 0, 0.30);
+            box-shadow: 0 2px 8px rgba(243, 142, 14, 0.30);
         }
         .btn-accent:hover {
             background: var(--color-accent-dark);
-            box-shadow: 0 4px 14px rgba(245, 184, 0, 0.40);
+            box-shadow: 0 4px 14px rgba(243, 142, 14, 0.40);
             transform: translateY(-1px);
         }
 
@@ -281,7 +301,7 @@
         .input-brand:focus {
             outline: none;
             border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.12);
+            box-shadow: 0 0 0 3px rgba(0, 128, 164, 0.12);
         }
 
         /* Panel de alertas con color encabezado */
@@ -295,14 +315,14 @@
         /* Scrollbar institucional */
         .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: var(--color-primary-50); border-radius: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--color-primary-light); border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--color-neutral); border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
 
         /* Badge "En línea" institucional */
         .badge-online {
-            background: rgba(5, 150, 105, 0.12);
-            color: var(--color-success);
-            border: 1px solid rgba(5, 150, 105, 0.25);
+            background: rgba(0, 128, 164, 0.10);
+            color: var(--color-primary);
+            border: 1px solid rgba(0, 128, 164, 0.25);
             border-radius: 20px;
             padding: 4px 12px;
             font-size: 0.8rem;
@@ -433,7 +453,7 @@
 
                 <a href="#" onclick="showModule('certificados')" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mx-2" style="color: rgba(255,255,255,0.8);">
                     <i class="fas fa-certificate w-5"></i> Certificados
-                    <span class="ml-auto bg-green-500 text-xs px-2 py-0.5 rounded-full">ACREDITTA</span>
+                    <span class="ml-auto text-xs px-2 py-0.5 rounded-full font-semibold" style="background: var(--color-accent); color: #fff;">ACREDITTA</span>
                 </a>
 
                 <a href="#" onclick="showModule('reportes')" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mx-2" style="color: rgba(255,255,255,0.8);">
@@ -453,7 +473,7 @@
 
             <div class="p-4" style="border-top: 1px solid rgba(255,255,255,0.1);">
                 <div class="flex items-center gap-3">
-                    <img src="https://ui-avatars.com/api/?name=Coord+Sede&background=003366&color=F5B800" class="w-10 h-10 rounded-full">
+                    <img src="https://ui-avatars.com/api/?name=Coord+Sede&background=0080a4&color=f38e0e" class="w-10 h-10 rounded-full">
                     <div class="flex-1 min-w-0">
                         <p class="text-sm font-medium text-white truncate">Coord. Sede Medellín</p>
                         <p class="text-xs truncate" style="color: rgba(255,255,255,0.55);">coordinador@ucla.edu.co</p>
@@ -521,7 +541,7 @@
                                 <div class="p-3 rounded-lg" style="background: var(--color-primary-50);">
                                     <i class="fas fa-calendar-check text-xl" style="color: var(--color-primary);"></i>
                                 </div>
-                                <span class="text-green-600 text-sm font-semibold flex items-center gap-1">
+                                <span class="text-sm font-semibold flex items-center gap-1" style="color: var(--color-primary);">
                                     <i class="fas fa-arrow-up"></i> +12%
                                 </span>
                             </div>
@@ -532,10 +552,10 @@
 
                         <div class="kpi-card bg-white rounded-xl p-6 shadow-lg" style="border-top-color: var(--color-success);">
                             <div class="flex items-center justify-between mb-4">
-                                <div class="p-3 rounded-lg bg-green-50">
-                                    <i class="fas fa-check-circle text-xl text-green-600"></i>
+                                <div class="p-3 rounded-lg" style="background: var(--color-primary-50);">
+                                    <i class="fas fa-check-circle text-xl" style="color: var(--color-primary);"></i>
                                 </div>
-                                <span class="text-green-600 text-sm font-semibold flex items-center gap-1">
+                                <span class="text-sm font-semibold flex items-center gap-1" style="color: var(--color-primary);">
                                     <i class="fas fa-arrow-up"></i> +8%
                                 </span>
                             </div>
@@ -549,7 +569,7 @@
                                 <div class="p-3 rounded-lg" style="background: var(--color-accent-100);">
                                     <i class="fas fa-dollar-sign text-xl" style="color: var(--color-accent-dark);"></i>
                                 </div>
-                                <span class="text-green-600 text-sm font-semibold flex items-center gap-1">
+                                <span class="text-sm font-semibold flex items-center gap-1" style="color: var(--color-primary);">
                                     <i class="fas fa-arrow-up"></i> +23%
                                 </span>
                             </div>
@@ -563,7 +583,7 @@
                                 <div class="p-3 rounded-lg" style="background: var(--color-primary-100);">
                                     <i class="fas fa-users text-xl" style="color: var(--color-primary);"></i>
                                 </div>
-                                <span class="text-green-600 text-sm font-semibold flex items-center gap-1">
+                                <span class="text-sm font-semibold flex items-center gap-1" style="color: var(--color-primary);">
                                     <i class="fas fa-arrow-up"></i> +18%
                                 </span>
                             </div>
@@ -597,19 +617,19 @@
                             </div>
                             <div class="mt-4 space-y-2 px-6 pb-6">
                                 <div class="flex justify-between items-center text-sm">
-                                    <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-brand-500"></span> Estudiantes</span>
+                                    <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background:#0080a4;"></span> Estudiantes</span>
                                     <span class="font-semibold">47%</span>
                                 </div>
                                 <div class="flex justify-between items-center text-sm">
-                                    <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-green-500"></span> Público Ext.</span>
+                                    <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background:#00a3d0;"></span> Público Ext.</span>
                                     <span class="font-semibold">28%</span>
                                 </div>
                                 <div class="flex justify-between items-center text-sm">
-                                    <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-yellow-500"></span> Graduados</span>
+                                    <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background:#f38e0e;"></span> Graduados</span>
                                     <span class="font-semibold">15%</span>
                                 </div>
                                 <div class="flex justify-between items-center text-sm">
-                                    <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-accent-500"></span> Docentes</span>
+                                    <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background:#b2babc;"></span> Docentes</span>
                                     <span class="font-semibold">10%</span>
                                 </div>
                             </div>
@@ -634,25 +654,25 @@
                                         <p class="text-sm text-gray-600">Vencen en los próximos 30 días</p>
                                         <p class="text-xs text-gray-500 mt-1">Hace 2 horas</p>
                                     </div>
-                                    <button class="text-brand-600 text-sm font-medium hover:underline">Ver</button>
+                                    <button class="text-sm font-semibold hover:underline" style="color: var(--color-primary);">Ver</button>
                                 </div>
-                                <div class="flex items-start gap-3 p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
-                                    <i class="fas fa-money-bill-wave text-yellow-600 mt-1"></i>
+                                <div class="flex items-start gap-3 p-3 rounded-lg border-l-4" style="background: var(--color-accent-50); border-color: var(--color-accent);">
+                                    <i class="fas fa-money-bill-wave mt-1" style="color: var(--color-accent-dark);"></i>
                                     <div class="flex-1">
                                         <p class="font-medium text-gray-800">5 pagos a docentes pendientes</p>
                                         <p class="text-sm text-gray-600">> 30 días sin procesar</p>
                                         <p class="text-xs text-gray-500 mt-1">Hace 5 horas</p>
                                     </div>
-                                    <button class="text-brand-600 text-sm font-medium hover:underline">Ver</button>
+                                    <button class="text-sm font-semibold hover:underline" style="color: var(--color-primary);">Ver</button>
                                 </div>
                                 <div class="flex items-start gap-3 p-3 bg-accent-50 rounded-lg border-l-4 border-accent-500">
-                                    <i class="fas fa-file-signature text-brand-500 mt-1"></i>
+                                    <i class="fas fa-file-signature mt-1" style="color: var(--color-primary);"></i>
                                     <div class="flex-1">
                                         <p class="font-medium text-gray-800">2 solicitudes esperando Vo.Bo.</p>
                                         <p class="text-sm text-gray-600">Financiera y Programa</p>
                                         <p class="text-xs text-gray-500 mt-1">Hace 1 día</p>
                                     </div>
-                                    <button class="text-brand-600 text-sm font-medium hover:underline">Ver</button>
+                                    <button class="text-sm font-semibold hover:underline" style="color: var(--color-primary);">Ver</button>
                                 </div>
                             </div>
                             </div>
@@ -670,7 +690,7 @@
                                         <p class="text-xs mt-0.5" style="color: var(--color-text-muted);">DIP0392 • Derecho</p>
                                     </div>
                                     <div class="text-right">
-                                        <p class="font-bold text-green-600">52.7%</p>
+                                        <p class="font-bold" style="color: var(--color-primary);">52.7%</p>
                                         <p class="text-xs" style="color: var(--color-text-muted);">$18.0M excedente</p>
                                     </div>
                                 </div>
@@ -680,7 +700,7 @@
                                         <p class="text-xs mt-0.5" style="color: var(--color-text-muted);">SML0045 • Ingeniería</p>
                                     </div>
                                     <div class="text-right">
-                                        <p class="font-bold text-green-600">48.3%</p>
+                                        <p class="font-bold" style="color: var(--color-primary);">48.3%</p>
                                         <p class="text-xs" style="color: var(--color-text-muted);">$12.4M excedente</p>
                                     </div>
                                 </div>
@@ -690,7 +710,7 @@
                                         <p class="text-xs mt-0.5" style="color: var(--color-text-muted);">CSO0777 • Administrativos</p>
                                     </div>
                                     <div class="text-right">
-                                        <p class="font-bold text-green-600">45.1%</p>
+                                        <p class="font-bold" style="color: var(--color-primary);">45.1%</p>
                                         <p class="text-xs" style="color: var(--color-text-muted);">$8.2M excedente</p>
                                     </div>
                                 </div>
@@ -700,7 +720,7 @@
                                         <p class="text-xs mt-0.5" style="color: var(--color-text-muted);">DIP0385 • Ciencias Políticas</p>
                                     </div>
                                     <div class="text-right">
-                                        <p class="font-bold text-green-600">42.8%</p>
+                                        <p class="font-bold" style="color: var(--color-primary);">42.8%</p>
                                         <p class="text-xs" style="color: var(--color-text-muted);">$15.6M excedente</p>
                                     </div>
                                 </div>
@@ -710,7 +730,7 @@
                                         <p class="text-xs mt-0.5" style="color: var(--color-text-muted);">CSO0788 • Comunicación</p>
                                     </div>
                                     <div class="text-right">
-                                        <p class="font-bold text-green-600">38.9%</p>
+                                        <p class="font-bold" style="color: var(--color-primary);">38.9%</p>
                                         <p class="text-xs" style="color: var(--color-text-muted);">$6.7M excedente</p>
                                     </div>
                                 </div>
@@ -758,7 +778,7 @@
                                     </div>
                                 </div>
 
-                                <div draggable="true" ondragstart="drag(event)" id="opp2" class="kanban-card bg-white p-4 rounded-lg shadow border-l-4 border-yellow-500 priority-medium">
+                                <div draggable="true" ondragstart="drag(event)" id="opp2" class="kanban-card bg-white p-4 rounded-lg shadow border-l-4 border-accent-500 priority-medium">
                                     <div class="flex justify-between items-start mb-2">
                                         <span class="status-badge status-recibida">RECIBIDA</span>
                                     </div>
@@ -798,7 +818,7 @@
                                     </div>
                                 </div>
 
-                                <div draggable="true" ondragstart="drag(event)" id="opp4" class="kanban-card bg-white p-4 rounded-lg shadow border-l-4 border-yellow-500 priority-medium">
+                                <div draggable="true" ondragstart="drag(event)" id="opp4" class="kanban-card bg-white p-4 rounded-lg shadow border-l-4 border-accent-500 priority-medium">
                                     <div class="flex justify-between items-start mb-2">
                                         <span class="status-badge status-analisis">ANÁLISIS</span>
                                     </div>
@@ -818,7 +838,7 @@
                                 <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs font-bold">5</span>
                             </div>
                             <div class="space-y-3" id="colPropuesta">
-                                <div draggable="true" ondragstart="drag(event)" id="opp5" class="kanban-card bg-white p-4 rounded-lg shadow border-l-4 border-green-500 priority-low">
+                                <div draggable="true" ondragstart="drag(event)" id="opp5" class="kanban-card bg-white p-4 rounded-lg shadow border-l-4 border-brand-500 priority-low">
                                     <div class="flex justify-between items-start mb-2">
                                         <span class="status-badge status-propuesta">PROPUESTA</span>
                                     </div>
@@ -865,21 +885,21 @@
                             </div>
                         </div>
 
-                        <div class="kanban-column p-4 bg-green-50" ondrop="drop(event)" ondragover="allowDrop(event)" data-stage="cerrada">
+                        <div class="kanban-column p-4" style="background: var(--color-primary-50);" ondrop="drop(event)" ondragover="allowDrop(event)" data-stage="cerrada">
                             <div class="flex items-center justify-between mb-4">
-                                <h4 class="font-bold text-green-800">Cerrada Ganada</h4>
-                                <span class="bg-green-200 text-green-800 px-2 py-1 rounded-full text-xs font-bold">2</span>
+                                <h4 class="font-bold" style="color: var(--color-primary-dark);">Cerrada Ganada</h4>
+                                <span class="px-2 py-1 rounded-full text-xs font-bold" style="background: var(--color-primary-100); color: var(--color-primary-dark);">2</span>
                             </div>
                             <div class="space-y-3" id="colCerrada">
-                                <div class="kanban-card bg-white p-4 rounded-lg shadow border-l-4 border-green-600">
+                                <div class="kanban-card bg-white p-4 rounded-lg shadow" style="border-left: 4px solid var(--color-primary);">
                                     <div class="flex justify-between items-start mb-2">
                                         <span class="status-badge status-ganada">GANADA</span>
                                     </div>
                                     <h5 class="font-bold text-gray-800 mb-1">EPM</h5>
                                     <p class="text-sm text-gray-600 mb-2">Seguridad industrial</p>
                                     <div class="flex items-center justify-between text-sm">
-                                        <span class="font-semibold text-green-600">$75M</span>
-                                        <span class="text-gray-500"><i class="fas fa-check-circle text-green-500"></i></span>
+                                        <span class="font-semibold" style="color: var(--color-primary);">$75M</span>
+                                        <span><i class="fas fa-check-circle" style="color: var(--color-primary);"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -972,25 +992,25 @@
                 <!-- FINANCIERO MODULE -->
                 <div id="financieroModule" class="hidden space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-green-500">
-                            <h4 class="text-gray-500 text-sm font-medium mb-1">Ingresos Totales</h4>
-                            <p class="text-2xl font-bold text-gray-800">$34.210.000</p>
-                            <p class="text-xs text-green-600 mt-1"><i class="fas fa-arrow-up"></i> +12% vs mes ant.</p>
+                        <div class="bg-white p-6 rounded-xl shadow-lg" style="border-left: 4px solid var(--color-primary);">
+                            <h4 class="text-sm font-medium mb-1" style="color: var(--color-text-muted);">Ingresos Totales</h4>
+                            <p class="text-2xl font-bold" style="color: var(--color-text);">$34.210.000</p>
+                            <p class="text-xs mt-1" style="color: var(--color-primary);"><i class="fas fa-arrow-up"></i> +12% vs mes ant.</p>
                         </div>
-                        <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-red-500">
-                            <h4 class="text-gray-500 text-sm font-medium mb-1">Costos Totales</h4>
-                            <p class="text-2xl font-bold text-gray-800">$16.190.291</p>
-                            <p class="text-xs text-red-600 mt-1"><i class="fas fa-arrow-up"></i> +5% vs mes ant.</p>
+                        <div class="bg-white p-6 rounded-xl shadow-lg" style="border-left: 4px solid var(--color-danger);">
+                            <h4 class="text-sm font-medium mb-1" style="color: var(--color-text-muted);">Costos Totales</h4>
+                            <p class="text-2xl font-bold" style="color: var(--color-text);">$16.190.291</p>
+                            <p class="text-xs mt-1 text-red-600"><i class="fas fa-arrow-up"></i> +5% vs mes ant.</p>
                         </div>
-                        <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-accent-500">
-                            <h4 class="text-gray-500 text-sm font-medium mb-1">Excedente</h4>
-                            <p class="text-2xl font-bold text-gray-800">$18.019.709</p>
-                            <p class="text-xs text-brand-600 mt-1">52.67% margen</p>
+                        <div class="bg-white p-6 rounded-xl shadow-lg" style="border-left: 4px solid var(--color-primary);">
+                            <h4 class="text-sm font-medium mb-1" style="color: var(--color-text-muted);">Excedente</h4>
+                            <p class="text-2xl font-bold" style="color: var(--color-text);">$18.019.709</p>
+                            <p class="text-xs mt-1" style="color: var(--color-primary);">52.67% margen</p>
                         </div>
-                        <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-yellow-500">
-                            <h4 class="text-gray-500 text-sm font-medium mb-1">Pendientes Pago</h4>
-                            <p class="text-2xl font-bold text-gray-800">$2.450.000</p>
-                            <p class="text-xs text-yellow-600 mt-1">3 facturas</p>
+                        <div class="bg-white p-6 rounded-xl shadow-lg" style="border-left: 4px solid var(--color-accent);">
+                            <h4 class="text-sm font-medium mb-1" style="color: var(--color-text-muted);">Pendientes Pago</h4>
+                            <p class="text-2xl font-bold" style="color: var(--color-text);">$2.450.000</p>
+                            <p class="text-xs mt-1" style="color: var(--color-accent-dark);">3 facturas</p>
                         </div>
                     </div>
 
@@ -1033,7 +1053,7 @@
                                 <div class="flex items-start justify-between">
                                     <div class="flex gap-4">
                                         <div class="w-12 h-12 bg-accent-100 rounded-full flex items-center justify-center">
-                                            <i class="fas fa-file-alt text-brand-600 text-xl"></i>
+                                            <i class="fas fa-file-alt text-xl" style="color: var(--color-primary);"></i>
                                         </div>
                                         <div>
                                             <h4 class="font-bold text-gray-800 text-lg">SOL-2026-0042</h4>
@@ -1046,7 +1066,7 @@
                                         </div>
                                     </div>
                                     <div class="text-right">
-                                        <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">En Revisión</span>
+                                        <span class="px-3 py-1 rounded-full text-sm font-medium" style="background: var(--color-accent-100); color: var(--color-accent-dark);">En Revisión</span>
                                         <p class="text-sm text-gray-500 mt-2">Responsable: Dra. Patricia López</p>
                                     </div>
                                 </div>
@@ -1057,17 +1077,17 @@
                                         <span class="text-sm text-gray-500">2 de 4 Vo.Bo.</span>
                                     </div>
                                     <div class="flex gap-2">
-                                        <div class="flex-1 bg-green-500 h-2 rounded-full relative group cursor-pointer">
+                                        <div class="flex-1 h-2 rounded-full relative group cursor-pointer" style="background: var(--color-primary);">
                                             <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                                                 Extensión: Aprobado<br>05/04/2026 10:30
                                             </div>
                                         </div>
-                                        <div class="flex-1 bg-green-500 h-2 rounded-full relative group cursor-pointer">
+                                        <div class="flex-1 h-2 rounded-full relative group cursor-pointer" style="background: var(--color-primary);">
                                             <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                                                 Financiera: Aprobado<br>06/04/2026 14:15
                                             </div>
                                         </div>
-                                        <div class="flex-1 bg-yellow-400 h-2 rounded-full animate-pulse relative group cursor-pointer">
+                                        <div class="flex-1 h-2 rounded-full animate-pulse relative group cursor-pointer" style="background: var(--color-accent);">
                                             <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                                                 Programa: Pendiente
                                             </div>
@@ -1157,7 +1177,7 @@
                                     <p class="text-gray-500">Año 2026 - Todas las sedes</p>
                                 </div>
                                 <div class="flex gap-2">
-                                    <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                                    <button class="btn-primary">
                                         <i class="fas fa-file-excel"></i> Exportar Excel
                                     </button>
                                     <button class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
@@ -1458,12 +1478,12 @@
                 <p class="text-xs text-gray-600 mt-1">Se le ha asignado la solicitud SOL-2026-0043</p>
                 <p class="text-xs text-gray-400 mt-2">Hace 5 minutos</p>
             </div>
-            <div class="p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+            <div class="p-3 rounded-lg" style="background: var(--color-accent-50); border-left: 4px solid var(--color-accent);">
                 <p class="text-sm font-medium text-gray-800">Vo.Bo. pendiente</p>
                 <p class="text-xs text-gray-600 mt-1">La propuesta PR-2026-0012 espera su aprobación</p>
                 <p class="text-xs text-gray-400 mt-2">Hace 2 horas</p>
             </div>
-            <div class="p-3 bg-green-50 rounded-lg border-l-4 border-green-500">
+            <div class="p-3 rounded-lg" style="background: var(--color-primary-50); border-left: 4px solid var(--color-primary);">
                 <p class="text-sm font-medium text-gray-800">Evento certificado</p>
                 <p class="text-xs text-gray-600 mt-1">El evento DIP0392 ha sido certificado exitosamente</p>
                 <p class="text-xs text-gray-400 mt-2">Hace 1 día</p>
@@ -1629,15 +1649,15 @@
                     datasets: [{
                         label: 'Ingresos 2026 (M COP)',
                         data: [81.4, 15.6, 90.3, 378.4, 156.3, 263.9, 165.0, 185.2, 240.2],
-                        backgroundColor: 'rgba(0, 51, 102, 0.82)',
-                        borderColor: 'rgba(0, 51, 102, 1)',
+                        backgroundColor: 'rgba(0, 128, 164, 0.82)',
+                        borderColor: 'rgba(0, 128, 164, 1)',
                         borderWidth: 2,
                         borderRadius: 6
                     }, {
                         label: 'Ingresos 2025 (M COP)',
                         data: [65.2, 12.1, 75.4, 298.3, 128.5, 198.2, 134.6, 156.8, 198.4],
-                        backgroundColor: 'rgba(245, 184, 0, 0.45)',
-                        borderColor: 'rgba(245, 184, 0, 0.9)',
+                        backgroundColor: 'rgba(243, 142, 14, 0.40)',
+                        borderColor: 'rgba(243, 142, 14, 0.90)',
                         borderWidth: 2,
                         borderRadius: 6
                     }]
@@ -1675,10 +1695,10 @@
                     datasets: [{
                         data: [47, 28, 15, 10],
                         backgroundColor: [
-                            'rgba(0, 51, 102, 0.88)',
-                            'rgba(0, 90, 145, 0.75)',
-                            'rgba(245, 184, 0, 0.88)',
-                            'rgba(245, 184, 0, 0.55)'
+                            'rgba(0, 128, 164, 0.90)',
+                            'rgba(0, 163, 208, 0.70)',
+                            'rgba(243, 142, 14, 0.90)',
+                            'rgba(178, 186, 188, 0.85)'
                         ],
                         borderWidth: 0
                     }]
@@ -1706,11 +1726,11 @@
 
         function loadEventos() {
             const eventos = [
-                { codigo: 'DIP0392', nombre: 'Diplomado Conciliación Extrajudicial', fechas: '03/06 - 26/07', estado: 'CERTIFICADO', estadoClass: 'bg-green-100 text-green-800', matriculas: 51, excedente: 52.7 },
-                { codigo: 'SML0033', nombre: 'Semillero Emprendimiento Grados 10° y 11°', fechas: '04/04 - 30/05', estado: 'CERTIFICADO', estadoClass: 'bg-green-100 text-green-800', matriculas: 45, excedente: 0.0 },
-                { codigo: 'DIP0385', nombre: 'Pedagogía Prof. No Licenciados', fechas: '01/08 - 13/02', estado: 'ACTIVO', estadoClass: 'bg-accent-100 text-brand-800', matriculas: 38, excedente: 65.3 },
-                { codigo: 'CSO0777', nombre: 'Convenio Smartfit', fechas: '04/08 - 15/02', estado: 'CANCELADO', estadoClass: 'bg-red-100 text-red-800', matriculas: 0, excedente: 0.0 },
-                { codigo: 'CSO0788', nombre: 'Curso Marketing Digital', fechas: '15/04 - 30/05', estado: 'PROGRAMADO', estadoClass: 'bg-gray-100 text-gray-800', matriculas: 0, excedente: 0.0 }
+                { codigo: 'DIP0392', nombre: 'Diplomado Conciliación Extrajudicial', fechas: '03/06 - 26/07', estado: 'CERTIFICADO', estadoStyle: 'background:#cce9f1;color:#005f7a;', matriculas: 51, excedente: 52.7 },
+                { codigo: 'SML0033', nombre: 'Semillero Emprendimiento Grados 10° y 11°', fechas: '04/04 - 30/05', estado: 'CERTIFICADO', estadoStyle: 'background:#cce9f1;color:#005f7a;', matriculas: 45, excedente: 0.0 },
+                { codigo: 'DIP0385', nombre: 'Pedagogía Prof. No Licenciados', fechas: '01/08 - 13/02', estado: 'ACTIVO', estadoStyle: 'background:#fde9c7;color:#c97208;', matriculas: 38, excedente: 65.3 },
+                { codigo: 'CSO0777', nombre: 'Convenio Smartfit', fechas: '04/08 - 15/02', estado: 'CANCELADO', estadoStyle: 'background:#fee2e2;color:#991b1b;', matriculas: 0, excedente: 0.0 },
+                { codigo: 'CSO0788', nombre: 'Curso Marketing Digital', fechas: '15/04 - 30/05', estado: 'PROGRAMADO', estadoStyle: 'background:#e1e5e6;color:#464e50;', matriculas: 0, excedente: 0.0 }
             ];
 
             const tbody = document.getElementById('eventosTable');
@@ -1723,20 +1743,20 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${e.fechas}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 py-1 text-xs font-semibold rounded-full ${e.estadoClass}">${e.estado}</span>
+                        <span class="px-2 py-1 text-xs font-semibold rounded-full" style="${e.estadoStyle}">${e.estado}</span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${e.matriculas}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
                             <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
-                                <div class="bg-green-500 h-2 rounded-full" style="width: ${e.excedente}%"></div>
+                                <div class="h-2 rounded-full" style="width: ${e.excedente}%; background: #0080a4;"></div>
                             </div>
-                            <span class="text-sm font-medium ${e.excedente > 0 ? 'text-green-600' : 'text-gray-500'}">${e.excedente}%</span>
+                            <span class="text-sm font-medium" style="color: ${e.excedente > 0 ? '#0080a4' : '#7a8689'};">${e.excedente}%</span>
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        <button class="text-brand-600 hover:text-brand-800 mr-2"><i class="fas fa-eye"></i></button>
-                        <button class="text-gray-600 hover:text-gray-800"><i class="fas fa-edit"></i></button>
+                        <button style="color: var(--color-primary);" class="mr-2"><i class="fas fa-eye"></i></button>
+                        <button style="color: var(--color-text-muted);"><i class="fas fa-edit"></i></button>
                     </td>
                 </tr>
             `).join('');
@@ -1751,19 +1771,19 @@
 
             const tbody = document.getElementById('financieroTable');
             tbody.innerHTML = financiero.map(f => `
-                <tr class="hover:bg-gray-50">
+                <tr style="border-bottom: 1px solid #e1e5e6;" class="hover:bg-gray-50">
                     <td class="px-6 py-4 text-sm font-medium text-gray-900">${f.evento}</td>
                     <td class="px-6 py-4 text-sm text-gray-600">$${f.ingresos.toLocaleString()}</td>
                     <td class="px-6 py-4 text-sm text-gray-600">$${f.costos.toLocaleString()}</td>
-                    <td class="px-6 py-4 text-sm font-bold text-green-600">$${f.excedente.toLocaleString()}</td>
-                    <td class="px-6 py-4 text-sm font-bold text-brand-600">${f.pct}%</td>
+                    <td class="px-6 py-4 text-sm font-bold" style="color:#0080a4;">$${f.excedente.toLocaleString()}</td>
+                    <td class="px-6 py-4 text-sm font-bold" style="color:#005f7a;">${f.pct}%</td>
                     <td class="px-6 py-4">
-                        <span class="px-2 py-1 text-xs rounded-full ${f.factura ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">
+                        <span class="px-2 py-1 text-xs rounded-full" style="${f.factura ? 'background:#cce9f1;color:#005f7a;' : 'background:#fde9c7;color:#c97208;'}">
                             ${f.factura ? '✓ Enviada' : 'Pendiente'}
                         </span>
                     </td>
                     <td class="px-6 py-4">
-                        <span class="px-2 py-1 text-xs rounded-full ${f.pagado ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                        <span class="px-2 py-1 text-xs rounded-full" style="${f.pagado ? 'background:#cce9f1;color:#005f7a;' : 'background:#fee2e2;color:#991b1b;'}">
                             ${f.pagado ? '✓ Pagado' : 'Pendiente'}
                         </span>
                     </td>
@@ -1792,10 +1812,10 @@
                     </div>
                     <div class="flex items-center gap-4">
                         <div class="text-right">
-                            <p class="text-sm font-medium ${c.estado === 'Listo' ? 'text-green-600' : 'text-yellow-600'}">${c.estado}</p>
+                            <p class="text-sm font-medium" style="color: ${c.estado === 'Listo' ? '#0080a4' : '#c97208'};">${c.estado}</p>
                             <p class="text-xs text-gray-500">${c.fecha}</p>
                         </div>
-                        <button onclick="emitirInsignias('${c.codigo}')" class="px-4 py-2 bg-gradient-to-r from-brand-600 to-brand-400 text-white rounded-lg hover:shadow-lg transform hover:scale-105 transition-all" ${c.estado !== 'Listo' ? 'disabled class="px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed"' : ''}>
+                        <button onclick="emitirInsignias('${c.codigo}')" class="btn-primary hover:shadow-lg transform hover:scale-105 transition-all" ${c.estado !== 'Listo' ? 'disabled style="background:#d5dadb;color:#7a8689;cursor:not-allowed;"' : ''}>
                             <i class="fas fa-medal mr-2"></i>Emitir Insignias
                         </button>
                     </div>
@@ -1834,7 +1854,7 @@
                     <td class="px-6 py-4 text-sm font-bold text-gray-800">${d.total}</td>
                     <td class="px-6 py-4 text-sm font-medium text-gray-800">$${d.ingresos}M</td>
                     <td class="px-6 py-4">
-                        <span class="px-2 py-1 text-xs font-bold rounded-full ${d.excedente > 50 ? 'bg-green-100 text-green-800' : d.excedente > 30 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'}">
+                        <span class="px-2 py-1 text-xs font-bold rounded-full" style="${d.excedente > 50 ? 'background:#cce9f1;color:#005f7a;' : d.excedente > 30 ? 'background:#fde9c7;color:#c97208;' : 'background:#fee2e2;color:#991b1b;'}">
                             ${d.excedente}%
                         </span>
                     </td>
@@ -1870,8 +1890,8 @@
                     <td class="px-6 py-4 text-sm text-gray-600">${c.ciudad}</td>
                     <td class="px-6 py-4 text-sm text-gray-600">${c.responsable}</td>
                     <td class="px-6 py-4 text-sm">
-                        <button class="text-brand-600 hover:text-brand-800 mr-2"><i class="fas fa-eye"></i></button>
-                        <button class="text-gray-600 hover:text-gray-800"><i class="fas fa-edit"></i></button>
+                        <button style="color:#0080a4;" class="mr-2"><i class="fas fa-eye"></i></button>
+                        <button style="color:#7a8689;"><i class="fas fa-edit"></i></button>
                     </td>
                 </tr>
             `).join('');
