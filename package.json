@@ -1,0 +1,12 @@
+{
+  "name": "ucla-extension-crm",
+  "version": "1.0.0",
+  "private": true,
+  "description": "UCLA Extensión CRM - Sistema de Gestión Universitaria",
+  "scripts": {
+    "build:css": "tailwindcss -i ./tailwind.src.css -o ./tailwind.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.13"
+  }
+}
