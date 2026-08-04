@@ -108,6 +108,11 @@
                 beca.estado = estado;
                 beca.porcentajeAprobado = estado === 'Aprobada' ? Number(modal.querySelector('#rbPorcentaje').value) || 0 : 0;
                 beca.comentario = modal.querySelector('#rbComentario').value;
+                UCLA.utils.registrarAuditoria({
+                    accion: estado === 'Aprobada' ? 'Aprobó solicitud de beca' : 'Rechazó solicitud de beca',
+                    modulo: 'Solicitudes',
+                    detalle: estado === 'Aprobada' ? `${beca.porcentajeAprobado}% — visible en Financiero › Becas` : (beca.comentario || 'Sin comentario'),
+                });
                 UCLA.components.toast.show(
                     estado === 'Aprobada' ? 'Beca aprobada — ya está disponible en Financiero › Becas' : 'Solicitud rechazada',
                     estado === 'Aprobada' ? 'success' : 'info'

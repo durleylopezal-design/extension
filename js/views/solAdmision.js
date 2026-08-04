@@ -159,8 +159,12 @@
                             fuente: 'Solicitud de admisión', proximaActividad: null,
                         });
                     }
-                    UCLA.components.toast.show('Contacto creado y correo de bienvenida enviado (simulado — quedaría registrado en Auditoría)', 'success');
+                    UCLA.utils.registrarAuditoria({ accion: 'Aprobó solicitud de admisión', modulo: 'Solicitudes', detalle: `${solicitud.radicado} — ${solicitud.aspirante} (contacto creado en CRM)` });
+                    UCLA.components.toast.show('Contacto creado y correo de bienvenida enviado (simulado)', 'success');
                 } else {
+                    if (nuevoEstado === 'Rechazada') {
+                        UCLA.utils.registrarAuditoria({ accion: 'Rechazó solicitud de admisión', modulo: 'Solicitudes', detalle: `${solicitud.radicado} — ${solicitud.aspirante}: ${comentario}` });
+                    }
                     UCLA.components.toast.show(`Solicitud actualizada a "${nuevoEstado}"`, 'success');
                 }
                 modal.classList.add('hidden');

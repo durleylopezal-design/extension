@@ -61,5 +61,15 @@
         return `<span class="text-xs font-semibold px-2 py-0.5 rounded-full" style="background: color-mix(in srgb, ${color} 18%, white); color: ${color};">${estado}</span>`;
     }
 
-    UCLA.utils = { formatoCOP, formatoFecha, debounce, exportCSV, exportPDF, colorEstado, badgeEstado };
+    // Registra una entrada real en Admin · Auditoría (UCLA.data.registrosAuditoria).
+    // Los flujos de aprobación (solicitudes/admision, solicitudes/becas, ...) la
+    // llaman en vez de solo simular con un toast.
+    function registrarAuditoria({ accion, modulo, detalle }) {
+        UCLA.data.registrosAuditoria.unshift({
+            id: 'aud-' + Date.now(), fecha: new Date().toISOString().slice(0, 16),
+            usuario: UCLA.state.usuarioActual.nombre, accion, modulo, detalle,
+        });
+    }
+
+    UCLA.utils = { formatoCOP, formatoFecha, debounce, exportCSV, exportPDF, colorEstado, badgeEstado, registrarAuditoria };
 })();
