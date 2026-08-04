@@ -12,50 +12,55 @@
         /* ============================================================
            VARIABLES DE COLOR — Universidad Católica Luis Amigó (UCLA)
            Paleta institucional oficial:
-             Teal   #0080a4  |  Gris  #b2babc  |  Naranja  #f38e0e
+             Turquesa #1C7FA8  |  Azul petróleo #1B3A4A  |  Naranja #F5821F
            ============================================================ */
         :root {
-            /* Teal institucional (principal) — #0080a4 */
-            --color-primary:        #0080a4;
-            --color-primary-light:  #00a3d0;
-            --color-primary-dark:   #005f7a;
-            --color-primary-50:     #e5f4f8;
-            --color-primary-100:    #cce9f1;
+            /* Turquesa institucional (principal) — #1C7FA8 */
+            --color-primary:        #1C7FA8;
+            --color-primary-light:  #2C93BE;
+            --color-primary-dark:   #1B3A4A;
+            --color-primary-50:     #F4F9FB;
+            --color-primary-100:    #E8F2F6;
 
-            /* Naranja institucional (acento) — #f38e0e */
-            --color-accent:         #f38e0e;
-            --color-accent-light:   #f5a945;
-            --color-accent-dark:    #c97208;
-            --color-accent-50:      #fef6ea;
-            --color-accent-100:     #fde9c7;
+            /* Naranja institucional (acento) — #F5821F */
+            --color-accent:         #F5821F;
+            --color-accent-light:   #F79A42;
+            --color-accent-dark:    #CA6B1A;
+            --color-accent-50:      #FFF9F4;
+            --color-accent-100:     #FEF3E9;
 
-            /* Gris neutro institucional — #b2babc */
-            --color-neutral:        #b2babc;
-            --color-neutral-light:  #d5dadb;
-            --color-neutral-dark:   #7a8689;
+            /* Gris neutro institucional — #C9CDCF */
+            --color-neutral:        #C9CDCF;
+            --color-neutral-light:  #E1E4E5;
+            --color-neutral-dark:   #6B6F72;
 
             /* Superficies */
             --color-surface:        #ffffff;
-            --color-bg:             #f0f4f5;
-            --color-text:           #1a2e35;
-            --color-text-muted:     #7a8689;
-            --color-border:         #d5dadb;
+            --color-bg:             #F0F2F3;
+            --color-text:           #2D2D2D;
+            --color-text-muted:     #6B6F72;
+            --color-border:         #E1E4E5;
 
             /* Semánticos (mínimos, solo para alertas funcionales) */
-            --color-success:        #059669;
-            --color-danger:         #dc2626;
-            --color-warning:        #f38e0e;
+            --color-success:        #2ECC71;
+            --color-danger:         #E96B5A;
+            --color-warning:        #F5821F;
         }
 
         * { font-family: 'Inter', sans-serif; }
 
         body { background-color: var(--color-bg); }
 
-        .sidebar-item { transition: all 0.3s ease; }
-        .sidebar-item:hover { background: rgba(255,255,255,0.12); transform: translateX(5px); }
+        /* Línea de acento naranja fija en el borde superior de la pantalla */
+        .topbar-accent-line { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: var(--color-accent); z-index: 60; }
+
+        .sidebar-item { transition: all 0.2s ease; color: rgba(255,255,255,0.8); }
+        .sidebar-item:hover { background: rgba(255,255,255,0.12); color: #ffffff; }
+        .sidebar-item-active { background: var(--color-primary-light); color: #ffffff !important; }
+        .sidebar-subitems { padding: 2px 0 6px; }
 
         .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 128, 164, 0.12); }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(28, 127, 168, 0.12); }
 
         /* Gradientes institucionales */
         .gradient-bg      { background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%); }
@@ -63,42 +68,32 @@
         .gradient-card-2  { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%); }
         .gradient-card-3  { background: linear-gradient(135deg, var(--color-neutral) 0%, var(--color-neutral-dark) 100%); }
         .gradient-card-4  { background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%); }
-       
-        .kanban-column { min-height: 500px; background: var(--color-neutral-light, #e1e5e6); border-radius: 12px; }
+
+        .kanban-column { min-height: 500px; background: var(--color-neutral-light, #E1E4E5); border-radius: 12px; }
         .kanban-card { cursor: move; transition: all 0.2s; }
         .kanban-card:hover { transform: scale(1.02); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-       
+
         .modal { backdrop-filter: blur(5px); }
-       
-        .pulse-ring {
-            position: absolute;
-            border-radius: 50%;
-            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-        }
-        @keyframes pulse-ring {
-            0% { transform: scale(0.33); opacity: 1; }
-            80%, 100% { transform: scale(2); opacity: 0; }
-        }
-       
+
         .status-badge {
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 600;
         }
-        .status-recibida   { background: #cce9f1; color: #005f7a; }
-        .status-analisis   { background: #fde9c7; color: #c97208; }
-        .status-propuesta  { background: #e5f4f8; color: #0080a4; }
-        .status-negociacion{ background: #e1e5e6; color: #464e50; }
+        .status-recibida   { background: #E8F2F6; color: #1B4B62; }
+        .status-analisis   { background: #FEF3E9; color: #CA6B1A; }
+        .status-propuesta  { background: #F4F9FB; color: #1C7FA8; }
+        .status-negociacion{ background: #E1E4E5; color: #3A3C3D; }
         .status-ganada     { background: #d1fae5; color: #065f46; }
         .status-perdida    { background: #fee2e2; color: #991b1b; }
 
-        .priority-high   { border-left: 4px solid #f38e0e; }
-        .priority-medium { border-left: 4px solid #b2babc; }
-        .priority-low    { border-left: 4px solid #0080a4; }
-       
+        .priority-high   { border-left: 4px solid #F5821F; }
+        .priority-medium { border-left: 4px solid #C9CDCF; }
+        .priority-low    { border-left: 4px solid #1C7FA8; }
+
         .chart-container { position: relative; height: 300px; }
-       
+
         .notification-dot {
             position: absolute;
             top: -2px;
@@ -110,7 +105,7 @@
             animation: blink 2s infinite;
         }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-       
+
         .sede-badge {
             display: inline-flex;
             align-items: center;
@@ -120,33 +115,10 @@
             font-size: 0.875rem;
             font-weight: 500;
         }
-       
-        .financial-positive { color: #059669; }
+
+        .financial-positive { color: #2ECC71; }
         .financial-negative { color: #dc2626; }
-       
-        .pipeline-stage {
-            position: relative;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .pipeline-stage::after {
-            content: '';
-            position: absolute;
-            right: -20px;
-            top: 50%;
-            transform: translateY(-50%);
-            border: 10px solid transparent;
-            border-left: 10px solid var(--color-accent);
-        }
-        .pipeline-stage:last-child::after { display: none; }
-       
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #888; border-radius: 3px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #555; }
-       
+
         .drag-ghost { opacity: 0.5; background: #e2e8f0; }
         .drag-over { background: var(--color-accent-50); border: 2px dashed var(--color-accent); }
 
@@ -168,17 +140,7 @@
         .app-header {
             background: #ffffff;
             border-bottom: 3px solid var(--color-primary);
-            box-shadow: 0 2px 8px rgba(0, 128, 164, 0.08);
-        }
-
-        /* Barra de acento amarilla en top del header */
-        .app-header::before {
-            content: '';
-            display: block;
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: var(--color-accent);
+            box-shadow: 0 2px 8px rgba(28, 127, 168, 0.08);
         }
 
         /* Tarjeta KPI con borde top institucional */
@@ -188,7 +150,7 @@
         }
         .kpi-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 16px 30px -8px rgba(0, 128, 164, 0.15);
+            box-shadow: 0 16px 30px -8px rgba(28, 127, 168, 0.15);
             border-top-color: var(--color-accent);
         }
 
@@ -219,27 +181,27 @@
             border-radius: 8px;
             padding: 8px 20px;
             transition: all 0.25s ease;
-            box-shadow: 0 2px 8px rgba(0, 128, 164, 0.25);
+            box-shadow: 0 2px 8px rgba(28, 127, 168, 0.25);
         }
         .btn-primary:hover {
             background: var(--color-primary-light);
-            box-shadow: 0 4px 14px rgba(0, 128, 164, 0.35);
+            box-shadow: 0 4px 14px rgba(28, 127, 168, 0.35);
             transform: translateY(-1px);
         }
 
-        /* Botón acento (amarillo) */
+        /* Botón acento (naranja) */
         .btn-accent {
             background: var(--color-accent);
-            color: var(--color-primary-dark);
+            color: #ffffff;
             font-weight: 700;
             border-radius: 8px;
             padding: 8px 20px;
             transition: all 0.25s ease;
-            box-shadow: 0 2px 8px rgba(243, 142, 14, 0.30);
+            box-shadow: 0 2px 8px rgba(245, 130, 31, 0.30);
         }
         .btn-accent:hover {
             background: var(--color-accent-dark);
-            box-shadow: 0 4px 14px rgba(243, 142, 14, 0.40);
+            box-shadow: 0 4px 14px rgba(245, 130, 31, 0.40);
             transform: translateY(-1px);
         }
 
@@ -252,7 +214,7 @@
         .input-brand:focus {
             outline: none;
             border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(0, 128, 164, 0.12);
+            box-shadow: 0 0 0 3px rgba(28, 127, 168, 0.12);
         }
 
         /* Panel de alertas con color encabezado */
@@ -269,22 +231,11 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--color-neutral); border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
 
-        /* Badge "En línea" institucional */
-        .badge-online {
-            background: rgba(0, 128, 164, 0.10);
-            color: var(--color-primary);
-            border: 1px solid rgba(0, 128, 164, 0.25);
-            border-radius: 20px;
-            padding: 4px 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
         /* Borde activo en tabs */
         .tab-active {
             background: var(--color-primary) !important;
             color: #ffffff !important;
-            box-shadow: 0 2px 8px rgba(0,51,102,0.2);
+            box-shadow: 0 2px 8px rgba(27, 58, 74, 0.2);
         }
         .tab-inactive {
             background: transparent;
@@ -299,6 +250,8 @@
     </style>
 </head>
 <body style="background-color: var(--color-bg); color: var(--color-text);">
+
+    <div class="topbar-accent-line"></div>
 
     <!-- Login Modal -->
     <div id="loginModal" class="login-backdrop fixed inset-0 z-50 flex items-center justify-center modal">
@@ -360,806 +313,17 @@
 
     <!-- Main Application (Hidden initially) -->
     <div id="mainApp" class="hidden min-h-screen flex">
-       
-        <!-- Sidebar -->
-        <aside class="w-64 text-white flex flex-col shadow-2xl" style="background: var(--color-primary-dark);">
-            <div class="p-6" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: var(--color-accent);">
-                        <i class="fas fa-graduation-cap text-white"></i>
-                    </div>
-                    <div>
-                        <h1 class="font-bold text-lg leading-tight">UCLA Extensión</h1>
-                        <p class="text-xs" style="color: rgba(255,255,255,0.55);">CRM Sistema</p>
-                    </div>
-                </div>
-            </div>
 
-            <nav class="flex-1 overflow-y-auto py-4">
-                <div class="px-4 mb-2 text-xs font-semibold uppercase tracking-wider" style="color: rgba(255,255,255,0.45);">Módulos</div>
-
-                <a href="#" onclick="showModule('dashboard')" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mx-2" style="background: var(--color-primary-light);">
-                    <i class="fas fa-home w-5"></i> Dashboard
-                </a>
-
-                <a href="#" onclick="showModule('crm')" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mx-2" style="color: rgba(255,255,255,0.8);">
-                    <i class="fas fa-users w-5"></i> CRM <span class="ml-auto text-xs px-2 py-0.5 rounded-full font-semibold" style="background: var(--color-accent); color: var(--color-primary-dark);">Nuevo</span>
-                </a>
-
-                <a href="#" onclick="showModule('solicitudes')" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mx-2" style="color: rgba(255,255,255,0.8);">
-                    <i class="fas fa-file-alt w-5"></i> Solicitudes
-                </a>
-
-                <a href="#" onclick="showModule('eventos')" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mx-2" style="color: rgba(255,255,255,0.8);">
-                    <i class="fas fa-calendar-alt w-5"></i> Eventos
-                </a>
-
-                <a href="#" onclick="showModule('financiero')" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mx-2" style="color: rgba(255,255,255,0.8);">
-                    <i class="fas fa-dollar-sign w-5"></i> Financiero
-                </a>
-
-                <a href="#" onclick="showModule('alianzas')" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mx-2" style="color: rgba(255,255,255,0.8);">
-                    <i class="fas fa-handshake w-5"></i> Alianzas
-                </a>
-
-                <a href="#" onclick="showModule('certificados')" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mx-2" style="color: rgba(255,255,255,0.8);">
-                    <i class="fas fa-certificate w-5"></i> Certificados
-                    <span class="ml-auto text-xs px-2 py-0.5 rounded-full font-semibold" style="background: var(--color-accent); color: #fff;">ACREDITTA</span>
-                </a>
-
-                <a href="#" onclick="showModule('reportes')" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mx-2" style="color: rgba(255,255,255,0.8);">
-                    <i class="fas fa-chart-bar w-5"></i> Reportes BI
-                </a>
-
-                <div class="px-4 mt-6 mb-2 text-xs font-semibold uppercase tracking-wider" style="color: rgba(255,255,255,0.45);">Administración</div>
-
-                <a href="#" onclick="showModule('usuarios')" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mx-2" style="color: rgba(255,255,255,0.8);">
-                    <i class="fas fa-user-cog w-5"></i> Usuarios
-                </a>
-
-                <a href="#" onclick="showModule('config')" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg mx-2" style="color: rgba(255,255,255,0.8);">
-                    <i class="fas fa-cog w-5"></i> Configuración
-                </a>
-            </nav>
-
-            <div class="p-4" style="border-top: 1px solid rgba(255,255,255,0.1);">
-                <div class="flex items-center gap-3">
-                    <img src="https://ui-avatars.com/api/?name=Coord+Sede&background=0080a4&color=f38e0e" class="w-10 h-10 rounded-full">
-                    <div class="flex-1 min-w-0">
-                        <p class="text-sm font-medium text-white truncate">Coord. Sede Medellín</p>
-                        <p class="text-xs truncate" style="color: rgba(255,255,255,0.55);">coordinador@ucla.edu.co</p>
-                    </div>
-                    <button onclick="logout()" style="color: rgba(255,255,255,0.55);" class="hover:text-white transition-colors">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
-                </div>
-            </div>
-        </aside>
+        <!-- Sidebar (contenido renderizado por js/components/sidebar.js) -->
+        <aside id="sidebar" class="w-64 text-white flex flex-col shadow-2xl" style="background: var(--color-primary-dark);"></aside>
 
         <!-- Main Content -->
         <main class="flex-1 flex flex-col overflow-hidden">
-            <!-- Header -->
-            <header class="app-header relative z-10">
-                <!-- Franja amarilla superior -->
-                <div style="height:4px; background: var(--color-accent);"></div>
-                <div class="flex items-center justify-between px-8 py-4">
-                    <div class="flex items-center gap-4">
-                        <div>
-                            <h2 id="pageTitle" class="text-xl font-bold" style="color: var(--color-primary);">Dashboard Gerencial</h2>
-                        </div>
-                        <span class="badge-online">
-                            <i class="fas fa-circle text-xs mr-1 animate-pulse"></i> En línea
-                        </span>
-                    </div>
+            <!-- Header (contenido renderizado por js/components/topbar.js) -->
+            <header id="topbar" class="app-header relative z-10"></header>
 
-                    <div class="flex items-center gap-4">
-                        <!-- Sede Selector -->
-                        <div class="relative">
-                            <select id="sedeSelector" onchange="changeSede(this.value)" class="input-brand appearance-none bg-white py-2 pl-3 pr-8 text-sm font-medium" style="color: var(--color-primary);">
-                                <option value="MDE">Sede Medellín (MDE)</option>
-                                <option value="MZL">Manizales (MZL)</option>
-                                <option value="MTR">Montería (MTR)</option>
-                                <option value="APD">Apartadó (APD)</option>
-                                <option value="BOG">Bogotá (BOG)</option>
-                            </select>
-                            <i class="fas fa-chevron-down absolute right-3 top-3 pointer-events-none" style="color: var(--color-primary);"></i>
-                        </div>
-
-                        <!-- Notifications -->
-                        <button onclick="toggleNotifications()" class="relative p-2 transition-colors" style="color: var(--color-primary);">
-                            <i class="fas fa-bell text-xl"></i>
-                            <span class="notification-dot"></span>
-                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
-                        </button>
-
-                        <!-- Quick Actions -->
-                        <button onclick="showQuickActions()" class="btn-accent flex items-center gap-2">
-                            <i class="fas fa-plus"></i> Nuevo
-                        </button>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Content Area -->
-            <div id="contentArea" class="flex-1 overflow-y-auto custom-scrollbar p-8">
-               
-                <!-- DASHBOARD MODULE -->
-                <div id="dashboardModule" class="space-y-6">
-                    <!-- KPI Cards -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="kpi-card bg-white rounded-xl p-6 shadow-lg" style="border-top-color: var(--color-primary);">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="p-3 rounded-lg" style="background: var(--color-primary-50);">
-                                    <i class="fas fa-calendar-check text-xl" style="color: var(--color-primary);"></i>
-                                </div>
-                                <span class="text-sm font-semibold flex items-center gap-1" style="color: var(--color-primary);">
-                                    <i class="fas fa-arrow-up"></i> +12%
-                                </span>
-                            </div>
-                            <h3 class="text-sm font-medium" style="color: var(--color-text-muted);">Eventos Activos</h3>
-                            <p class="text-3xl font-bold mt-1" style="color: var(--color-primary);">127</p>
-                            <p class="text-xs mt-2" style="color: var(--color-text-muted);">vs. 113 mes anterior</p>
-                        </div>
-
-                        <div class="kpi-card bg-white rounded-xl p-6 shadow-lg" style="border-top-color: var(--color-success);">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="p-3 rounded-lg" style="background: var(--color-primary-50);">
-                                    <i class="fas fa-check-circle text-xl" style="color: var(--color-primary);"></i>
-                                </div>
-                                <span class="text-sm font-semibold flex items-center gap-1" style="color: var(--color-primary);">
-                                    <i class="fas fa-arrow-up"></i> +8%
-                                </span>
-                            </div>
-                            <h3 class="text-sm font-medium" style="color: var(--color-text-muted);">Eventos Certificados</h3>
-                            <p class="text-3xl font-bold mt-1" style="color: var(--color-text);">845</p>
-                            <p class="text-xs mt-2" style="color: var(--color-text-muted);">Acumulado 2026</p>
-                        </div>
-
-                        <div class="kpi-card bg-white rounded-xl p-6 shadow-lg" style="border-top-color: var(--color-accent);">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="p-3 rounded-lg" style="background: var(--color-accent-100);">
-                                    <i class="fas fa-dollar-sign text-xl" style="color: var(--color-accent-dark);"></i>
-                                </div>
-                                <span class="text-sm font-semibold flex items-center gap-1" style="color: var(--color-primary);">
-                                    <i class="fas fa-arrow-up"></i> +23%
-                                </span>
-                            </div>
-                            <h3 class="text-sm font-medium" style="color: var(--color-text-muted);">Ingresos Acumulados</h3>
-                            <p class="text-3xl font-bold mt-1" style="color: var(--color-text);">$1.376M</p>
-                            <p class="text-xs mt-2" style="color: var(--color-text-muted);">COP mes actual</p>
-                        </div>
-
-                        <div class="kpi-card bg-white rounded-xl p-6 shadow-lg" style="border-top-color: var(--color-primary-light);">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="p-3 rounded-lg" style="background: var(--color-primary-100);">
-                                    <i class="fas fa-users text-xl" style="color: var(--color-primary);"></i>
-                                </div>
-                                <span class="text-sm font-semibold flex items-center gap-1" style="color: var(--color-primary);">
-                                    <i class="fas fa-arrow-up"></i> +18%
-                                </span>
-                            </div>
-                            <h3 class="text-sm font-medium" style="color: var(--color-text-muted);">Total Participantes</h3>
-                            <p class="text-3xl font-bold mt-1" style="color: var(--color-text);">9.349</p>
-                            <p class="text-xs mt-2" style="color: var(--color-text-muted);">Todos los segmentos</p>
-                        </div>
-                    </div>
-
-                    <!-- Charts Row -->
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lg:col-span-2 bg-white rounded-xl shadow-lg overflow-hidden" style="border-top: 4px solid var(--color-primary);">
-                            <div class="flex items-center justify-between p-6 pb-4">
-                                <h3 class="section-title text-base">Ingresos por Mes</h3>
-                                <div class="flex gap-2">
-                                    <button class="tab-active px-3 py-1 text-sm rounded-lg font-semibold">2026</button>
-                                    <button class="tab-inactive px-3 py-1 text-sm rounded-lg font-medium">2025</button>
-                                </div>
-                            </div>
-                            <div class="chart-container px-6 pb-6">
-                                <canvas id="ingresosChart"></canvas>
-                            </div>
-                        </div>
-
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden" style="border-top: 4px solid var(--color-accent);">
-                            <div class="p-6 pb-2">
-                                <h3 class="section-title text-base mb-4">Participantes por Segmento</h3>
-                            </div>
-                            <div class="chart-container px-6">
-                                <canvas id="segmentosChart"></canvas>
-                            </div>
-                            <div class="mt-4 space-y-2 px-6 pb-6">
-                                <div class="flex justify-between items-center text-sm">
-                                    <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background:#0080a4;"></span> Estudiantes</span>
-                                    <span class="font-semibold">47%</span>
-                                </div>
-                                <div class="flex justify-between items-center text-sm">
-                                    <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background:#00a3d0;"></span> Público Ext.</span>
-                                    <span class="font-semibold">28%</span>
-                                </div>
-                                <div class="flex justify-between items-center text-sm">
-                                    <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background:#f38e0e;"></span> Graduados</span>
-                                    <span class="font-semibold">15%</span>
-                                </div>
-                                <div class="flex justify-between items-center text-sm">
-                                    <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background:#b2babc;"></span> Docentes</span>
-                                    <span class="font-semibold">10%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Alerts & Top Events -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden" style="border-top: 4px solid var(--color-danger);">
-                            <div class="alert-panel-header flex items-center justify-between">
-                                <h3 class="text-base font-bold flex items-center gap-2 text-white">
-                                    <i class="fas fa-exclamation-triangle" style="color: var(--color-accent);"></i> Alertas del Sistema
-                                </h3>
-                                <span class="text-xs font-semibold px-2 py-1 rounded-full" style="background: rgba(255,255,255,0.2); color: #fff;">3 pendientes</span>
-                            </div>
-                            <div class="p-6 pt-4">
-                            <div class="space-y-3">
-                                <div class="flex items-start gap-3 p-3 bg-red-50 rounded-lg border-l-4 border-red-500">
-                                    <i class="fas fa-handshake text-red-500 mt-1"></i>
-                                    <div class="flex-1">
-                                        <p class="font-medium text-gray-800">3 alianzas próximas a vencer</p>
-                                        <p class="text-sm text-gray-600">Vencen en los próximos 30 días</p>
-                                        <p class="text-xs text-gray-500 mt-1">Hace 2 horas</p>
-                                    </div>
-                                    <button class="text-sm font-semibold hover:underline" style="color: var(--color-primary);">Ver</button>
-                                </div>
-                                <div class="flex items-start gap-3 p-3 rounded-lg border-l-4" style="background: var(--color-accent-50); border-color: var(--color-accent);">
-                                    <i class="fas fa-money-bill-wave mt-1" style="color: var(--color-accent-dark);"></i>
-                                    <div class="flex-1">
-                                        <p class="font-medium text-gray-800">5 pagos a docentes pendientes</p>
-                                        <p class="text-sm text-gray-600">> 30 días sin procesar</p>
-                                        <p class="text-xs text-gray-500 mt-1">Hace 5 horas</p>
-                                    </div>
-                                    <button class="text-sm font-semibold hover:underline" style="color: var(--color-primary);">Ver</button>
-                                </div>
-                                <div class="flex items-start gap-3 p-3 bg-accent-50 rounded-lg border-l-4 border-accent-500">
-                                    <i class="fas fa-file-signature mt-1" style="color: var(--color-primary);"></i>
-                                    <div class="flex-1">
-                                        <p class="font-medium text-gray-800">2 solicitudes esperando Vo.Bo.</p>
-                                        <p class="text-sm text-gray-600">Financiera y Programa</p>
-                                        <p class="text-xs text-gray-500 mt-1">Hace 1 día</p>
-                                    </div>
-                                    <button class="text-sm font-semibold hover:underline" style="color: var(--color-primary);">Ver</button>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden" style="border-top: 4px solid var(--color-accent);">
-                            <div class="flex items-center justify-between px-6 py-4" style="border-bottom: 1px solid var(--color-border);">
-                                <h3 class="section-title text-base">Top 5 Eventos por Excedente</h3>
-                                <button class="text-sm font-semibold hover:underline" style="color: var(--color-primary-light);">Ver todos</button>
-                            </div>
-                            <div class="space-y-1 p-4">
-                                <div class="flex items-center justify-between p-3 rounded-lg transition-colors hover:bg-brand-50">
-                                    <div>
-                                        <p class="font-medium text-sm" style="color: var(--color-text);">Diplomado Conciliación Extrajudicial</p>
-                                        <p class="text-xs mt-0.5" style="color: var(--color-text-muted);">DIP0392 • Derecho</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="font-bold" style="color: var(--color-primary);">52.7%</p>
-                                        <p class="text-xs" style="color: var(--color-text-muted);">$18.0M excedente</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between p-3 rounded-lg transition-colors hover:bg-brand-50">
-                                    <div>
-                                        <p class="font-medium text-sm" style="color: var(--color-text);">Seminario IA Aplicada</p>
-                                        <p class="text-xs mt-0.5" style="color: var(--color-text-muted);">SML0045 • Ingeniería</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="font-bold" style="color: var(--color-primary);">48.3%</p>
-                                        <p class="text-xs" style="color: var(--color-text-muted);">$12.4M excedente</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between p-3 rounded-lg transition-colors hover:bg-brand-50">
-                                    <div>
-                                        <p class="font-medium text-sm" style="color: var(--color-text);">Curso Excel Avanzado</p>
-                                        <p class="text-xs mt-0.5" style="color: var(--color-text-muted);">CSO0777 • Administrativos</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="font-bold" style="color: var(--color-primary);">45.1%</p>
-                                        <p class="text-xs" style="color: var(--color-text-muted);">$8.2M excedente</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between p-3 rounded-lg transition-colors hover:bg-brand-50">
-                                    <div>
-                                        <p class="font-medium text-sm" style="color: var(--color-text);">Diplomado Gestión Pública</p>
-                                        <p class="text-xs mt-0.5" style="color: var(--color-text-muted);">DIP0385 • Ciencias Políticas</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="font-bold" style="color: var(--color-primary);">42.8%</p>
-                                        <p class="text-xs" style="color: var(--color-text-muted);">$15.6M excedente</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between p-3 rounded-lg transition-colors hover:bg-brand-50">
-                                    <div>
-                                        <p class="font-medium text-sm" style="color: var(--color-text);">Curso Marketing Digital</p>
-                                        <p class="text-xs mt-0.5" style="color: var(--color-text-muted);">CSO0788 • Comunicación</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="font-bold" style="color: var(--color-primary);">38.9%</p>
-                                        <p class="text-xs" style="color: var(--color-text-muted);">$6.7M excedente</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CRM MODULE -->
-                <div id="crmModule" class="hidden space-y-6">
-                    <div class="flex items-center justify-between">
-                        <div class="flex gap-2">
-                            <button onclick="showCRMTab('pipeline')" id="btnPipeline" class="tab-active px-4 py-2 rounded-lg text-sm font-semibold">Pipeline Kanban</button>
-                            <button onclick="showCRMTab('cuentas')" id="btnCuentas" class="tab-inactive px-4 py-2 rounded-lg text-sm font-medium">Cuentas</button>
-                            <button onclick="showCRMTab('contactos')" id="btnContactos" class="tab-inactive px-4 py-2 rounded-lg text-sm font-medium">Contactos</button>
-                            <button onclick="showCRMTab('actividades')" id="btnActividades" class="tab-inactive px-4 py-2 rounded-lg text-sm font-medium">Actividades</button>
-                        </div>
-                        <button onclick="openModal('nuevaOportunidadModal')" class="btn-primary flex items-center gap-2">
-                            <i class="fas fa-plus"></i> Nueva Oportunidad
-                        </button>
-                    </div>
-
-                    <!-- Pipeline Kanban -->
-                    <div id="pipelineView" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                        <div class="kanban-column p-4" ondrop="drop(event)" ondragover="allowDrop(event)" data-stage="recibida">
-                            <div class="flex items-center justify-between mb-4">
-                                <h4 class="font-bold text-gray-700">Recibida</h4>
-                                <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs font-bold">4</span>
-                            </div>
-                            <div class="space-y-3" id="colRecibida">
-                                <div draggable="true" ondragstart="drag(event)" id="opp1" class="kanban-card bg-white p-4 rounded-lg shadow border-l-4 border-accent-500 priority-high">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <span class="status-badge status-recibida">RECIBIDA</span>
-                                        <button class="text-gray-400 hover:text-gray-600"><i class="fas fa-ellipsis-h"></i></button>
-                                    </div>
-                                    <h5 class="font-bold text-gray-800 mb-1">TECNOVA</h5>
-                                    <p class="text-sm text-gray-600 mb-2">Formación en gestión de proyectos</p>
-                                    <div class="flex items-center justify-between text-sm">
-                                        <span class="font-semibold text-gray-700">$45M</span>
-                                        <span class="text-gray-500"><i class="far fa-calendar"></i> 15/03</span>
-                                    </div>
-                                    <div class="mt-3 flex items-center gap-2">
-                                        <img src="https://ui-avatars.com/api/?name=Ana+Garcia&background=random" class="w-6 h-6 rounded-full">
-                                        <span class="text-xs text-gray-500">Ana García</span>
-                                    </div>
-                                </div>
-
-                                <div draggable="true" ondragstart="drag(event)" id="opp2" class="kanban-card bg-white p-4 rounded-lg shadow border-l-4 border-accent-500 priority-medium">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <span class="status-badge status-recibida">RECIBIDA</span>
-                                    </div>
-                                    <h5 class="font-bold text-gray-800 mb-1">CÁMARA DE COMERCIO</h5>
-                                    <p class="text-sm text-gray-600 mb-2">Capacitación empresarial</p>
-                                    <div class="flex items-center justify-between text-sm">
-                                        <span class="font-semibold text-gray-700">$30M</span>
-                                        <span class="text-gray-500"><i class="far fa-calendar"></i> 18/03</span>
-                                    </div>
-                                    <div class="mt-3 flex items-center gap-2">
-                                        <img src="https://ui-avatars.com/api/?name=Carlos+Perez&background=random" class="w-6 h-6 rounded-full">
-                                        <span class="text-xs text-gray-500">Carlos Pérez</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="kanban-column p-4" ondrop="drop(event)" ondragover="allowDrop(event)" data-stage="analisis">
-                            <div class="flex items-center justify-between mb-4">
-                                <h4 class="font-bold text-gray-700">En Análisis</h4>
-                                <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs font-bold">6</span>
-                            </div>
-                            <div class="space-y-3" id="colAnalisis">
-                                <div draggable="true" ondragstart="drag(event)" id="opp3" class="kanban-card bg-white p-4 rounded-lg shadow border-l-4 border-red-500 priority-high">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <span class="status-badge status-analisis">ANÁLISIS</span>
-                                    </div>
-                                    <h5 class="font-bold text-gray-800 mb-1">SENA</h5>
-                                    <p class="text-sm text-gray-600 mb-2">Diplomado técnico instructores</p>
-                                    <div class="flex items-center justify-between text-sm">
-                                        <span class="font-semibold text-gray-700">$120M</span>
-                                        <span class="text-gray-500"><i class="far fa-calendar"></i> 20/03</span>
-                                    </div>
-                                    <div class="mt-3 flex items-center gap-2">
-                                        <img src="https://ui-avatars.com/api/?name=Maria+Lopez&background=random" class="w-6 h-6 rounded-full">
-                                        <span class="text-xs text-gray-500">María López</span>
-                                    </div>
-                                </div>
-
-                                <div draggable="true" ondragstart="drag(event)" id="opp4" class="kanban-card bg-white p-4 rounded-lg shadow border-l-4 border-accent-500 priority-medium">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <span class="status-badge status-analisis">ANÁLISIS</span>
-                                    </div>
-                                    <h5 class="font-bold text-gray-800 mb-1">MINTIC</h5>
-                                    <p class="text-sm text-gray-600 mb-2">Programación básica</p>
-                                    <div class="flex items-center justify-between text-sm">
-                                        <span class="font-semibold text-gray-700">$95M</span>
-                                        <span class="text-gray-500"><i class="far fa-calendar"></i> 22/03</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="kanban-column p-4" ondrop="drop(event)" ondragover="allowDrop(event)" data-stage="propuesta">
-                            <div class="flex items-center justify-between mb-4">
-                                <h4 class="font-bold text-gray-700">Propuesta Enviada</h4>
-                                <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs font-bold">5</span>
-                            </div>
-                            <div class="space-y-3" id="colPropuesta">
-                                <div draggable="true" ondragstart="drag(event)" id="opp5" class="kanban-card bg-white p-4 rounded-lg shadow border-l-4 border-brand-500 priority-low">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <span class="status-badge status-propuesta">PROPUESTA</span>
-                                    </div>
-                                    <h5 class="font-bold text-gray-800 mb-1">GOBERNACIÓN</h5>
-                                    <p class="text-sm text-gray-600 mb-2">Gestión pública territorial</p>
-                                    <div class="flex items-center justify-between text-sm">
-                                        <span class="font-semibold text-gray-700">$80M</span>
-                                        <span class="text-gray-500"><i class="far fa-calendar"></i> 25/03</span>
-                                    </div>
-                                </div>
-
-                                <div draggable="true" ondragstart="drag(event)" id="opp6" class="kanban-card bg-white p-4 rounded-lg shadow border-l-4 border-accent-500 priority-medium">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <span class="status-badge status-propuesta">PROPUESTA</span>
-                                    </div>
-                                    <h5 class="font-bold text-gray-800 mb-1">BANCOLOMBIA</h5>
-                                    <p class="text-sm text-gray-600 mb-2">Liderazgo transformacional</p>
-                                    <div class="flex items-center justify-between text-sm">
-                                        <span class="font-semibold text-gray-700">$55M</span>
-                                        <span class="text-gray-500"><i class="far fa-calendar"></i> 28/03</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="kanban-column p-4" ondrop="drop(event)" ondragover="allowDrop(event)" data-stage="negociacion">
-                            <div class="flex items-center justify-between mb-4">
-                                <h4 class="font-bold text-gray-700">Negociación</h4>
-                                <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs font-bold">3</span>
-                            </div>
-                            <div class="space-y-3" id="colNegociacion">
-                                <div draggable="true" ondragstart="drag(event)" id="opp7" class="kanban-card bg-white p-4 rounded-lg shadow border-l-4 border-red-500 priority-high">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <span class="status-badge status-negociacion">NEGOCIACIÓN</span>
-                                        <span class="text-red-500 text-xs font-bold animate-pulse">VENCE HOY</span>
-                                    </div>
-                                    <h5 class="font-bold text-gray-800 mb-1">COLCIENCIAS</h5>
-                                    <p class="text-sm text-gray-600 mb-2">Investigación aplicada</p>
-                                    <div class="flex items-center justify-between text-sm">
-                                        <span class="font-semibold text-gray-700">$200M</span>
-                                        <span class="text-gray-500"><i class="far fa-calendar"></i> HOY</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="kanban-column p-4" style="background: var(--color-primary-50);" ondrop="drop(event)" ondragover="allowDrop(event)" data-stage="cerrada">
-                            <div class="flex items-center justify-between mb-4">
-                                <h4 class="font-bold" style="color: var(--color-primary-dark);">Cerrada Ganada</h4>
-                                <span class="px-2 py-1 rounded-full text-xs font-bold" style="background: var(--color-primary-100); color: var(--color-primary-dark);">2</span>
-                            </div>
-                            <div class="space-y-3" id="colCerrada">
-                                <div class="kanban-card bg-white p-4 rounded-lg shadow" style="border-left: 4px solid var(--color-primary);">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <span class="status-badge status-ganada">GANADA</span>
-                                    </div>
-                                    <h5 class="font-bold text-gray-800 mb-1">EPM</h5>
-                                    <p class="text-sm text-gray-600 mb-2">Seguridad industrial</p>
-                                    <div class="flex items-center justify-between text-sm">
-                                        <span class="font-semibold" style="color: var(--color-primary);">$75M</span>
-                                        <span><i class="fas fa-check-circle" style="color: var(--color-primary);"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Cuentas List View (Hidden by default) -->
-                    <div id="cuentasView" class="hidden bg-white rounded-xl shadow-lg overflow-hidden">
-                        <div class="p-4 border-b border-gray-200 flex items-center justify-between">
-                            <div class="flex gap-2">
-                                <input type="text" placeholder="Buscar cuentas..." class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-500 w-64">
-                                <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">
-                                    <i class="fas fa-filter"></i> Filtros
-                                </button>
-                            </div>
-                            <button class="btn-primary">
-                                <i class="fas fa-plus"></i> Nueva Cuenta
-                            </button>
-                        </div>
-                        <table class="w-full">
-                            <thead class="table-head-branded">
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Razón Social</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">NIT</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Sector</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ciudad</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Responsable</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200" id="cuentasTable">
-                                <!-- Populated by JS -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- EVENTOS MODULE -->
-                <div id="eventosModule" class="hidden space-y-6">
-                    <div class="flex items-center justify-between">
-                        <div class="flex gap-2">
-                            <select class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-500">
-                                <option>Todos los estados</option>
-                                <option>Programado</option>
-                                <option>Activo</option>
-                                <option>Certificado</option>
-                                <option>Cancelado</option>
-                            </select>
-                            <select class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-500">
-                                <option>Todas las facultades</option>
-                                <option>Derecho</option>
-                                <option>Ingeniería</option>
-                                <option>Ciencias Económicas</option>
-                            </select>
-                            <input type="month" value="2026-03" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-500">
-                        </div>
-                        <div class="flex gap-2">
-                            <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">
-                                <i class="fas fa-file-excel"></i> Excel
-                            </button>
-                            <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">
-                                <i class="fas fa-file-pdf"></i> PDF
-                            </button>
-                            <button onclick="openModal('nuevoEventoModal')" class="btn-primary">
-                                <i class="fas fa-plus"></i> Nuevo Evento
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                        <table class="w-full">
-                            <thead class="table-head-branded">
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Código</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nombre del Evento</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fechas</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Matrículas</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">% Excedente</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200" id="eventosTable">
-                                <!-- Populated by JS -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- FINANCIERO MODULE -->
-                <div id="financieroModule" class="hidden space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div class="bg-white p-6 rounded-xl shadow-lg" style="border-left: 4px solid var(--color-primary);">
-                            <h4 class="text-sm font-medium mb-1" style="color: var(--color-text-muted);">Ingresos Totales</h4>
-                            <p class="text-2xl font-bold" style="color: var(--color-text);">$34.210.000</p>
-                            <p class="text-xs mt-1" style="color: var(--color-primary);"><i class="fas fa-arrow-up"></i> +12% vs mes ant.</p>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl shadow-lg" style="border-left: 4px solid var(--color-danger);">
-                            <h4 class="text-sm font-medium mb-1" style="color: var(--color-text-muted);">Costos Totales</h4>
-                            <p class="text-2xl font-bold" style="color: var(--color-text);">$16.190.291</p>
-                            <p class="text-xs mt-1 text-red-600"><i class="fas fa-arrow-up"></i> +5% vs mes ant.</p>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl shadow-lg" style="border-left: 4px solid var(--color-primary);">
-                            <h4 class="text-sm font-medium mb-1" style="color: var(--color-text-muted);">Excedente</h4>
-                            <p class="text-2xl font-bold" style="color: var(--color-text);">$18.019.709</p>
-                            <p class="text-xs mt-1" style="color: var(--color-primary);">52.67% margen</p>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl shadow-lg" style="border-left: 4px solid var(--color-accent);">
-                            <h4 class="text-sm font-medium mb-1" style="color: var(--color-text-muted);">Pendientes Pago</h4>
-                            <p class="text-2xl font-bold" style="color: var(--color-text);">$2.450.000</p>
-                            <p class="text-xs mt-1" style="color: var(--color-accent-dark);">3 facturas</p>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-lg p-6">
-                        <h3 class="text-lg font-bold text-gray-800 mb-4">Control Financiero por Evento</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full">
-                                <thead class="table-head-branded">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Evento</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ingresos</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Costos</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Excedente</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">%</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado Factura</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pagado</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-200" id="financieroTable">
-                                    <!-- Populated by JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SOLICITUDES MODULE -->
-                <div id="solicitudesModule" class="hidden space-y-6">
-                    <div class="bg-white rounded-xl shadow-lg p-6">
-                        <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-lg font-bold text-gray-800">Flujo de Aprobación (Vo.Bo.)</h3>
-                            <button onclick="openModal('nuevaSolicitudModal')" class="btn-primary">
-                                <i class="fas fa-plus"></i> Nueva Solicitud
-                            </button>
-                        </div>
-                       
-                        <div class="space-y-4" id="solicitudesList">
-                            <!-- Solicitud Card -->
-                            <div class="border rounded-xl p-6 hover:shadow-lg transition-shadow">
-                                <div class="flex items-start justify-between">
-                                    <div class="flex gap-4">
-                                        <div class="w-12 h-12 bg-accent-100 rounded-full flex items-center justify-center">
-                                            <i class="fas fa-file-alt text-xl" style="color: var(--color-primary);"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold text-gray-800 text-lg">SOL-2026-0042</h4>
-                                            <p class="text-gray-600">Formación en liderazgo organizacional - GRUPO ÉXITO</p>
-                                            <div class="flex items-center gap-4 mt-2 text-sm text-gray-500">
-                                                <span><i class="fas fa-building"></i> NIT: 890.123.456-7</span>
-                                                <span><i class="fas fa-calendar"></i> Recibida: 05/04/2026</span>
-                                                <span><i class="fas fa-user"></i> Solicitante: Juan Martínez</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <span class="px-3 py-1 rounded-full text-sm font-medium" style="background: var(--color-accent-100); color: var(--color-accent-dark);">En Revisión</span>
-                                        <p class="text-sm text-gray-500 mt-2">Responsable: Dra. Patricia López</p>
-                                    </div>
-                                </div>
-                               
-                                <div class="mt-6">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-sm font-medium text-gray-700">Progreso de Aprobación</span>
-                                        <span class="text-sm text-gray-500">2 de 4 Vo.Bo.</span>
-                                    </div>
-                                    <div class="flex gap-2">
-                                        <div class="flex-1 h-2 rounded-full relative group cursor-pointer" style="background: var(--color-primary);">
-                                            <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                                Extensión: Aprobado<br>05/04/2026 10:30
-                                            </div>
-                                        </div>
-                                        <div class="flex-1 h-2 rounded-full relative group cursor-pointer" style="background: var(--color-primary);">
-                                            <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                                Financiera: Aprobado<br>06/04/2026 14:15
-                                            </div>
-                                        </div>
-                                        <div class="flex-1 h-2 rounded-full animate-pulse relative group cursor-pointer" style="background: var(--color-accent);">
-                                            <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                                Programa: Pendiente
-                                            </div>
-                                        </div>
-                                        <div class="flex-1 bg-gray-200 h-2 rounded-full relative group cursor-pointer">
-                                            <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                                OCRI: Pendiente
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-between mt-1 text-xs text-gray-500">
-                                        <span>Extensión</span>
-                                        <span>Financiera</span>
-                                        <span>Programa</span>
-                                        <span>OCRI</span>
-                                    </div>
-                                </div>
-
-                                <div class="mt-4 flex gap-2">
-                                    <button class="btn-primary text-sm">
-                                        <i class="fas fa-eye"></i> Ver Detalle
-                                    </button>
-                                    <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200">
-                                        <i class="fas fa-file-pdf"></i> Ver Propuesta
-                                    </button>
-                                    <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200">
-                                        <i class="fas fa-history"></i> Historial
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CERTIFICADOS MODULE -->
-                <div id="certificadosModule" class="hidden space-y-6">
-                    <div class="bg-gradient-to-r from-brand-600 to-brand-400 rounded-xl p-6 text-white shadow-lg">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <h3 class="text-2xl font-bold mb-2">Integración ACREDITTA</h3>
-                                <p class="text-accent-100">Emisión automática de insignias digitales verificables</p>
-                                <div class="flex items-center gap-4 mt-4">
-                                    <div class="bg-white bg-opacity-20 px-4 py-2 rounded-lg">
-                                        <p class="text-2xl font-bold">2,847</p>
-                                        <p class="text-sm text-accent-100">Insignias emitidas</p>
-                                    </div>
-                                    <div class="bg-white bg-opacity-20 px-4 py-2 rounded-lg">
-                                        <p class="text-2xl font-bold">98.5%</p>
-                                        <p class="text-sm text-accent-100">Tasa de éxito</p>
-                                    </div>
-                                    <div class="bg-white bg-opacity-20 px-4 py-2 rounded-lg">
-                                        <p class="text-2xl font-bold">12</p>
-                                        <p class="text-sm text-accent-100">Pendientes cola</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg">
-                                    <i class="fas fa-medal text-4xl text-accent-600"></i>
-                                </div>
-                                <p class="mt-2 text-sm text-accent-100">API Conectada</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-lg p-6">
-                        <h3 class="text-lg font-bold text-gray-800 mb-4">Eventos Listos para Certificación</h3>
-                        <div class="space-y-3" id="certificadosList">
-                            <!-- Populated by JS -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- REPORTES MODULE -->
-                <div id="reportesModule" class="hidden space-y-6">
-                    <div class="flex gap-2 mb-4">
-                        <button onclick="showReporte('consolidado')" class="btn-primary tab-active">Consolidado Mensual</button>
-                        <button onclick="showReporte('ejecutivo')" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">Reporte Ejecutivo</button>
-                        <button onclick="showReporte('financiero')" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">Financiero Detallado</button>
-                    </div>
-
-                    <div id="reporteConsolidado" class="bg-white rounded-xl shadow-lg overflow-hidden">
-                        <div class="p-6 border-b border-gray-200">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <h3 class="text-xl font-bold text-gray-800">Consolidado Mensual - FO-MI-194</h3>
-                                    <p class="text-gray-500">Año 2026 - Todas las sedes</p>
-                                </div>
-                                <div class="flex gap-2">
-                                    <button class="btn-primary">
-                                        <i class="fas fa-file-excel"></i> Exportar Excel
-                                    </button>
-                                    <button class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
-                                        <i class="fas fa-file-pdf"></i> Exportar PDF
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full">
-                                <thead class="table-head-branded">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mes</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estudiantes</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Graduados</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Doc/Adm</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Público Ext.</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total Part.</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ingresos</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">% Excedente</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-200" id="consolidadoTable">
-                                    <!-- Populated by JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+            <!-- Content Area (rutas renderizadas por js/core/router.js) -->
+            <div id="contentArea" class="flex-1 overflow-y-auto custom-scrollbar p-8"></div>
         </main>
     </div>
 
@@ -1256,7 +420,7 @@
                             </select>
                         </div>
                     </div>
-                   
+
                     <div class="grid grid-cols-3 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Fecha Inicio *</label>
@@ -1299,7 +463,7 @@
                                 <label class="block text-xs text-gray-600 mb-1">Estudiantes</label>
                                 <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" placeholder="$0">
                             </div>
-                            div>
+                            <div>
                                 <label class="block text-xs text-gray-600 mb-1">Graduados</label>
                                 <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" placeholder="$0">
                             </div>
@@ -1442,430 +606,59 @@
         </div>
     </div>
 
-    <script>
-        // Authentication
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-           
-            if (email && password) {
-                document.getElementById('loginModal').classList.add('hidden');
-                document.getElementById('mainApp').classList.remove('hidden');
-                initializeCharts();
-                loadData();
-            }
-        });
+    <!-- Núcleo -->
+    <script src="js/core/namespace.js"></script>
+    <script src="js/core/state.js"></script>
+    <script src="js/core/utils.js"></script>
+    <script src="js/core/router.js"></script>
 
-        function logout() {
-            document.getElementById('mainApp').classList.add('hidden');
-            document.getElementById('loginModal').classList.remove('hidden');
-        }
+    <!-- Componentes -->
+    <script src="js/components/modal.js"></script>
+    <script src="js/components/toast.js"></script>
+    <script src="js/components/placeholder.js"></script>
+    <script src="js/components/charts.js"></script>
+    <script src="js/components/sidebar.js"></script>
+    <script src="js/components/topbar.js"></script>
+    <script src="js/components/emptyState.js"></script>
+    <script src="js/components/dataTable.js"></script>
+    <script src="js/components/filterPanel.js"></script>
+    <script src="js/components/listShell.js"></script>
+    <script src="js/components/recordForm.js"></script>
+    <script src="js/components/kanbanBoard.js"></script>
 
-        // Module Navigation
-        function showModule(moduleName) {
-            // Hide all modules
-            const modules = ['dashboard', 'crm', 'eventos', 'financiero', 'solicitudes', 'alianzas', 'certificados', 'reportes', 'usuarios', 'config'];
-            modules.forEach(m => {
-                document.getElementById(m + 'Module').classList.add('hidden');
-            });
-           
-            // Show selected module
-            document.getElementById(moduleName + 'Module').classList.remove('hidden');
-           
-            // Update title
-            const titles = {
-                'dashboard': 'Dashboard Gerencial',
-                'crm': 'Gestión CRM',
-                'eventos': 'Gestión de Eventos',
-                'financiero': 'Control Financiero',
-                'solicitudes': 'Solicitudes y Propuestas',
-                'alianzas': 'Alianzas Estratégicas',
-                'certificados': 'Certificados e Insignias',
-                'reportes': 'Reportes y BI',
-                'usuarios': 'Administración de Usuarios',
-                'config': 'Configuración del Sistema'
-            };
-            document.getElementById('pageTitle').textContent = titles[moduleName];
-           
-            // Update sidebar active state
-            document.querySelectorAll('.sidebar-item').forEach(item => {
-                item.style.background = '';
-                item.style.color = 'rgba(255,255,255,0.8)';
-            });
-            const activeItem = event.target.closest('.sidebar-item');
-            activeItem.style.background = 'var(--color-primary-light)';
-            activeItem.style.color = '#ffffff';
-        }
+    <!-- Datos de ejemplo -->
+    <script src="js/data/eventos.js"></script>
+    <script src="js/data/financiero.js"></script>
+    <script src="js/data/certificados.js"></script>
+    <script src="js/data/consolidado.js"></script>
+    <script src="js/data/cuentas.js"></script>
+    <script src="js/data/informes.js"></script>
+    <script src="js/data/paneles.js"></script>
+    <script src="js/data/leads.js"></script>
+    <script src="js/data/contactos.js"></script>
+    <script src="js/data/oportunidades.js"></script>
+    <script src="js/data/documentos.js"></script>
 
-        // CRM Tabs
-        function showCRMTab(tab) {
-            document.getElementById('pipelineView').classList.add('hidden');
-            document.getElementById('cuentasView').classList.add('hidden');
+    <!-- Vistas -->
+    <script src="js/views/inicio.js"></script>
+    <script src="js/views/informes.js"></script>
+    <script src="js/views/informeDetalle.js"></script>
+    <script src="js/views/analisis.js"></script>
+    <script src="js/views/dashboard.js"></script>
+    <script src="js/views/crmLeads.js"></script>
+    <script src="js/views/crmContactos.js"></script>
+    <script src="js/views/crmCuentas.js"></script>
+    <script src="js/views/crmOportunidades.js"></script>
+    <script src="js/views/crmPrevisiones.js"></script>
+    <script src="js/views/crmDocumentos.js"></script>
+    <script src="js/views/crmCampanas.js"></script>
+    <script src="js/views/eventos.js"></script>
+    <script src="js/views/financiero.js"></script>
+    <script src="js/views/solicitudes.js"></script>
+    <script src="js/views/certificados.js"></script>
+    <script src="js/views/reportes.js"></script>
 
-            ['btnPipeline','btnCuentas','btnContactos','btnActividades'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) { el.className = 'tab-inactive px-4 py-2 rounded-lg text-sm font-medium'; }
-            });
-
-            if (tab === 'pipeline') {
-                document.getElementById('pipelineView').classList.remove('hidden');
-                document.getElementById('btnPipeline').className = 'tab-active px-4 py-2 rounded-lg text-sm font-semibold';
-            } else if (tab === 'cuentas') {
-                document.getElementById('cuentasView').classList.remove('hidden');
-                document.getElementById('btnCuentas').className = 'tab-active px-4 py-2 rounded-lg text-sm font-semibold';
-                loadCuentas();
-            }
-        }
-
-        // Drag and Drop for Kanban
-        function allowDrop(ev) {
-            ev.preventDefault();
-            ev.currentTarget.classList.add('drag-over');
-        }
-
-        function drag(ev) {
-            ev.dataTransfer.setData("text", ev.target.id);
-            ev.target.classList.add('drag-ghost');
-        }
-
-        function drop(ev) {
-            ev.preventDefault();
-            ev.currentTarget.classList.remove('drag-over');
-            var data = ev.dataTransfer.getData("text");
-            var draggedElement = document.getElementById(data);
-            draggedElement.classList.remove('drag-ghost');
-           
-            // Find the correct column container
-            let targetColumn = ev.target.closest('.kanban-column');
-            if (targetColumn) {
-                let container = targetColumn.querySelector('div[id^="col"]');
-                if (container) {
-                    container.appendChild(draggedElement);
-                    updateOpportunityStage(draggedElement.id, targetColumn.dataset.stage);
-                }
-            }
-        }
-
-        function updateOpportunityStage(oppId, newStage) {
-            console.log(`Oportunidad ${oppId} movida a etapa: ${newStage}`);
-            // Aquí iría la llamada al backend
-            showNotification('Oportunidad actualizada exitosamente', 'success');
-        }
-
-        // Modal Functions
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.remove('hidden');
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
-        }
-
-        // Notifications
-        function toggleNotifications() {
-            const panel = document.getElementById('notificationsPanel');
-            if (panel.classList.contains('translate-x-full')) {
-                panel.classList.remove('translate-x-full');
-            } else {
-                panel.classList.add('translate-x-full');
-            }
-        }
-
-        function showNotification(message, type = 'info') {
-            const div = document.createElement('div');
-            div.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-xl text-white transform transition-all duration-300 translate-y-0 z-50 ${
-                type === 'success' ? 'bg-green-600' : type === 'error' ? 'bg-red-600' : ''
-            }`;
-            if (type === 'info') {
-                div.style.background = 'var(--color-primary)';
-                div.style.borderLeft = '4px solid var(--color-accent)';
-            }
-            div.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'} mr-2"></i>${message}`;
-            document.body.appendChild(div);
-            setTimeout(() => {
-                div.style.transform = 'translateY(100px)';
-                setTimeout(() => div.remove(), 300);
-            }, 3000);
-        }
-
-        // Charts Initialization
-        function initializeCharts() {
-            // Ingresos Chart
-            const ctxIngresos = document.getElementById('ingresosChart').getContext('2d');
-            new Chart(ctxIngresos, {
-                type: 'bar',
-                data: {
-                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'],
-                    datasets: [{
-                        label: 'Ingresos 2026 (M COP)',
-                        data: [81.4, 15.6, 90.3, 378.4, 156.3, 263.9, 165.0, 185.2, 240.2],
-                        backgroundColor: 'rgba(0, 128, 164, 0.82)',
-                        borderColor: 'rgba(0, 128, 164, 1)',
-                        borderWidth: 2,
-                        borderRadius: 6
-                    }, {
-                        label: 'Ingresos 2025 (M COP)',
-                        data: [65.2, 12.1, 75.4, 298.3, 128.5, 198.2, 134.6, 156.8, 198.4],
-                        backgroundColor: 'rgba(243, 142, 14, 0.40)',
-                        borderColor: 'rgba(243, 142, 14, 0.90)',
-                        borderWidth: 2,
-                        borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Segmentos Chart
-            const ctxSegmentos = document.getElementById('segmentosChart').getContext('2d');
-            new Chart(ctxSegmentos, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Estudiantes', 'Público Ext.', 'Graduados', 'Docentes'],
-                    datasets: [{
-                        data: [47, 28, 15, 10],
-                        backgroundColor: [
-                            'rgba(0, 128, 164, 0.90)',
-                            'rgba(0, 163, 208, 0.70)',
-                            'rgba(243, 142, 14, 0.90)',
-                            'rgba(178, 186, 188, 0.85)'
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    cutout: '70%',
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    }
-                }
-            });
-        }
-
-        // Data Loading
-        function loadData() {
-            loadEventos();
-            loadFinanciero();
-            loadCertificados();
-            loadConsolidado();
-        }
-
-        function loadEventos() {
-            const eventos = [
-                { codigo: 'DIP0392', nombre: 'Diplomado Conciliación Extrajudicial', fechas: '03/06 - 26/07', estado: 'CERTIFICADO', estadoStyle: 'background:#cce9f1;color:#005f7a;', matriculas: 51, excedente: 52.7 },
-                { codigo: 'SML0033', nombre: 'Semillero Emprendimiento Grados 10° y 11°', fechas: '04/04 - 30/05', estado: 'CERTIFICADO', estadoStyle: 'background:#cce9f1;color:#005f7a;', matriculas: 45, excedente: 0.0 },
-                { codigo: 'DIP0385', nombre: 'Pedagogía Prof. No Licenciados', fechas: '01/08 - 13/02', estado: 'ACTIVO', estadoStyle: 'background:#fde9c7;color:#c97208;', matriculas: 38, excedente: 65.3 },
-                { codigo: 'CSO0777', nombre: 'Convenio Smartfit', fechas: '04/08 - 15/02', estado: 'CANCELADO', estadoStyle: 'background:#fee2e2;color:#991b1b;', matriculas: 0, excedente: 0.0 },
-                { codigo: 'CSO0788', nombre: 'Curso Marketing Digital', fechas: '15/04 - 30/05', estado: 'PROGRAMADO', estadoStyle: 'background:#e1e5e6;color:#464e50;', matriculas: 0, excedente: 0.0 }
-            ];
-
-            const tbody = document.getElementById('eventosTable');
-            tbody.innerHTML = eventos.map(e => `
-                <tr class="hover:bg-gray-50 transition-colors">
-                    <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">${e.codigo}</td>
-                    <td class="px-6 py-4">
-                        <div class="text-sm font-medium text-gray-900">${e.nombre}</div>
-                        <div class="text-sm text-gray-500">Derecho • Medellín</div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${e.fechas}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 py-1 text-xs font-semibold rounded-full" style="${e.estadoStyle}">${e.estado}</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${e.matriculas}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center">
-                            <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
-                                <div class="h-2 rounded-full" style="width: ${e.excedente}%; background: #0080a4;"></div>
-                            </div>
-                            <span class="text-sm font-medium" style="color: ${e.excedente > 0 ? '#0080a4' : '#7a8689'};">${e.excedente}%</span>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        <button style="color: var(--color-primary);" class="mr-2"><i class="fas fa-eye"></i></button>
-                        <button style="color: var(--color-text-muted);"><i class="fas fa-edit"></i></button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function loadFinanciero() {
-            const financiero = [
-                { evento: 'DIP0392 - Diplomado Conciliación', ingresos: 34210000, costos: 16190291, excedente: 18019709, pct: 52.67, factura: true, pagado: true },
-                { evento: 'SML0045 - Seminario IA', ingresos: 25600000, costos: 13200000, excedente: 12400000, pct: 48.44, factura: true, pagado: false },
-                { evento: 'CSO0777 - Curso Excel Avanzado', ingresos: 18900000, costos: 10300000, excedente: 8600000, pct: 45.50, factura: false, pagado: false }
-            ];
-
-            const tbody = document.getElementById('financieroTable');
-            tbody.innerHTML = financiero.map(f => `
-                <tr style="border-bottom: 1px solid #e1e5e6;" class="hover:bg-gray-50">
-                    <td class="px-6 py-4 text-sm font-medium text-gray-900">${f.evento}</td>
-                    <td class="px-6 py-4 text-sm text-gray-600">$${f.ingresos.toLocaleString()}</td>
-                    <td class="px-6 py-4 text-sm text-gray-600">$${f.costos.toLocaleString()}</td>
-                    <td class="px-6 py-4 text-sm font-bold" style="color:#0080a4;">$${f.excedente.toLocaleString()}</td>
-                    <td class="px-6 py-4 text-sm font-bold" style="color:#005f7a;">${f.pct}%</td>
-                    <td class="px-6 py-4">
-                        <span class="px-2 py-1 text-xs rounded-full" style="${f.factura ? 'background:#cce9f1;color:#005f7a;' : 'background:#fde9c7;color:#c97208;'}">
-                            ${f.factura ? '✓ Enviada' : 'Pendiente'}
-                        </span>
-                    </td>
-                    <td class="px-6 py-4">
-                        <span class="px-2 py-1 text-xs rounded-full" style="${f.pagado ? 'background:#cce9f1;color:#005f7a;' : 'background:#fee2e2;color:#991b1b;'}">
-                            ${f.pagado ? '✓ Pagado' : 'Pendiente'}
-                        </span>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function loadCertificados() {
-            const certificados = [
-                { nombre: 'Diplomado Conciliación Extrajudicial', codigo: 'DIP0392', participantes: 51, estado: 'Listo', fecha: '2025-07-27' },
-                { nombre: 'Seminario IA Aplicada', codigo: 'SML0045', participantes: 45, estado: 'Listo', fecha: '2025-07-20' },
-                { nombre: 'Curso Excel Avanzado', codigo: 'CSO0777', participantes: 32, estado: 'Pendiente', fecha: '2025-08-15' }
-            ];
-
-            const container = document.getElementById('certificadosList');
-            container.innerHTML = certificados.map(c => `
-                <div class="flex items-center justify-between p-4 border rounded-lg hover:shadow-md transition-shadow">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-brand-100 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-certificate text-accent-500 text-xl"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800">${c.nombre}</h4>
-                            <p class="text-sm text-gray-500">${c.codigo} • ${c.participantes} participantes</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <div class="text-right">
-                            <p class="text-sm font-medium" style="color: ${c.estado === 'Listo' ? '#0080a4' : '#c97208'};">${c.estado}</p>
-                            <p class="text-xs text-gray-500">${c.fecha}</p>
-                        </div>
-                        <button onclick="emitirInsignias('${c.codigo}')" class="btn-primary hover:shadow-lg transform hover:scale-105 transition-all" ${c.estado !== 'Listo' ? 'disabled style="background:#d5dadb;color:#7a8689;cursor:not-allowed;"' : ''}>
-                            <i class="fas fa-medal mr-2"></i>Emitir Insignias
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function emitirInsignias(codigoEvento) {
-            showNotification(`Iniciando emisión de insignias para ${codigoEvento} vía ACREDITTA API...`, 'success');
-            setTimeout(() => {
-                showNotification('Insignias emitidas exitosamente. Correos enviados a participantes.', 'success');
-            }, 2000);
-        }
-
-        function loadConsolidado() {
-            const data = [
-                { mes: 'Enero', est: 1, grad: 6, doc: 0, ext: 37, total: 44, ingresos: 81.4, excedente: 44.2 },
-                { mes: 'Febrero', est: 34, grad: 35, doc: 27, ext: 37, total: 133, ingresos: 15.6, excedente: 94.3 },
-                { mes: 'Marzo', est: 437, grad: 88, doc: 198, ext: 202, total: 925, ingresos: 90.3, excedente: 57.2 },
-                { mes: 'Abril', est: 1677, grad: 231, doc: 108, ext: 1061, total: 3077, ingresos: 378.4, excedente: 8.9 },
-                { mes: 'Mayo', est: 909, grad: 125, doc: 63, ext: 274, total: 1371, ingresos: 156.3, excedente: 27.6 },
-                { mes: 'Junio', est: 198, grad: 0, doc: 1, ext: 6, total: 205, ingresos: 263.9, excedente: 35.4 },
-                { mes: 'Julio', est: 74, grad: 9, doc: 0, ext: 60, total: 143, ingresos: 165.0, excedente: 77.9 },
-                { mes: 'Agosto', est: 261, grad: 74, doc: 254, ext: 282, total: 871, ingresos: 185.2, excedente: 50.1 },
-                { mes: 'Septiembre', est: 488, grad: 36, doc: 115, ext: 961, total: 1600, ingresos: 240.2, excedente: 80.2 }
-            ];
-
-            const tbody = document.getElementById('consolidadoTable');
-            tbody.innerHTML = data.map(d => `
-                <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-4 font-medium text-gray-900">${d.mes}</td>
-                    <td class="px-6 py-4 text-sm text-gray-600">${d.est}</td>
-                    <td class="px-6 py-4 text-sm text-gray-600">${d.grad}</td>
-                    <td class="px-6 py-4 text-sm text-gray-600">${d.doc}</td>
-                    <td class="px-6 py-4 text-sm text-gray-600">${d.ext}</td>
-                    <td class="px-6 py-4 text-sm font-bold text-gray-800">${d.total}</td>
-                    <td class="px-6 py-4 text-sm font-medium text-gray-800">$${d.ingresos}M</td>
-                    <td class="px-6 py-4">
-                        <span class="px-2 py-1 text-xs font-bold rounded-full" style="${d.excedente > 50 ? 'background:#cce9f1;color:#005f7a;' : d.excedente > 30 ? 'background:#fde9c7;color:#c97208;' : 'background:#fee2e2;color:#991b1b;'}">
-                            ${d.excedente}%
-                        </span>
-                    </td>
-                </tr>
-            `).join('') + `
-                <tr class="bg-gray-100 font-bold">
-                    <td class="px-6 py-4">TOTAL</td>
-                    <td class="px-6 py-4">4,079</td>
-                    <td class="px-6 py-4">604</td>
-                    <td class="px-6 py-4">766</td>
-                    <td class="px-6 py-4">2,920</td>
-                    <td class="px-6 py-4">8,369</td>
-                    <td class="px-6 py-4">$1,576.3M</td>
-                    <td class="px-6 py-4">53.4%</td>
-                </tr>
-            `;
-        }
-
-        function loadCuentas() {
-            const cuentas = [
-                { razon: 'TECNOVA S.A.S.', nit: '890.123.456-7', sector: 'Tecnología', ciudad: 'Medellín', responsable: 'Ana García' },
-                { razon: 'SENA Regional Antioquia', nit: '899.999.034-1', sector: 'Gobierno', ciudad: 'Medellín', responsable: 'María López' },
-                { razon: 'GRUPO ÉXITO', nit: '890.900.608-8', sector: 'Retail', ciudad: 'Medellín', responsable: 'Carlos Pérez' },
-                { razon: 'BANCOLOMBIA', nit: '890.900.608-9', sector: 'Financiero', ciudad: 'Medellín', responsable: 'Ana García' }
-            ];
-
-            const tbody = document.getElementById('cuentasTable');
-            tbody.innerHTML = cuentas.map(c => `
-                <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-4 font-medium text-gray-900">${c.razon}</td>
-                    <td class="px-6 py-4 text-sm text-gray-600">${c.nit}</td>
-                    <td class="px-6 py-4 text-sm text-gray-600">${c.sector}</td>
-                    <td class="px-6 py-4 text-sm text-gray-600">${c.ciudad}</td>
-                    <td class="px-6 py-4 text-sm text-gray-600">${c.responsable}</td>
-                    <td class="px-6 py-4 text-sm">
-                        <button style="color:#0080a4;" class="mr-2"><i class="fas fa-eye"></i></button>
-                        <button style="color:#7a8689;"><i class="fas fa-edit"></i></button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function changeSede(sede) {
-            showNotification(`Cambiando a sede: ${sede}`, 'info');
-            // Aquí iría la lógica para filtrar datos por sede
-        }
-
-        function showQuickActions() {
-            // Implementar menú de acciones rápidas
-            showNotification('Menú de acciones rápidas - Implementar dropdown', 'info');
-        }
-
-        // Close modals on escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('[id$="Modal"]').forEach(modal => {
-                    modal.classList.add('hidden');
-                });
-            }
-        });
-    </script>
+    <!-- Arranque de la app -->
+    <script src="js/core/app.js"></script>
 </body>
 </html>
