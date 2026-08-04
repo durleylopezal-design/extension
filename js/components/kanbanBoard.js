@@ -3,18 +3,18 @@
 // Oportunidades). Parametrizado por columnas/etapas y una función de
 // renderizado de tarjeta.
 (function () {
-    function render(container, { columnas, filas, filaId, renderTarjeta, onMover }) {
+    function render(container, { columnas, filas, filaId, renderTarjeta, onMover, campoEtapa = 'etapa' }) {
         container.innerHTML = `
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 ${columnas.map((col) => {
-                    const filasCol = filas.filter((f) => f.etapa === col.id);
+                    const filasCol = filas.filter((f) => f[campoEtapa] === col.id);
                     return `
                         <div class="kanban-column p-4" data-etapa="${col.id}">
                             <div class="flex items-center justify-between mb-1">
                                 <h4 class="font-bold text-sm" style="color: var(--color-primary-dark);">${col.etiqueta}</h4>
                                 <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs font-bold">${filasCol.length}</span>
                             </div>
-                            <p class="text-xs font-semibold mb-4" style="color: var(--color-accent-dark);">${col.pct}%</p>
+                            ${col.pct !== undefined ? `<p class="text-xs font-semibold mb-4" style="color: var(--color-accent-dark);">${col.pct}%</p>` : '<div class="mb-3"></div>'}
                             <div class="space-y-3 kanban-drop-target" data-col-id="${col.id}">
                                 ${filasCol.length ? filasCol.map((f) => `
                                     <div draggable="true" data-tarjeta-id="${filaId(f)}" class="kanban-card bg-white p-4 rounded-lg shadow border-l-4 border-brand-500">

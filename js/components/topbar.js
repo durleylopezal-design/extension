@@ -70,7 +70,7 @@
                     <button id="btnNotificaciones" class="relative p-2 transition-colors" style="color: var(--color-primary);" title="Notificaciones">
                         <i class="fas fa-bell text-xl"></i>
                         <span class="notification-dot"></span>
-                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                        <span id="notifBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
                     </button>
 
                     <div class="relative">
@@ -170,6 +170,25 @@
         bind(container);
     }
 
-    UCLA.components.topbar = { render };
+    // Refleja un recordatorio de Actividades (tarea/reunión/llamada) en la
+    // campana de notificaciones: incrementa el contador y agrega el ítem
+    // arriba del panel.
+    function agregarNotificacion({ titulo, detalle }) {
+        const badge = document.getElementById('notifBadge');
+        if (badge) badge.textContent = String((parseInt(badge.textContent, 10) || 0) + 1);
+
+        const panel = document.querySelector('#notificationsPanel > div:last-child');
+        if (!panel) return;
+        const item = document.createElement('div');
+        item.className = 'p-3 rounded-lg';
+        item.style.cssText = 'background: var(--color-primary-50); border-left: 4px solid var(--color-primary);';
+        item.innerHTML = `
+            <p class="text-sm font-medium text-gray-800">${titulo}</p>
+            <p class="text-xs text-gray-600 mt-1">${detalle}</p>
+            <p class="text-xs text-gray-400 mt-2">Ahora mismo</p>`;
+        panel.prepend(item);
+    }
+
+    UCLA.components.topbar = { render, agregarNotificacion };
     window.changeSede = (codigo) => UCLA.state.setSedeActiva(codigo);
 })();

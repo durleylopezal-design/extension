@@ -147,6 +147,7 @@
                     b.style.background = activo ? 'var(--color-primary)' : 'transparent';
                 });
                 pintarCuerpo();
+                if (config.onVistaCambiada) config.onVistaCambiada(tipo);
             });
         });
 
@@ -164,7 +165,7 @@
             const btn = e.target.closest('[data-accion]');
             if (!btn) return;
             if (btn.getAttribute('data-accion') === 'importar') {
-                UCLA.components.toast.show('El asistente de importación llega con el módulo de Actividades', 'info');
+                UCLA.components.importWizard.abrir({ modulo: config.titulo });
             } else {
                 UCLA.components.toast.show('Combinar registros — función simulada', 'info');
             }
