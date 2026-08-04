@@ -20,7 +20,7 @@
 
     function badgePrioridad(p) {
         const color = p === 'Alta' ? 'var(--color-danger)' : p === 'Media' ? 'var(--color-accent)' : 'var(--color-neutral-dark, #6B6F72)';
-        return `<span class="text-xs font-semibold px-2 py-0.5 rounded-full" style="background: ${color}22; color: ${color};">${p}</span>`;
+        return `<span class="text-xs font-semibold px-2 py-0.5 rounded-full" style="background: color-mix(in srgb, ${color} 18%, white); color: ${color};">${p}</span>`;
     }
 
     function seccionesFormulario() {

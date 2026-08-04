@@ -29,7 +29,13 @@
 
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {
-            document.querySelectorAll('[id$="Modal"]').forEach((modal) => modal.classList.add('hidden'));
+            // Todo overlay modal del sitio (los 3 originales de index.html y los
+            // que las vistas crean dinámicamente) comparte la clase .modal —
+            // más confiable que adivinar por el sufijo del id. Se excluye
+            // #loginModal para no dejar la pantalla en blanco antes de autenticar.
+            document.querySelectorAll('.modal:not(.hidden)').forEach((modal) => {
+                if (modal.id !== 'loginModal') modal.classList.add('hidden');
+            });
         }
     });
 })();

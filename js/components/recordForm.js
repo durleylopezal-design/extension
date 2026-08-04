@@ -8,7 +8,7 @@
         if (panelEl) return panelEl;
         panelEl = document.createElement('div');
         panelEl.id = 'recordFormOverlay';
-        panelEl.className = 'fixed inset-0 z-50 hidden';
+        panelEl.className = 'fixed inset-0 z-50 hidden modal';
         panelEl.innerHTML = `
             <div class="fixed inset-0 bg-black opacity-40" data-rf-cerrar></div>
             <div id="recordFormPanel" class="fixed right-0 top-0 h-full w-full max-w-2xl bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">

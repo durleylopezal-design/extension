@@ -1,0 +1,22 @@
+UCLA.data.recordatorios = [
+    { id: 'rec-01', asunto: 'Solicitud ADM-2026-0148 lleva más de 5 días en revisión', origenTipo: 'Solicitud', relacionadoCon: 'Solicitudes · Admisión', destinatario: 'Dra. Patricia López', fechaDisparo: '2026-08-02T09:00', canal: 'Sistema', estado: 'Programado' },
+    { id: 'rec-02', asunto: 'Convenio con SENA Regional Antioquia vence en 30 días', origenTipo: 'Convenio', relacionadoCon: 'Alianzas · Convenios', destinatario: 'María López', fechaDisparo: '2026-08-05T08:00', canal: 'Correo', estado: 'Programado' },
+    { id: 'rec-03', asunto: 'Cuota de matrícula de Andrés Felipe Londoño vence en 3 días', origenTipo: 'Pago', relacionadoCon: 'Financiero · Cartera', destinatario: 'Andrés Felipe Londoño', fechaDisparo: '2026-08-06T07:00', canal: 'WhatsApp', estado: 'Programado' },
+    { id: 'rec-04', asunto: 'Enviar encuesta de satisfacción — Curso Marketing Digital', origenTipo: 'Reunión', relacionadoCon: 'Eventos · CSO0788', destinatario: 'Coordinación de Eventos', fechaDisparo: '2026-08-01T10:00', canal: 'Correo', estado: 'Programado' },
+    { id: 'rec-05', asunto: 'Actualización de datos — Carlos Andrés Muñoz Zapata', origenTipo: 'Solicitud', relacionadoCon: 'Egresados · Base de datos', destinatario: 'Carlos Andrés Muñoz Zapata', fechaDisparo: '2026-07-30T09:00', canal: 'Correo', estado: 'Programado' },
+    { id: 'rec-06', asunto: 'Llamar a Diego Cárdenas Ochoa para confirmar matrícula', origenTipo: 'Tarea', relacionadoCon: 'Cuenta · BANCOLOMBIA', destinatario: 'Juan Martínez', fechaDisparo: '2026-08-05T14:00', canal: 'Sistema', estado: 'Programado' },
+    { id: 'rec-07', asunto: 'Reunión de seguimiento con Comfama', origenTipo: 'Reunión', relacionadoCon: 'Cuenta · Comfama', destinatario: 'María López', fechaDisparo: '2026-08-12T10:00', canal: 'Sistema', estado: 'Programado' },
+    { id: 'rec-08', asunto: 'Certificado del Diplomado Conciliación listo para envío', origenTipo: 'Pago', relacionadoCon: 'Certificados · DIP0392', destinatario: 'Laura Jaramillo Vélez', fechaDisparo: '2026-07-28T09:00', canal: 'Correo', estado: 'Enviado' },
+    { id: 'rec-09', asunto: 'Confirmar cupo del Diplomado Conciliación Extrajudicial', origenTipo: 'Tarea', relacionadoCon: 'Evento · DIP0392', destinatario: 'Ana García', fechaDisparo: '2026-07-27T09:00', canal: 'Sistema', estado: 'Enviado' },
+    { id: 'rec-10', asunto: 'Llamada saliente a Ricardo Muñoz Salazar', origenTipo: 'Llamada', relacionadoCon: 'Cuenta · SENA Regional Antioquia', destinatario: 'Ana García', fechaDisparo: '2026-08-07T09:30', canal: 'Sistema', estado: 'Programado' },
+    { id: 'rec-11', asunto: 'Solicitud de beca BEC-2026-0034 pendiente de comité', origenTipo: 'Solicitud', relacionadoCon: 'Solicitudes · Becas', destinatario: 'Comité de Becas', fechaDisparo: '2026-08-04T09:00', canal: 'Correo', estado: 'Descartado' },
+    { id: 'rec-12', asunto: 'Convenio con Smartfit Colombia vencido sin renovar', origenTipo: 'Convenio', relacionadoCon: 'Alianzas · Convenios', destinatario: 'Ana García', fechaDisparo: '2026-07-15T08:00', canal: 'Correo', estado: 'Programado' },
+];
+
+UCLA.data.reglasAutomaticas = [
+    { id: 'ra-01', nombre: 'Solicitud de admisión estancada en revisión', modulo: 'Solicitudes', disparador: 'Cambio de estado', condicion: 'Solicitud en "En revisión" por más de 5 días', momento: '5 días después', accion: 'Crear recordatorio', plantillaId: null, activa: true },
+    { id: 'ra-02', nombre: 'Convenio próximo a vencer', modulo: 'Alianzas', disparador: 'Proximidad de fecha', condicion: 'Fecha de fin del convenio', momento: '30 días antes', accion: 'Enviar correo', plantillaId: 'pl-convenio-vencer', activa: true },
+    { id: 'ra-03', nombre: 'Cuota de matrícula por vencer', modulo: 'Financiero', disparador: 'Proximidad de fecha', condicion: 'Fecha de vencimiento de la cuota', momento: '3 días antes', accion: 'Enviar correo', plantillaId: 'pl-recordatorio-pago', activa: true },
+    { id: 'ra-04', nombre: 'Encuesta post evento', modulo: 'Eventos', disparador: 'Cambio de estado', condicion: 'Evento pasa a "Certificado"', momento: '1 día después', accion: 'Enviar correo', plantillaId: 'pl-encuesta-evento', activa: true },
+    { id: 'ra-05', nombre: 'Actualización de datos de egresados', modulo: 'Egresados', disparador: 'Creación de registro', condicion: 'Sin contacto en los últimos 12 meses', momento: '12 meses después', accion: 'Crear recordatorio', plantillaId: 'pl-actualizacion-egresados', activa: true },
+];

@@ -83,7 +83,14 @@
             }
             const campoOrden = config.campoOrden || config.columnas[0].clave;
             filas = filas.slice().sort((a, b) => {
-                const cmp = String(a[campoOrden] ?? '').localeCompare(String(b[campoOrden] ?? ''), 'es');
+                const va = a[campoOrden];
+                const vb = b[campoOrden];
+                // Compara numéricamente cuando ambos valores lo son (p. ej. días de
+                // mora, porcentajes) — comparar como texto ordenaría "155" antes
+                // que "19" y rompería columnas numéricas.
+                const cmp = (typeof va === 'number' && typeof vb === 'number')
+                    ? va - vb
+                    : String(va ?? '').localeCompare(String(vb ?? ''), 'es');
                 return estado.ordenAsc ? cmp : -cmp;
             });
             return filas;
