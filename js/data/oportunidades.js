@@ -10,7 +10,7 @@ UCLA.data.oportunidades = [
     { id: 'opp-05', nombre: 'SENA', descripcion: 'Diplomado técnico instructores', valor: 120000000, etapa: 'interesado', fecha: '20/03', propietario: 'María López', sedeId: 'MDE' },
     { id: 'opp-06', nombre: 'MINTIC', descripcion: 'Programación básica', valor: 95000000, etapa: 'interesado', fecha: '22/03', propietario: 'Ana García', sedeId: 'BOG' },
     { id: 'opp-07', nombre: 'GRUPO NUTRESA', descripcion: 'Programa de liderazgo para supervisores', valor: 68000000, etapa: 'interesado', fecha: '24/03', propietario: 'Carlos Pérez', sedeId: 'MDE' },
-    { id: 'opp-08', nombre: 'COMFAMA — REGIONAL ORIENTE', descripcion: 'Diplomado en economía solidaria', valor: 41000000, etapa: 'interesado', fecha: '26/03', propietario: 'Juan Martínez', sedeId: 'MDE' },
+    { id: 'opp-08', nombre: 'COMFAMA - REGIONAL ORIENTE', descripcion: 'Diplomado en economía solidaria', valor: 41000000, etapa: 'interesado', fecha: '26/03', propietario: 'Juan Martínez', sedeId: 'MDE' },
     { id: 'opp-09', nombre: 'UNIVERSIDAD DE ANTIOQUIA', descripcion: 'Curso complementario para egresados', valor: 22000000, etapa: 'interesado', fecha: '27/03', propietario: 'María López', sedeId: 'MDE' },
 
     { id: 'opp-10', nombre: 'GOBERNACIÓN', descripcion: 'Gestión pública territorial', valor: 80000000, etapa: 'propuesta-enviada', fecha: '25/03', propietario: 'Ana García', sedeId: 'MZL' },
@@ -19,7 +19,7 @@ UCLA.data.oportunidades = [
     { id: 'opp-13', nombre: 'FUNDACIÓN UNIVERSITARIA AMIGÓ', descripcion: 'Diplomado en docencia universitaria', valor: 33000000, etapa: 'propuesta-enviada', fecha: '30/03', propietario: 'Juan Martínez', sedeId: 'MDE' },
 
     { id: 'opp-14', nombre: 'COLCIENCIAS', descripcion: 'Investigación aplicada', valor: 200000000, etapa: 'documentacion-revision', fecha: 'HOY', propietario: 'Ana García', sedeId: 'BOG', etiqueta: 'VENCE HOY' },
-    { id: 'opp-15', nombre: 'MINTIC — REGIÓN CAFETERA', descripcion: 'Alfabetización digital para docentes', valor: 61000000, etapa: 'documentacion-revision', fecha: '02/04', propietario: 'Carlos Pérez', sedeId: 'MZL' },
+    { id: 'opp-15', nombre: 'MINTIC - REGIÓN CAFETERA', descripcion: 'Alfabetización digital para docentes', valor: 61000000, etapa: 'documentacion-revision', fecha: '02/04', propietario: 'Carlos Pérez', sedeId: 'MZL' },
     { id: 'opp-16', nombre: 'GRUPO ÉXITO', descripcion: 'Programa de formación en servicio al cliente', valor: 39000000, etapa: 'documentacion-revision', fecha: '03/04', propietario: 'María López', sedeId: 'MZL' },
 
     { id: 'opp-17', nombre: 'EPM', descripcion: 'Seguridad industrial', valor: 75000000, etapa: 'matricula-confirmada', fecha: '01/03', propietario: 'Juan Martínez', sedeId: 'MDE' },

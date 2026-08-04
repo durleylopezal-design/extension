@@ -9,8 +9,8 @@
     function columnas() {
         return [
             { clave: 'nombre', etiqueta: 'Programa', render: (p) => `<span class="font-medium" style="color: var(--color-text);">${p.nombre}</span>` },
-            { clave: 'cuentaId', etiqueta: 'Empresa / Entidad', render: (p) => { const cta = cuentaDe(p.cuentaId); return cta ? `<a href="#/alianzas/empresas/${cta.id}" class="hover:underline" style="color: var(--color-primary);">${cta.razonSocial}</a>` : '—'; } },
-            { clave: 'convenioId', etiqueta: 'Convenio', render: (p) => { const cv = convenioDe(p.convenioId); return cv ? cv.nombre : '—'; } },
+            { clave: 'cuentaId', etiqueta: 'Empresa / Entidad', render: (p) => { const cta = cuentaDe(p.cuentaId); return cta ? `<a href="#/alianzas/empresas/${cta.id}" class="hover:underline" style="color: var(--color-primary);">${cta.razonSocial}</a>` : '-'; } },
+            { clave: 'convenioId', etiqueta: 'Convenio', render: (p) => { const cv = convenioDe(p.convenioId); return cv ? cv.nombre : '-'; } },
             { clave: 'modalidad', etiqueta: 'Modalidad' },
             { clave: 'inscritos', etiqueta: 'Inscritos', render: (p) => `${p.inscritos} / ${p.cupoMaximo}` },
             { clave: 'fechaInicio', etiqueta: 'Fecha de inicio', render: (p) => UCLA.utils.formatoFecha(p.fechaInicio) },
@@ -23,8 +23,8 @@
             titulo: 'Nuevo programa en alianza',
             camposIzquierda: [
                 { clave: 'nombre', etiqueta: 'Nombre del programa', tipo: 'text', obligatorio: true },
-                { clave: 'cuenta', etiqueta: 'Empresa / Entidad', tipo: 'select', opciones: UCLA.data.cuentas.map((c) => c.id + ' — ' + c.razonSocial), obligatorio: true },
-                { clave: 'convenio', etiqueta: 'Convenio', tipo: 'select', opciones: UCLA.data.convenios.map((c) => c.id + ' — ' + c.nombre) },
+                { clave: 'cuenta', etiqueta: 'Empresa / Entidad', tipo: 'select', opciones: UCLA.data.cuentas.map((c) => c.id + ' - ' + c.razonSocial), obligatorio: true },
+                { clave: 'convenio', etiqueta: 'Convenio', tipo: 'select', opciones: UCLA.data.convenios.map((c) => c.id + ' - ' + c.nombre) },
             ],
             camposDerecha: [
                 { clave: 'modalidad', etiqueta: 'Modalidad', tipo: 'select', opciones: ['Presencial', 'Virtual', 'Híbrido'] },
@@ -51,7 +51,7 @@
                         secciones: secciones(),
                         onGuardar: (datos) => {
                             UCLA.data.programasAlianza.unshift({
-                                id: 'pa-' + Date.now(), cuentaId: (datos.cuenta || '').split(' — ')[0], convenioId: (datos.convenio || '').split(' — ')[0],
+                                id: 'pa-' + Date.now(), cuentaId: (datos.cuenta || '').split(' - ')[0], convenioId: (datos.convenio || '').split(' - ')[0],
                                 nombre: datos.nombre || 'Sin nombre', modalidad: datos.modalidad || 'Presencial', cupoMaximo: Number(datos.cupoMaximo) || 20,
                                 inscritos: 0, fechaInicio: datos.fechaInicio || new Date().toISOString().slice(0, 10), estado: 'Programado',
                             });

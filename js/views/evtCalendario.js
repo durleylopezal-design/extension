@@ -87,7 +87,7 @@
                 </div>
                 <p class="text-sm mb-4" style="color: var(--color-text-muted);">${evento.codigo}</p>
                 <div class="grid grid-cols-2 gap-3 text-sm mb-4">
-                    <div><p class="text-xs font-medium" style="color: var(--color-text-muted);">Fechas</p><p>${UCLA.utils.formatoFecha(evento.fechaInicio)} — ${UCLA.utils.formatoFecha(evento.fechaFin)}</p></div>
+                    <div><p class="text-xs font-medium" style="color: var(--color-text-muted);">Fechas</p><p>${UCLA.utils.formatoFecha(evento.fechaInicio)} - ${UCLA.utils.formatoFecha(evento.fechaFin)}</p></div>
                     <div><p class="text-xs font-medium" style="color: var(--color-text-muted);">Modalidad</p><p>${evento.modalidad}</p></div>
                     <div><p class="text-xs font-medium" style="color: var(--color-text-muted);">Facultad</p><p>${evento.facultad}</p></div>
                     <div><p class="text-xs font-medium" style="color: var(--color-text-muted);">Sede</p><p>${evento.sedeId}</p></div>

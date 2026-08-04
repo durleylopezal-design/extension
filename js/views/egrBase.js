@@ -20,7 +20,7 @@
             { clave: 'fechaGrado', etiqueta: 'Fecha de grado', render: (f) => UCLA.utils.formatoFecha(f.fechaGrado) },
             { clave: 'sedeId', etiqueta: 'Sede' },
             { clave: 'situacionLaboral', etiqueta: 'Situación laboral', render: (f) => UCLA.utils.badgeEstado(f.situacionLaboral) },
-            { clave: 'empresaActual', etiqueta: 'Empresa actual', render: (f) => f.empresaActual || '—' },
+            { clave: 'empresaActual', etiqueta: 'Empresa actual', render: (f) => f.empresaActual || '-' },
             { clave: 'correo', etiqueta: 'Correo' },
             {
                 clave: 'ultimaActualizacion', etiqueta: 'Última actualización',

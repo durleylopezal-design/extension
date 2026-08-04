@@ -17,8 +17,8 @@
     function columnas() {
         return [
             { clave: 'direccion', etiqueta: 'Dirección', render: (f) => `<span class="text-xs font-semibold px-2 py-0.5 rounded-full" style="background: ${f.direccion === 'Saliente' ? 'var(--color-primary-50)' : 'var(--color-accent-100)'}; color: ${f.direccion === 'Saliente' ? 'var(--color-primary)' : 'var(--color-accent-dark)'};"><i class="fas fa-phone-${f.direccion === 'Saliente' ? 'arrow-up-right' : 'arrow-down-left'} mr-1"></i>${f.direccion}</span>` },
-            { clave: 'relacionadoCon', etiqueta: 'Relacionado con', render: (f) => f.relacionadoCon || '—' },
-            { clave: 'contactoNombre', etiqueta: 'Nombre de contacto', render: (f) => f.contactoNombre || '—' },
+            { clave: 'relacionadoCon', etiqueta: 'Relacionado con', render: (f) => f.relacionadoCon || '-' },
+            { clave: 'contactoNombre', etiqueta: 'Nombre de contacto', render: (f) => f.contactoNombre || '-' },
         ];
     }
 
@@ -183,7 +183,7 @@
             modal.querySelector('#llDatalistRelacionado').innerHTML = datalistHtml('dlRelacionado', e.target.value);
         });
         modal.querySelector('#llContacto').addEventListener('input', actualizarAsunto);
-        modal.querySelector('#llReasignar').addEventListener('click', () => UCLA.components.toast.show('Reasignación de propietario — función simulada', 'info'));
+        modal.querySelector('#llReasignar').addEventListener('click', () => UCLA.components.toast.show('Reasignación de propietario - función simulada', 'info'));
         actualizarAsunto();
 
         if (esProgramar) {

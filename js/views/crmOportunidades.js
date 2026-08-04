@@ -59,7 +59,7 @@
                 </div>`,
             onExtraToolbarBind: (root) => {
                 root.querySelector('#oppEditarFlujo')?.addEventListener('click', () => {
-                    UCLA.components.toast.show('Edición del flujo de etapas — función simulada', 'info');
+                    UCLA.components.toast.show('Edición del flujo de etapas - función simulada', 'info');
                 });
             },
             renderKanban: (cuerpo) => {

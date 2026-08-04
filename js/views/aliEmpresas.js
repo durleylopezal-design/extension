@@ -9,11 +9,11 @@
             { clave: 'razonSocial', etiqueta: 'Empresa / Entidad', render: (c) => `<a href="#/alianzas/empresas/${c.id}" class="font-medium hover:underline" style="color: var(--color-primary);">${c.razonSocial}</a>` },
             { clave: 'tipo', etiqueta: 'Tipo' },
             { clave: 'sector', etiqueta: 'Sector' },
-            { clave: 'numeroConvenio', etiqueta: 'N.° de convenio', render: (c) => c.numeroConvenio || '—' },
-            { clave: 'calificacionConvenio', etiqueta: 'Calificación', render: (c) => c.calificacionConvenio ? UCLA.utils.badgeEstado(c.calificacionConvenio) : '—' },
+            { clave: 'numeroConvenio', etiqueta: 'N.° de convenio', render: (c) => c.numeroConvenio || '-' },
+            { clave: 'calificacionConvenio', etiqueta: 'Calificación', render: (c) => c.calificacionConvenio ? UCLA.utils.badgeEstado(c.calificacionConvenio) : '-' },
             { clave: 'numeroEmpleados', etiqueta: 'N.° empleados' },
             { clave: 'sedeId', etiqueta: 'Sede' },
-            { clave: 'contactoPrincipal', etiqueta: 'Contacto principal', render: (c) => c.contactoPrincipal || '—' },
+            { clave: 'contactoPrincipal', etiqueta: 'Contacto principal', render: (c) => c.contactoPrincipal || '-' },
         ];
     }
 

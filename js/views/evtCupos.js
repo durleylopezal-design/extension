@@ -34,7 +34,7 @@
                     </div>`;
                 },
             },
-            { clave: 'listaEspera', etiqueta: 'Lista de espera', render: (e) => { const n = listaEspera(e.codigo).length; return n > 0 ? `<span style="color: var(--color-danger); font-weight: 600;">${n}</span>` : '—'; } },
+            { clave: 'listaEspera', etiqueta: 'Lista de espera', render: (e) => { const n = listaEspera(e.codigo).length; return n > 0 ? `<span style="color: var(--color-danger); font-weight: 600;">${n}</span>` : '-'; } },
             { clave: 'estado', etiqueta: 'Estado', render: (e) => UCLA.utils.badgeEstado(e.estado) },
             { clave: 'acciones', etiqueta: 'Acciones', render: (e) => `<button data-espera="${e.codigo}" class="text-xs font-medium hover:underline" style="color: var(--color-primary);">Ver lista de espera</button>` },
         ];

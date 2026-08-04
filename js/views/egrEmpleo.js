@@ -11,7 +11,7 @@
     function columnas() {
         return [
             { clave: 'cargo', etiqueta: 'Cargo', render: (o) => `<span class="font-medium" style="color: var(--color-text);">${o.cargo}</span>` },
-            { clave: 'cuentaId', etiqueta: 'Empresa', render: (o) => { const c = cuentaDe(o.cuentaId); return c ? c.razonSocial : '—'; } },
+            { clave: 'cuentaId', etiqueta: 'Empresa', render: (o) => { const c = cuentaDe(o.cuentaId); return c ? c.razonSocial : '-'; } },
             { clave: 'modalidad', etiqueta: 'Modalidad' },
             { clave: 'ciudad', etiqueta: 'Ciudad' },
             { clave: 'salario', etiqueta: 'Salario' },
@@ -27,7 +27,7 @@
             titulo: 'Nueva oferta de empleo',
             camposIzquierda: [
                 { clave: 'cargo', etiqueta: 'Cargo', tipo: 'text', obligatorio: true },
-                { clave: 'cuenta', etiqueta: 'Empresa aliada', tipo: 'select', opciones: UCLA.data.cuentas.map((c) => c.id + ' — ' + c.razonSocial), obligatorio: true },
+                { clave: 'cuenta', etiqueta: 'Empresa aliada', tipo: 'select', opciones: UCLA.data.cuentas.map((c) => c.id + ' - ' + c.razonSocial), obligatorio: true },
                 { clave: 'modalidad', etiqueta: 'Modalidad', tipo: 'select', opciones: ['Presencial', 'Híbrido', 'Remoto'] },
             ],
             camposDerecha: [
@@ -54,7 +54,7 @@
                         secciones: secciones(),
                         onGuardar: (datos) => {
                             UCLA.data.ofertasEmpleo.unshift({
-                                id: 'oe-' + Date.now(), cargo: datos.cargo || 'Sin nombre', cuentaId: (datos.cuenta || '').split(' — ')[0],
+                                id: 'oe-' + Date.now(), cargo: datos.cargo || 'Sin nombre', cuentaId: (datos.cuenta || '').split(' - ')[0],
                                 modalidad: datos.modalidad || 'Presencial', ciudad: datos.ciudad || '', salario: datos.salario || '',
                                 fechaPublicacion: new Date().toISOString().slice(0, 10), estado: 'Abierta', egresadoIds: [],
                             });

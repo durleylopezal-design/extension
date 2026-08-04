@@ -12,15 +12,15 @@
 
     function opcionesRecurso() {
         return [
-            ...UCLA.data.salones.map((s) => `salon:${s.id} — Salón — ${s.nombre}`),
-            ...UCLA.data.equipos.map((e) => `equipo:${e.id} — Equipo — ${e.nombre}`),
+            ...UCLA.data.salones.map((s) => `salon:${s.id} - Salón - ${s.nombre}`),
+            ...UCLA.data.equipos.map((e) => `equipo:${e.id} - Equipo - ${e.nombre}`),
         ];
     }
 
     function columnas() {
         return [
-            { clave: 'recurso', etiqueta: 'Recurso', render: (r) => { const rec = recursoDe(r); return `<span class="font-medium" style="color: var(--color-text);"><i class="fas ${r.recursoTipo === 'salon' ? 'fa-door-open' : 'fa-box'} text-xs" style="color: var(--color-text-muted);"></i> ${rec ? rec.nombre : '—'}</span>`; } },
-            { clave: 'eventoCodigo', etiqueta: 'Evento asociado', render: (r) => { const e = eventoDe(r.eventoCodigo); return e ? e.nombre : '—'; } },
+            { clave: 'recurso', etiqueta: 'Recurso', render: (r) => { const rec = recursoDe(r); return `<span class="font-medium" style="color: var(--color-text);"><i class="fas ${r.recursoTipo === 'salon' ? 'fa-door-open' : 'fa-box'} text-xs" style="color: var(--color-text-muted);"></i> ${rec ? rec.nombre : '-'}</span>`; } },
+            { clave: 'eventoCodigo', etiqueta: 'Evento asociado', render: (r) => { const e = eventoDe(r.eventoCodigo); return e ? e.nombre : '-'; } },
             { clave: 'fecha', etiqueta: 'Fecha', render: (r) => UCLA.utils.formatoFecha(r.fecha) },
             { clave: 'horario', etiqueta: 'Horario', render: (r) => `${r.horaInicio} - ${r.horaFin}` },
             { clave: 'estado', etiqueta: 'Estado', render: (r) => UCLA.utils.badgeEstado(r.estado) },
@@ -29,7 +29,7 @@
                 render: (r) => r.estado === 'Pendiente' ? `<div class="flex gap-2">
                     <button data-confirmar="${r.id}" class="text-xs font-medium hover:underline" style="color: var(--color-success);">Confirmar</button>
                     <button data-cancelar="${r.id}" class="text-xs font-medium hover:underline" style="color: var(--color-danger);">Cancelar</button>
-                </div>` : '—',
+                </div>` : '-',
             },
         ];
     }
@@ -39,7 +39,7 @@
             titulo: 'Nueva reserva',
             camposIzquierda: [
                 { clave: 'recurso', etiqueta: 'Recurso', tipo: 'select', opciones: opcionesRecurso(), obligatorio: true },
-                { clave: 'evento', etiqueta: 'Evento asociado (opcional)', tipo: 'select', opciones: ['Sin evento asociado', ...UCLA.data.eventos.map((e) => e.codigo + ' — ' + e.nombre)] },
+                { clave: 'evento', etiqueta: 'Evento asociado (opcional)', tipo: 'select', opciones: ['Sin evento asociado', ...UCLA.data.eventos.map((e) => e.codigo + ' - ' + e.nombre)] },
             ],
             camposDerecha: [
                 { clave: 'fecha', etiqueta: 'Fecha', tipo: 'date', obligatorio: true },
@@ -65,9 +65,9 @@
                         titulo: 'Nueva reserva de recurso',
                         secciones: secciones(),
                         onGuardar: (datos) => {
-                            const [tipoId, ...resto] = (datos.recurso || '').split(' — ');
+                            const [tipoId, ...resto] = (datos.recurso || '').split(' - ');
                             const [recursoTipo, recursoId] = (tipoId || '').split(':');
-                            const eventoCodigo = datos.evento && datos.evento !== 'Sin evento asociado' ? datos.evento.split(' — ')[0] : null;
+                            const eventoCodigo = datos.evento && datos.evento !== 'Sin evento asociado' ? datos.evento.split(' - ')[0] : null;
                             UCLA.data.reservasRecursos.unshift({
                                 id: 'res-' + Date.now(), recursoTipo: recursoTipo || 'salon', recursoId: recursoId || '', eventoCodigo,
                                 fecha: datos.fecha || new Date().toISOString().slice(0, 10), horaInicio: datos.horaInicio || '08:00', horaFin: datos.horaFin || '09:00', estado: 'Pendiente',

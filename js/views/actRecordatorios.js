@@ -24,7 +24,7 @@
                         <button data-disparar="${r.id}" class="text-xs font-medium hover:underline" style="color: var(--color-success);">Disparar ahora</button>
                         <button data-posponer="${r.id}" class="text-xs font-medium hover:underline" style="color: var(--color-primary);">Posponer</button>
                         <button data-descartar="${r.id}" class="text-xs font-medium hover:underline" style="color: var(--color-danger);">Descartar</button>
-                    </div>` : '—',
+                    </div>` : '-',
             },
         ];
     }

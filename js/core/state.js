@@ -33,7 +33,7 @@
         nombre: 'Coord. Sede Medellín',
         correo: 'coordinador@ucla.edu.co',
         cargo: 'Coordinador de Extensión',
-        rol: 'admin', // 'admin' | 'coordinador' — controla visibilidad de Administración
+        rol: 'admin', // 'admin' | 'coordinador' - controla visibilidad de Administración
         sedeId: 'MDE',
     };
 

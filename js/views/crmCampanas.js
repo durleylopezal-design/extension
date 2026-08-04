@@ -11,8 +11,8 @@
             titulo: 'Planificar campañas de captación',
             alineacion: 'left',
             botones: [
-                { id: 'crear', etiqueta: 'Crear', principal: true, onClick: () => UCLA.components.toast.show('Nueva campaña — función simulada', 'info') },
-                { id: 'importar', etiqueta: 'Importar', principal: false, onClick: () => UCLA.components.toast.show('Importar campañas — función simulada', 'info') },
+                { id: 'crear', etiqueta: 'Crear', principal: true, onClick: () => UCLA.components.toast.show('Nueva campaña - función simulada', 'info') },
+                { id: 'importar', etiqueta: 'Importar', principal: false, onClick: () => UCLA.components.toast.show('Importar campañas - función simulada', 'info') },
             ],
         });
 

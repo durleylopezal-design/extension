@@ -29,7 +29,7 @@
                     { texto: egresado.sedeId, color: 'var(--color-primary)' },
                 ],
                 acciones: [
-                    { etiqueta: 'Editar', onClick: () => UCLA.components.toast.show('Edición de perfil — función simulada', 'info') },
+                    { etiqueta: 'Editar', onClick: () => UCLA.components.toast.show('Edición de perfil - función simulada', 'info') },
                     { etiqueta: 'Registrar interacción', onClick: () => abrirRegistrarInteraccion(egresado, () => UCLA.router.navigate('egresados/perfil/' + egresado.id)) },
                     { etiqueta: 'Enviar encuesta', principal: true, onClick: () => UCLA.components.toast.show('Encuesta de seguimiento enviada (simulado)', 'success') },
                 ],
@@ -41,12 +41,12 @@
                         c.innerHTML = `
                             <div class="bg-white rounded-xl shadow-lg p-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                                 ${filaDato('Documento', egresado.documento)}
-                                ${filaDato('Fecha de nacimiento', egresado.fechaNacimiento ? UCLA.utils.formatoFecha(egresado.fechaNacimiento) : '—')}
+                                ${filaDato('Fecha de nacimiento', egresado.fechaNacimiento ? UCLA.utils.formatoFecha(egresado.fechaNacimiento) : '-')}
                                 ${filaDato('Correo', egresado.correo)}
-                                ${filaDato('Correo alterno', egresado.correoAlterno || '—')}
+                                ${filaDato('Correo alterno', egresado.correoAlterno || '-')}
                                 ${filaDato('Teléfono', egresado.telefono)}
                                 ${filaDato('Ciudad', egresado.ciudad)}
-                                ${filaDato('Redes profesionales', egresado.redProfesional || '—')}
+                                ${filaDato('Redes profesionales', egresado.redProfesional || '-')}
                             </div>`;
                     },
                 },
@@ -58,9 +58,9 @@
                                 ${filaDato('Programa', egresado.programa)}
                                 ${filaDato('Cohorte', egresado.cohorte)}
                                 ${filaDato('Fecha de grado', UCLA.utils.formatoFecha(egresado.fechaGrado))}
-                                ${filaDato('Promedio', egresado.promedio ?? '—')}
-                                ${filaDato('Distinciones', egresado.distinciones || '—')}
-                                ${filaDato('Otros programas cursados en Extensión', egresado.otrosProgramas || '—')}
+                                ${filaDato('Promedio', egresado.promedio ?? '-')}
+                                ${filaDato('Distinciones', egresado.distinciones || '-')}
+                                ${filaDato('Otros programas cursados en Extensión', egresado.otrosProgramas || '-')}
                             </div>`;
                     },
                 },
@@ -70,13 +70,13 @@
                         c.innerHTML = `
                             <div class="bg-white rounded-xl shadow-lg p-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                                 ${filaDato('Estado', egresado.situacionLaboral)}
-                                ${filaDato('Empresa actual', egresado.empresaActual || '—')}
-                                ${filaDato('Cargo', egresado.cargo || '—')}
-                                ${filaDato('Sector', egresado.sector || '—')}
-                                ${filaDato('Fecha de vinculación', egresado.fechaVinculacion ? UCLA.utils.formatoFecha(egresado.fechaVinculacion) : '—')}
-                                ${filaDato('Rango salarial', egresado.rangoSalarial || '—')}
+                                ${filaDato('Empresa actual', egresado.empresaActual || '-')}
+                                ${filaDato('Cargo', egresado.cargo || '-')}
+                                ${filaDato('Sector', egresado.sector || '-')}
+                                ${filaDato('Fecha de vinculación', egresado.fechaVinculacion ? UCLA.utils.formatoFecha(egresado.fechaVinculacion) : '-')}
+                                ${filaDato('Rango salarial', egresado.rangoSalarial || '-')}
                                 ${filaDato('Empleo afín al programa', egresado.empleoAfin ? 'Sí' : 'No')}
-                                ${filaDato('Meses entre grado y vinculación', egresado.mesesHastaVinculacion ?? '—')}
+                                ${filaDato('Meses entre grado y vinculación', egresado.mesesHastaVinculacion ?? '-')}
                             </div>`;
                     },
                 },

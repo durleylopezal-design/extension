@@ -2,7 +2,7 @@
 // preguntas se simula con un modelo fijo hasta que exista un surveyBuilder).
 UCLA.data.eventosEncuestas = [
     {
-        id: 'enc-01', eventoCodigo: 'DIP0392', nombre: 'Encuesta de satisfacción — Diplomado Conciliación Extrajudicial',
+        id: 'enc-01', eventoCodigo: 'DIP0392', nombre: 'Encuesta de satisfacción - Diplomado Conciliación Extrajudicial',
         enviadas: 51, respondidas: 38, promedioGeneral: 4.6,
         preguntas: [
             { texto: 'Calidad de los contenidos', promedio: 4.7 },
@@ -12,7 +12,7 @@ UCLA.data.eventosEncuestas = [
         ],
     },
     {
-        id: 'enc-02', eventoCodigo: 'SML0033', nombre: 'Encuesta de satisfacción — Semillero Emprendimiento',
+        id: 'enc-02', eventoCodigo: 'SML0033', nombre: 'Encuesta de satisfacción - Semillero Emprendimiento',
         enviadas: 45, respondidas: 40, promedioGeneral: 4.8,
         preguntas: [
             { texto: 'Calidad de los contenidos', promedio: 4.9 },
@@ -22,7 +22,7 @@ UCLA.data.eventosEncuestas = [
         ],
     },
     {
-        id: 'enc-03', eventoCodigo: 'EVT1004', nombre: 'Encuesta de satisfacción — Taller de Oratoria y Liderazgo',
+        id: 'enc-03', eventoCodigo: 'EVT1004', nombre: 'Encuesta de satisfacción - Taller de Oratoria y Liderazgo',
         enviadas: 30, respondidas: 21, promedioGeneral: 4.3,
         preguntas: [
             { texto: 'Calidad de los contenidos', promedio: 4.4 },
@@ -32,7 +32,7 @@ UCLA.data.eventosEncuestas = [
         ],
     },
     {
-        id: 'enc-04', eventoCodigo: 'DIP0385', nombre: 'Encuesta de satisfacción — Pedagogía Prof. No Licenciados',
+        id: 'enc-04', eventoCodigo: 'DIP0385', nombre: 'Encuesta de satisfacción - Pedagogía Prof. No Licenciados',
         enviadas: 38, respondidas: 12, promedioGeneral: 4.1,
         preguntas: [
             { texto: 'Calidad de los contenidos', promedio: 4.3 },

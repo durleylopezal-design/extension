@@ -20,7 +20,7 @@
     function columnas() {
         return [
             { clave: 'nombre', etiqueta: 'Convenio', render: (c) => `<span class="font-medium" style="color: var(--color-text);">${c.nombre}</span>` },
-            { clave: 'cuentaId', etiqueta: 'Empresa / Entidad', render: (c) => { const cta = cuentaDe(c.cuentaId); return cta ? cta.razonSocial : '—'; } },
+            { clave: 'cuentaId', etiqueta: 'Empresa / Entidad', render: (c) => { const cta = cuentaDe(c.cuentaId); return cta ? cta.razonSocial : '-'; } },
             { clave: 'fechaFin', etiqueta: 'Vigencia hasta', render: (c) => UCLA.utils.formatoFecha(c.fechaFin) },
             { clave: 'estado', etiqueta: 'Estado', render: (c) => UCLA.utils.badgeEstado(estadoConvenio(c)) },
             { clave: 'responsable', etiqueta: 'Responsable' },

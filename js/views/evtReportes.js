@@ -13,7 +13,7 @@
         const asistenciaPct = totalConAsistenciaTomada ? Math.round((totalAsistieron / totalConAsistenciaTomada) * 100) : 0;
         const satisfaccionProm = UCLA.data.eventosEncuestas.length
             ? (UCLA.data.eventosEncuestas.reduce((s, e) => s + e.promedioGeneral, 0) / UCLA.data.eventosEncuestas.length).toFixed(1)
-            : '—';
+            : '-';
         return {
             conRegistro,
             tarjetas: [
@@ -63,7 +63,7 @@
                 { clave: 'nombre', etiqueta: 'Evento', render: (e) => `<span class="font-medium" style="color: var(--color-text);">${e.nombre}</span>` },
                 { clave: 'inscritos', etiqueta: 'Inscritos', render: (e) => inscritos(e.codigo).length },
                 { clave: 'asistieron', etiqueta: 'Asistieron', render: (e) => inscritos(e.codigo).filter((a) => a.asistio).length },
-                { clave: 'tasa', etiqueta: 'Tasa de asistencia', render: (e) => { const ins = inscritos(e.codigo).length; return ins ? `${Math.round((inscritos(e.codigo).filter((a) => a.asistio).length / ins) * 100)}%` : '—'; } },
+                { clave: 'tasa', etiqueta: 'Tasa de asistencia', render: (e) => { const ins = inscritos(e.codigo).length; return ins ? `${Math.round((inscritos(e.codigo).filter((a) => a.asistio).length / ins) * 100)}%` : '-'; } },
                 { clave: 'estado', etiqueta: 'Estado', render: (e) => UCLA.utils.badgeEstado(e.estado) },
             ],
             filas: UCLA.data.eventos,

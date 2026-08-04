@@ -14,7 +14,7 @@
             { clave: 'nombre', etiqueta: 'Nombre', render: (f) => `<span class="font-medium" style="color: var(--color-primary);">${f.nombre} ${f.apellidos}</span>${etiquetaActividad(f.proximaActividad)}` },
             { clave: 'institucionProcedencia', etiqueta: 'Institución / Colegio' },
             { clave: 'correo', etiqueta: 'Correo' },
-            { clave: 'movil', etiqueta: 'Teléfono', render: (f) => `<i class="fas fa-phone text-xs mr-1" style="color: var(--color-text-muted);"></i>${f.movil || f.telefono || '—'}` },
+            { clave: 'movil', etiqueta: 'Teléfono', render: (f) => `<i class="fas fa-phone text-xs mr-1" style="color: var(--color-text-muted);"></i>${f.movil || f.telefono || '-'}` },
             { clave: 'fuente', etiqueta: 'Fuente' },
             { clave: 'propietario', etiqueta: 'Propietario' },
         ];

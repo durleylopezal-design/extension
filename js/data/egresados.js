@@ -24,7 +24,7 @@ UCLA.data.interaccionesEgresado = [
     { id: 'ie-02', egresadoId: 'egr-01', tipo: 'evento', fecha: '2026-05-10', titulo: 'Asistió a "Encuentro de Egresados 2026"', detalle: 'Participó en el panel de tecnología.' },
     { id: 'ie-03', egresadoId: 'egr-01', tipo: 'encuesta', fecha: '2026-04-02', titulo: 'Respondió encuesta de Empleabilidad', detalle: 'Calificó el programa con 5/5.' },
     { id: 'ie-04', egresadoId: 'egr-01', tipo: 'llamada', fecha: '2026-02-18', titulo: 'Llamada de seguimiento', detalle: 'Se confirmó vinculación laboral reciente.' },
-    { id: 'ie-05', egresadoId: 'egr-03', tipo: 'postulacion', fecha: '2026-06-01', titulo: 'Se postuló a oferta "Abogado Junior — Bancolombia"', detalle: 'Proceso finalizado con contratación.' },
+    { id: 'ie-05', egresadoId: 'egr-03', tipo: 'postulacion', fecha: '2026-06-01', titulo: 'Se postuló a oferta "Abogado Junior - Bancolombia"', detalle: 'Proceso finalizado con contratación.' },
     { id: 'ie-06', egresadoId: 'egr-03', tipo: 'correo', fecha: '2026-06-20', titulo: 'Correo de felicitación por vinculación', detalle: 'Enviado automáticamente al confirmar contratación.' },
     { id: 'ie-07', egresadoId: 'egr-08', tipo: 'evento', fecha: '2026-07-29', titulo: 'Asistió a "Feria de Empleabilidad Tech"', detalle: 'Se conectó con 3 empresas aliadas.' },
     { id: 'ie-08', egresadoId: 'egr-08', tipo: 'pago', fecha: '2026-01-10', titulo: 'Pago de certificado de diplomado', detalle: 'Diplomado en Analítica de Datos.' },

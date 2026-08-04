@@ -14,7 +14,7 @@
             { clave: 'nombre', etiqueta: 'Nombre', render: (f) => `<span class="font-medium" style="color: var(--color-primary);">${f.nombre} ${f.apellidos}</span>${etiquetaActividad(f.proximaActividad)}` },
             { clave: 'programaAsociado', etiqueta: 'Institución / Programa asociado' },
             { clave: 'correo', etiqueta: 'Correo' },
-            { clave: 'movil', etiqueta: 'Teléfono', render: (f) => `<i class="fas fa-phone text-xs mr-1" style="color: var(--color-text-muted);"></i>${f.movil || f.telefono || '—'}` },
+            { clave: 'movil', etiqueta: 'Teléfono', render: (f) => `<i class="fas fa-phone text-xs mr-1" style="color: var(--color-text-muted);"></i>${f.movil || f.telefono || '-'}` },
             { clave: 'propietario', etiqueta: 'Propietario' },
         ];
     }
@@ -52,7 +52,7 @@
                 ],
             },
             {
-                titulo: 'Información de la dirección — Domicilio postal',
+                titulo: 'Información de la dirección - Domicilio postal',
                 camposIzquierda: [
                     { clave: 'domPais', etiqueta: 'País o región', tipo: 'text' },
                     { clave: 'domDireccion', etiqueta: 'Dirección', tipo: 'text' },
@@ -63,7 +63,7 @@
                 ],
             },
             {
-                titulo: 'Información de la dirección — Dirección alterna',
+                titulo: 'Información de la dirección - Dirección alterna',
                 camposIzquierda: [
                     { clave: 'altPais', etiqueta: 'País o región', tipo: 'text' },
                     { clave: 'altDireccion', etiqueta: 'Dirección', tipo: 'text' },

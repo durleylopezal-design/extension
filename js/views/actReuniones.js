@@ -16,8 +16,8 @@
             { clave: 'titulo', etiqueta: 'Título', render: (f) => `<span class="font-medium" style="color: var(--color-primary);">${f.titulo}</span>${f.todoElDia ? ` <span class="text-xs" style="color: var(--color-text-muted);">(todo el día)</span>` : ''}` },
             { clave: 'inicio', etiqueta: 'Fecha y hora de inicio', render: (f) => fmtFechaHora(f.inicio) },
             { clave: 'fin', etiqueta: 'Fecha y hora de fin', render: (f) => fmtFechaHora(f.fin) },
-            { clave: 'relacionadoCon', etiqueta: 'Relacionado con', render: (f) => f.relacionadoCon || '—' },
-            { clave: 'contactoNombre', etiqueta: 'Nombre de contacto', render: (f) => f.contactoNombre || '—' },
+            { clave: 'relacionadoCon', etiqueta: 'Relacionado con', render: (f) => f.relacionadoCon || '-' },
+            { clave: 'contactoNombre', etiqueta: 'Nombre de contacto', render: (f) => f.contactoNombre || '-' },
             { clave: 'anfitrion', etiqueta: 'Anfitrión (host)' },
         ];
     }
@@ -150,7 +150,7 @@
                 UCLA.components.toast.show('Participante agregado (simulado)', 'info');
             });
             modal.querySelector('#mrEditarRecurrencia').addEventListener('click', () => {
-                UCLA.components.toast.show('Configuración de recurrencia — función simulada', 'info');
+                UCLA.components.toast.show('Configuración de recurrencia - función simulada', 'info');
             });
             modal.querySelector('#mrGuardar').addEventListener('click', () => {
                 const de = modal.querySelector('#mrDe');

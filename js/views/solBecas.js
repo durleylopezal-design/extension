@@ -12,7 +12,7 @@
             { clave: 'tipo', etiqueta: 'Tipo' },
             { clave: 'programa', etiqueta: 'Programa' },
             { clave: 'porcentajeSolicitado', etiqueta: '% Solicitado', render: (f) => `${f.porcentajeSolicitado}%` },
-            { clave: 'porcentajeAprobado', etiqueta: '% Aprobado', render: (f) => f.porcentajeAprobado != null ? `${f.porcentajeAprobado}%` : '—' },
+            { clave: 'porcentajeAprobado', etiqueta: '% Aprobado', render: (f) => f.porcentajeAprobado != null ? `${f.porcentajeAprobado}%` : '-' },
             { clave: 'estado', etiqueta: 'Estado', render: (f) => UCLA.utils.badgeEstado(f.estado) },
             { clave: 'fecha', etiqueta: 'Fecha', render: (f) => UCLA.utils.formatoFecha(f.fecha) },
             { clave: 'acciones', etiqueta: 'Acciones', render: (f) => `<button data-resolver-beca="${f.id}" class="text-xs font-medium hover:underline" style="color: var(--color-primary);">Resolver</button>` },
@@ -88,7 +88,7 @@
                 <div class="fixed inset-0 bg-black opacity-40" data-rb-cerrar></div>
                 <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 p-6">
                     <h3 class="text-lg font-bold mb-1" style="color: var(--color-primary-dark);">Resolver solicitud</h3>
-                    <p class="text-sm mb-4" style="color: var(--color-text-muted);">${beca.radicado} · ${beca.solicitante} — ${beca.porcentajeSolicitado}% solicitado</p>
+                    <p class="text-sm mb-4" style="color: var(--color-text-muted);">${beca.radicado} · ${beca.solicitante} - ${beca.porcentajeSolicitado}% solicitado</p>
                     <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Decisión</label>
                     <select id="rbEstado" class="input-brand w-full px-3 py-2 text-sm mb-3">
                         <option>Aprobada</option><option>Rechazada</option>
@@ -111,10 +111,10 @@
                 UCLA.utils.registrarAuditoria({
                     accion: estado === 'Aprobada' ? 'Aprobó solicitud de beca' : 'Rechazó solicitud de beca',
                     modulo: 'Solicitudes',
-                    detalle: estado === 'Aprobada' ? `${beca.porcentajeAprobado}% — visible en Financiero › Becas` : (beca.comentario || 'Sin comentario'),
+                    detalle: estado === 'Aprobada' ? `${beca.porcentajeAprobado}% - visible en Financiero › Becas` : (beca.comentario || 'Sin comentario'),
                 });
                 UCLA.components.toast.show(
-                    estado === 'Aprobada' ? 'Beca aprobada — ya está disponible en Financiero › Becas' : 'Solicitud rechazada',
+                    estado === 'Aprobada' ? 'Beca aprobada - ya está disponible en Financiero › Becas' : 'Solicitud rechazada',
                     estado === 'Aprobada' ? 'success' : 'info'
                 );
                 modal.classList.add('hidden');

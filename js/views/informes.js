@@ -248,7 +248,7 @@
                 container.querySelector('#modalCarpetas').classList.remove('hidden');
             }
             if (e.target.closest('#btnAnaliticaAvanzada')) {
-                UCLA.components.toast.show('Analítica avanzada UCLA — función simulada', 'info');
+                UCLA.components.toast.show('Analítica avanzada UCLA - función simulada', 'info');
             }
         });
 

@@ -33,12 +33,12 @@
             { clave: 'referencia', etiqueta: 'Referencia' },
             { clave: 'tipo', etiqueta: 'Tipo' },
             { clave: 'valor', etiqueta: 'Valor', render: (m) => UCLA.utils.formatoCOP(m.valor) },
-            { clave: 'pago', etiqueta: 'Pago asociado', render: (m) => { const p = pagoDe(m); return p ? `${p.recibo} · ${p.estudiante}` : '—'; } },
+            { clave: 'pago', etiqueta: 'Pago asociado', render: (m) => { const p = pagoDe(m); return p ? `${p.recibo} · ${p.estudiante}` : '-'; } },
             { clave: 'estado', etiqueta: 'Estado', render: (m) => UCLA.utils.badgeEstado(m.estado) },
             {
                 clave: 'acciones', etiqueta: 'Acciones',
                 render: (m) => m.estado === 'Pendiente' ? `<button data-conciliar="${m.id}" class="text-xs font-medium hover:underline" style="color: var(--color-primary);">Conciliar</button>`
-                    : m.estado === 'Diferencia' ? `<button data-diferencia="${m.id}" class="text-xs font-medium hover:underline" style="color: var(--color-danger);">Ver diferencia</button>` : '—',
+                    : m.estado === 'Diferencia' ? `<button data-diferencia="${m.id}" class="text-xs font-medium hover:underline" style="color: var(--color-danger);">Ver diferencia</button>` : '-',
             },
         ];
     }
@@ -57,7 +57,7 @@
                 camposModulo: CAMPOS_MODULO,
                 campoOrden: 'fecha',
                 exportName: 'conciliacion-pagos',
-                botonPrincipal: { etiqueta: 'Cargar extracto bancario', onClick: () => UCLA.components.toast.show('Carga de extracto bancario — función simulada', 'info') },
+                botonPrincipal: { etiqueta: 'Cargar extracto bancario', onClick: () => UCLA.components.toast.show('Carga de extracto bancario - función simulada', 'info') },
             });
         }
 
@@ -89,7 +89,7 @@
                 <p class="text-sm mb-4" style="color: var(--color-text-muted);">${mov.referencia} · ${UCLA.utils.formatoCOP(mov.valor)} · ${UCLA.utils.formatoFecha(mov.fecha)}</p>
                 <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Pago asociado</label>
                 <select id="ccPago" class="input-brand w-full px-3 py-2 text-sm mb-4">
-                    ${candidatos.length ? candidatos.map((p) => `<option value="${p.id}">${p.recibo} — ${p.estudiante} — ${UCLA.utils.formatoCOP(p.valor)}</option>`).join('') : '<option value="">No hay pagos pendientes de conciliar</option>'}
+                    ${candidatos.length ? candidatos.map((p) => `<option value="${p.id}">${p.recibo} - ${p.estudiante} - ${UCLA.utils.formatoCOP(p.valor)}</option>`).join('') : '<option value="">No hay pagos pendientes de conciliar</option>'}
                 </select>
                 <div class="flex justify-end gap-2">
                     <button data-cc-cerrar class="px-4 py-2 text-sm rounded-lg" style="color: var(--color-text-muted);">Cancelar</button>
@@ -125,7 +125,7 @@
                 <h3 class="text-lg font-bold mb-4" style="color: var(--color-primary-dark);">Diferencia detectada</h3>
                 <div class="space-y-2 text-sm mb-4">
                     <div class="flex justify-between"><span style="color: var(--color-text-muted);">Valor en extracto</span><span class="font-medium">${UCLA.utils.formatoCOP(mov.valor)}</span></div>
-                    <div class="flex justify-between"><span style="color: var(--color-text-muted);">Valor del pago (${pago ? pago.recibo : '—'})</span><span class="font-medium">${pago ? UCLA.utils.formatoCOP(pago.valor) : '—'}</span></div>
+                    <div class="flex justify-between"><span style="color: var(--color-text-muted);">Valor del pago (${pago ? pago.recibo : '-'})</span><span class="font-medium">${pago ? UCLA.utils.formatoCOP(pago.valor) : '-'}</span></div>
                     <div class="flex justify-between pt-2" style="border-top: 1px solid var(--color-border);"><span style="color: var(--color-danger); font-weight: 600;">Diferencia</span><span style="color: var(--color-danger); font-weight: 600;">${UCLA.utils.formatoCOP(diferencia)}</span></div>
                 </div>
                 <div class="flex justify-end gap-2">

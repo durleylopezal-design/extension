@@ -13,8 +13,8 @@
         return [
             { clave: 'asunto', etiqueta: 'Asunto', render: (f) => `<span class="font-medium" style="color: var(--color-primary);">${f.asunto}</span>` },
             { clave: 'prioridad', etiqueta: 'Prioridad', render: (f) => badgePrioridad(f.prioridad) },
-            { clave: 'relacionadoCon', etiqueta: 'Relacionado con', render: (f) => f.relacionadoCon || '—' },
-            { clave: 'contactoNombre', etiqueta: 'Nombre de contacto', render: (f) => f.contactoNombre || '—' },
+            { clave: 'relacionadoCon', etiqueta: 'Relacionado con', render: (f) => f.relacionadoCon || '-' },
+            { clave: 'contactoNombre', etiqueta: 'Nombre de contacto', render: (f) => f.contactoNombre || '-' },
         ];
     }
 
@@ -126,7 +126,7 @@
             'Fecha de vencimiento': UCLA.utils.formatoFecha(f.fechaVencimiento), 'Nombre de contacto': f.contactoNombre,
             'Relacionado con': f.relacionadoCon, 'Creado por': f.propietario, 'Modificado por': f.propietario,
         };
-        return mapa[etiquetaCampo] || '—';
+        return mapa[etiquetaCampo] || '-';
     }
 
     function abrirModalConfig(alGuardar) {

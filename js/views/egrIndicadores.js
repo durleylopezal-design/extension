@@ -8,7 +8,7 @@
         const empleoAfin = empleados.filter((e) => e.empleoAfin);
         const tasaAfin = empleados.length ? Math.round((empleoAfin.length / empleados.length) * 100) : 0;
         const conMeses = empleados.filter((e) => typeof e.mesesHastaVinculacion === 'number');
-        const promedioMeses = conMeses.length ? (conMeses.reduce((s, e) => s + e.mesesHastaVinculacion, 0) / conMeses.length).toFixed(1) : '—';
+        const promedioMeses = conMeses.length ? (conMeses.reduce((s, e) => s + e.mesesHastaVinculacion, 0) / conMeses.length).toFixed(1) : '-';
 
         const situaciones = {};
         egresados.forEach((e) => { situaciones[e.situacionLaboral] = (situaciones[e.situacionLaboral] || 0) + 1; });

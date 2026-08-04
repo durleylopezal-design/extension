@@ -11,7 +11,7 @@
             { clave: 'carpeta', etiqueta: 'Carpeta' },
             { clave: 'modulo', etiqueta: 'Módulo' },
             { clave: 'ultimaModificacion', etiqueta: 'Última modificación', render: (i) => UCLA.utils.formatoFecha(i.ultimaModificacion) },
-            { clave: 'programado', etiqueta: 'Envío automático', render: (i) => i.programado ? `<span style="color: var(--color-success); font-weight: 600;"><i class="fas fa-check-circle"></i> ${i.programado}</span>` : '—' },
+            { clave: 'programado', etiqueta: 'Envío automático', render: (i) => i.programado ? `<span style="color: var(--color-success); font-weight: 600;"><i class="fas fa-check-circle"></i> ${i.programado}</span>` : '-' },
             {
                 clave: 'acciones', etiqueta: 'Acciones',
                 render: (i) => `<div class="flex gap-2">

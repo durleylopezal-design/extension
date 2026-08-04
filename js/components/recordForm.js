@@ -31,7 +31,7 @@
         panelEl.querySelectorAll('[data-rf-cerrar], [data-rf-cancelar]').forEach((el) => el.addEventListener('click', cerrar));
         panelEl.querySelector('[data-rf-editar-diseno]').addEventListener('click', (e) => {
             e.preventDefault();
-            UCLA.components.toast.show('Editor de diseño de página — función simulada', 'info');
+            UCLA.components.toast.show('Editor de diseño de página - función simulada', 'info');
         });
         return panelEl;
     }
@@ -90,7 +90,7 @@
         };
         const guardarYnuevo = () => {
             if (onGuardar) onGuardar(recolectarDatos(overlay));
-            UCLA.components.toast.show('Registro guardado — formulario listo para uno nuevo', 'success');
+            UCLA.components.toast.show('Registro guardado - formulario listo para uno nuevo', 'success');
             overlay.querySelectorAll('[data-campo]').forEach((el) => { el.type === 'checkbox' ? (el.checked = false) : (el.value = ''); });
         };
 

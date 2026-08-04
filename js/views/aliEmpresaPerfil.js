@@ -27,13 +27,13 @@
             encabezado: {
                 icono: 'fa-building',
                 titulo: cuenta.razonSocial,
-                subtitulo: `${cuenta.tipo || '—'} · ${cuenta.sector || '—'} · Sede ${cuenta.sedeId || '—'}`,
+                subtitulo: `${cuenta.tipo || '-'} · ${cuenta.sector || '-'} · Sede ${cuenta.sedeId || '-'}`,
                 badges: [
                     ...(cuenta.calificacionConvenio ? [{ texto: 'Calificación ' + cuenta.calificacionConvenio, color: UCLA.utils.colorEstado(cuenta.calificacionConvenio) }] : []),
                     ...(convenios().length ? [{ texto: convenios().length + ' convenio(s)', color: 'var(--color-primary)' }] : []),
                 ],
                 acciones: [
-                    { etiqueta: 'Editar', onClick: () => UCLA.components.toast.show('Edición de perfil — función simulada', 'info') },
+                    { etiqueta: 'Editar', onClick: () => UCLA.components.toast.show('Edición de perfil - función simulada', 'info') },
                     { etiqueta: 'Registrar interacción', principal: true, onClick: () => abrirRegistrarInteraccion(cuenta, () => UCLA.router.navigate('alianzas/empresas/' + cuenta.id)) },
                 ],
             },
@@ -43,14 +43,14 @@
                     render: (c) => {
                         c.innerHTML = `
                             <div class="bg-white rounded-xl shadow-lg p-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                                ${filaDato('NIT', cuenta.nit || '—')}
-                                ${filaDato('Teléfono', cuenta.telefono || '—')}
-                                ${filaDato('Sitio web', cuenta.sitioWeb || '—')}
-                                ${filaDato('N.° de convenio', cuenta.numeroConvenio || '—')}
-                                ${filaDato('N.° de empleados', cuenta.numeroEmpleados ?? '—')}
-                                ${filaDato('Contacto principal', cuenta.contactoPrincipal || '—')}
-                                ${filaDato('Propietario', cuenta.propietario || '—')}
-                                ${filaDato('Ciudad de facturación', cuenta.dirFacturacion?.ciudad || '—')}
+                                ${filaDato('NIT', cuenta.nit || '-')}
+                                ${filaDato('Teléfono', cuenta.telefono || '-')}
+                                ${filaDato('Sitio web', cuenta.sitioWeb || '-')}
+                                ${filaDato('N.° de convenio', cuenta.numeroConvenio || '-')}
+                                ${filaDato('N.° de empleados', cuenta.numeroEmpleados ?? '-')}
+                                ${filaDato('Contacto principal', cuenta.contactoPrincipal || '-')}
+                                ${filaDato('Propietario', cuenta.propietario || '-')}
+                                ${filaDato('Ciudad de facturación', cuenta.dirFacturacion?.ciudad || '-')}
                             </div>`;
                     },
                 },

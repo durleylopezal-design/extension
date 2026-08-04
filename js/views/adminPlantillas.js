@@ -15,7 +15,7 @@
             { clave: 'asunto', etiqueta: 'Asunto' },
             { clave: 'modulo', etiqueta: 'Módulo' },
             { clave: 'ultimaModificacion', etiqueta: 'Última modificación', render: (p) => UCLA.utils.formatoFecha(p.ultimaModificacion) },
-            { clave: 'usos', etiqueta: 'Reglas automáticas que la usan', render: (p) => { const n = usosDe(p.id); return n > 0 ? `<span style="color: var(--color-primary); font-weight: 600;">${n}</span>` : '—'; } },
+            { clave: 'usos', etiqueta: 'Reglas automáticas que la usan', render: (p) => { const n = usosDe(p.id); return n > 0 ? `<span style="color: var(--color-primary); font-weight: 600;">${n}</span>` : '-'; } },
             { clave: 'acciones', etiqueta: 'Acciones', render: (p) => `<button data-preview="${p.id}" class="text-xs font-medium hover:underline" style="color: var(--color-primary);">Vista previa</button>` },
         ];
     }

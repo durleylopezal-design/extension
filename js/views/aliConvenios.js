@@ -24,7 +24,7 @@
     function columnas() {
         return [
             { clave: 'nombre', etiqueta: 'Convenio', render: (c) => `<span class="font-medium" style="color: var(--color-text);">${c.nombre}</span>` },
-            { clave: 'cuentaId', etiqueta: 'Empresa / Entidad', render: (c) => { const cta = cuentaDe(c.cuentaId); return cta ? `<a href="#/alianzas/empresas/${cta.id}" class="hover:underline" style="color: var(--color-primary);">${cta.razonSocial}</a>` : '—'; } },
+            { clave: 'cuentaId', etiqueta: 'Empresa / Entidad', render: (c) => { const cta = cuentaDe(c.cuentaId); return cta ? `<a href="#/alianzas/empresas/${cta.id}" class="hover:underline" style="color: var(--color-primary);">${cta.razonSocial}</a>` : '-'; } },
             { clave: 'tipo', etiqueta: 'Tipo' },
             { clave: 'fechaInicio', etiqueta: 'Inicio', render: (c) => UCLA.utils.formatoFecha(c.fechaInicio) },
             { clave: 'fechaFin', etiqueta: 'Vigencia hasta', render: (c) => UCLA.utils.formatoFecha(c.fechaFin) },
@@ -41,7 +41,7 @@
         return [{
             titulo: 'Nuevo convenio',
             camposIzquierda: [
-                { clave: 'cuenta', etiqueta: 'Empresa / Entidad', tipo: 'select', opciones: UCLA.data.cuentas.map((c) => c.id + ' — ' + c.razonSocial), obligatorio: true },
+                { clave: 'cuenta', etiqueta: 'Empresa / Entidad', tipo: 'select', opciones: UCLA.data.cuentas.map((c) => c.id + ' - ' + c.razonSocial), obligatorio: true },
                 { clave: 'nombre', etiqueta: 'Nombre del convenio', tipo: 'text', obligatorio: true },
                 { clave: 'tipo', etiqueta: 'Tipo', tipo: 'select', opciones: ['Prácticas', 'Formación complementaria', 'Descuento matrícula', 'Patrocinio', 'Capacitación', 'Cooperación', 'Articulación', 'Empleabilidad', 'Bienestar'] },
             ],
@@ -71,7 +71,7 @@
                         titulo: 'Nuevo convenio institucional',
                         secciones: secciones(),
                         onGuardar: (datos) => {
-                            const cuentaId = (datos.cuenta || '').split(' — ')[0];
+                            const cuentaId = (datos.cuenta || '').split(' - ')[0];
                             UCLA.data.convenios.unshift({
                                 id: 'conv-' + Date.now(), cuentaId, nombre: datos.nombre || 'Sin nombre', tipo: datos.tipo || 'Cooperación',
                                 fechaInicio: datos.fechaInicio || new Date().toISOString().slice(0, 10), fechaFin: datos.fechaFin || new Date().toISOString().slice(0, 10),

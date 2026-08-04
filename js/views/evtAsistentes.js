@@ -22,7 +22,7 @@
             { clave: 'estadoInscripcion', etiqueta: 'Estado', render: (a) => UCLA.utils.badgeEstado(a.estadoInscripcion) },
             {
                 clave: 'acciones', etiqueta: 'Acciones',
-                render: (a) => a.estadoInscripcion !== 'Cancelado' ? `<button data-cancelar="${a.id}" class="text-xs font-medium hover:underline" style="color: var(--color-danger);">Cancelar inscripción</button>` : '—',
+                render: (a) => a.estadoInscripcion !== 'Cancelado' ? `<button data-cancelar="${a.id}" class="text-xs font-medium hover:underline" style="color: var(--color-danger);">Cancelar inscripción</button>` : '-',
             },
         ];
     }
@@ -31,7 +31,7 @@
         return [{
             titulo: 'Nueva inscripción',
             camposIzquierda: [
-                { clave: 'eventoCodigo', etiqueta: 'Evento', tipo: 'select', opciones: UCLA.data.eventos.map((e) => e.codigo + ' — ' + e.nombre), obligatorio: true },
+                { clave: 'eventoCodigo', etiqueta: 'Evento', tipo: 'select', opciones: UCLA.data.eventos.map((e) => e.codigo + ' - ' + e.nombre), obligatorio: true },
                 { clave: 'nombre', etiqueta: 'Nombre completo', tipo: 'text', obligatorio: true },
                 { clave: 'documento', etiqueta: 'Documento', tipo: 'text' },
             ],
@@ -74,7 +74,7 @@
                         titulo: 'Inscribir asistente',
                         secciones: secciones(),
                         onGuardar: (datos) => {
-                            const codigo = (datos.eventoCodigo || '').split(' — ')[0];
+                            const codigo = (datos.eventoCodigo || '').split(' - ')[0];
                             const evento = UCLA.data.eventos.find((e) => e.codigo === codigo);
                             const confirmado = evento && evento.cupoOcupado < evento.cupoMaximo;
                             if (evento && confirmado) evento.cupoOcupado++;
