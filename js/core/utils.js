@@ -49,10 +49,10 @@
     // de espera · coral = rechazado/vencido/inactivo/anulado · gris = borrador/archivado.
     function colorEstado(estado) {
         const e = String(estado || '').toLowerCase();
-        if (/aprobad|pagad|activ|vigente|complet|homologad|exitos|conectad|confirmad/.test(e)) return 'var(--color-success)';
+        if (/aprobad|pagad|activ|vigente|complet|homologad|exitos|conectad|confirmad|certificad|conciliad/.test(e)) return 'var(--color-success)';
         if (/proceso|revisi|programad|en curso/.test(e)) return 'var(--color-primary)';
         if (/pendiente|vencer|espera|borrador/.test(e)) return 'var(--color-accent)';
-        if (/rechazad|vencid|inactiv|anulad|error|descartad|no homologad/.test(e)) return 'var(--color-danger)';
+        if (/rechazad|vencid|inactiv|anulad|cancelad|error|descartad|no homologad|diferencia/.test(e)) return 'var(--color-danger)';
         return 'var(--color-neutral-dark, #6B6F72)';
     }
 
