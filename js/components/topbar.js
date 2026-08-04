@@ -189,6 +189,14 @@
         panel.prepend(item);
     }
 
+    // Panel deslizante (#notificationsPanel, estático en index.html, mismo
+    // patrón visual que recordFormPanel): la campana lo abre y su botón "×"
+    // llama a la misma función para cerrarlo, por eso un toggle simple basta.
+    function toggleNotifications() {
+        document.getElementById('notificationsPanel')?.classList.toggle('translate-x-full');
+    }
+
     UCLA.components.topbar = { render, agregarNotificacion };
     window.changeSede = (codigo) => UCLA.state.setSedeActiva(codigo);
+    window.toggleNotifications = toggleNotifications;
 })();
