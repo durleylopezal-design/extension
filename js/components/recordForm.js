@@ -70,7 +70,7 @@
         return datos;
     }
 
-    function abrir({ titulo, secciones, onGuardar }) {
+    function abrir({ titulo, secciones, onGuardar, validar }) {
         const overlay = asegurarPanel();
         overlay.querySelector('#rfTitulo').textContent = titulo;
         overlay.querySelector('#rfCuerpo').innerHTML = secciones.map((s) => `
@@ -84,12 +84,18 @@
 
         const panel = overlay.querySelector('#recordFormPanel');
         const guardarYcerrar = () => {
-            if (onGuardar) onGuardar(recolectarDatos(overlay));
+            const datos = recolectarDatos(overlay);
+            const error = validar && validar(datos);
+            if (error) { UCLA.components.toast.show(error, 'error'); return; }
+            if (onGuardar) onGuardar(datos);
             UCLA.components.toast.show('Registro guardado exitosamente', 'success');
             cerrar();
         };
         const guardarYnuevo = () => {
-            if (onGuardar) onGuardar(recolectarDatos(overlay));
+            const datos = recolectarDatos(overlay);
+            const error = validar && validar(datos);
+            if (error) { UCLA.components.toast.show(error, 'error'); return; }
+            if (onGuardar) onGuardar(datos);
             UCLA.components.toast.show('Registro guardado - formulario listo para uno nuevo', 'success');
             overlay.querySelectorAll('[data-campo]').forEach((el) => { el.type === 'checkbox' ? (el.checked = false) : (el.value = ''); });
         };

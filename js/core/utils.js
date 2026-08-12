@@ -71,5 +71,10 @@
         });
     }
 
-    UCLA.utils = { formatoCOP, formatoFecha, debounce, exportCSV, exportPDF, colorEstado, badgeEstado, registrarAuditoria };
+    // Dominio institucional obligatorio para iniciar sesión o invitar un nuevo usuario del sistema.
+    function esCorreoInstitucional(correo) {
+        return /@amigo\.edu\.co$/i.test((correo || '').trim());
+    }
+
+    UCLA.utils = { formatoCOP, formatoFecha, debounce, exportCSV, exportPDF, colorEstado, badgeEstado, registrarAuditoria, esCorreoInstitucional };
 })();

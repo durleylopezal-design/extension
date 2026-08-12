@@ -17,9 +17,14 @@
 
     document.getElementById('loginForm').addEventListener('submit', function (e) {
         e.preventDefault();
-        const email = document.getElementById('loginEmail').value;
+        const email = document.getElementById('loginEmail').value.trim();
         const password = document.getElementById('loginPassword').value;
-        if (email && password) iniciarApp();
+        if (!email || !password) return;
+        if (!UCLA.utils.esCorreoInstitucional(email)) {
+            UCLA.components.toast.show('Use su correo institucional @amigo.edu.co para iniciar sesión', 'error');
+            return;
+        }
+        iniciarApp();
     });
 
     window.logout = function logout() {

@@ -30,9 +30,9 @@
     ];
 
     const usuarioActual = {
-        nombre: 'Coord. Sede Medellín',
-        correo: 'coordinador@ucla.edu.co',
-        cargo: 'Coordinador de Extensión',
+        nombre: 'Dir. Extensión',
+        correo: 'dir.extension@amigo.edu.co',
+        cargo: 'Director de Extensión',
         rol: 'admin', // 'admin' | 'coordinador' - controla visibilidad de Administración
         sedeId: 'MDE',
     };

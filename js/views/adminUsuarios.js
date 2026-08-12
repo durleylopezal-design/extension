@@ -20,7 +20,7 @@
             titulo: 'Invitar usuario',
             camposIzquierda: [
                 { clave: 'nombre', etiqueta: 'Nombre completo', tipo: 'text', obligatorio: true },
-                { clave: 'correo', etiqueta: 'Correo institucional', tipo: 'email', obligatorio: true },
+                { clave: 'correo', etiqueta: 'Correo institucional', tipo: 'email', obligatorio: true, placeholder: 'nombre@amigo.edu.co' },
             ],
             camposDerecha: [
                 { clave: 'rol', etiqueta: 'Rol', tipo: 'select', opciones: ['Administrador', 'Coordinador', 'Asesor', 'Auxiliar'] },
@@ -44,6 +44,7 @@
                     onClick: () => UCLA.components.recordForm.abrir({
                         titulo: 'Invitar usuario',
                         secciones: secciones(),
+                        validar: (datos) => !UCLA.utils.esCorreoInstitucional(datos.correo) ? 'El correo debe ser institucional (@amigo.edu.co)' : null,
                         onGuardar: (datos) => {
                             UCLA.data.usuariosSistema.unshift({ id: 'usr-' + Date.now(), nombre: datos.nombre || 'Sin nombre', correo: datos.correo || '', rol: datos.rol || 'Asesor', sedeId: datos.sedeId || 'MDE', estado: 'Activo', ultimoAcceso: null });
                             UCLA.utils.registrarAuditoria({ accion: 'Invitó nuevo usuario', modulo: 'Administración', detalle: `${datos.correo || ''} - rol ${datos.rol || 'Asesor'}` });
