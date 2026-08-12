@@ -157,7 +157,7 @@
                         <i class="fas fa-graduation-cap text-white"></i>
                     </div>
                     <div>
-                        <h1 class="font-bold text-lg leading-tight text-white">UCLA Extension</h1>
+                        <h1 class="font-bold text-lg leading-tight text-white">UCLA Extensión</h1>
                         <p class="text-xs" style="color: rgba(255,255,255,0.55);">CRM Sistema</p>
                     </div>
                 </div>
@@ -189,7 +189,7 @@
                         <i class="fas fa-sign-out-alt"></i>
                     </button>
                 </div>
-                <p class="text-[10px] text-center mt-3" style="color: rgba(255,255,255,0.35);">Creado por semillero de investigación iaxpert S.R.C V1.0</p>
+                <p class="text-[10px] text-center mt-3" style="color: rgba(255,255,255,0.35);">Creado por semillero de investigación IAXpert S.R.C V1.0</p>
             </div>`;
     }
 
