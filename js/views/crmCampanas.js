@@ -89,9 +89,8 @@
     }
 
     function render(container) {
-        const filas = UCLA.data.campanas.slice();
-
         function pintar() {
+            const filas = UCLA.data.campanas;
             UCLA.components.listShell.render(container, {
                 titulo: 'Campañas de Mercadeo',
                 columnas: columnas(),
@@ -107,8 +106,7 @@
                         secciones: secciones(),
                         onGuardar: (datos) => {
                             const ahora = new Date().toISOString().slice(0, 10);
-                            filas.unshift({
-                                id: 'camp-' + Date.now(),
+                            const nueva = UCLA.store.crear('campanas', {
                                 nombre: datos.nombre || 'Sin nombre',
                                 descripcion: datos.descripcion || '',
                                 tipo: datos.tipo || TIPOS[0],
@@ -142,7 +140,7 @@
                                 usuarioModificador: UCLA.state.usuarioActual.nombre,
                                 fechaModificacion: ahora,
                             });
-                            UCLA.utils.registrarAuditoria({ accion: 'Creó campaña de mercadeo', modulo: 'CRM', detalle: datos.nombre || 'Sin nombre' });
+                            UCLA.utils.registrarAuditoria({ accion: 'Creó campaña de mercadeo', modulo: 'CRM', detalle: nueva.nombre });
                             pintar();
                         },
                     }),

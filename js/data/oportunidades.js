@@ -1,7 +1,7 @@
 // Oportunidades de matrícula — pipeline Kanban. Etapas: contacto-inicial (10%),
 // interesado (20%), propuesta-enviada (40%), documentacion-revision (60%),
 // matricula-confirmada (100%).
-UCLA.data.oportunidades = [
+UCLA.data.oportunidades = UCLA.store.hidratar('oportunidades', [
     { id: 'opp-01', nombre: 'TECNOVA', descripcion: 'Formación en gestión de proyectos', valor: 45000000, etapa: 'contacto-inicial', fecha: '15/03', campanaId: null, propietario: 'Ana García', sedeId: 'MDE' },
     { id: 'opp-02', nombre: 'CÁMARA DE COMERCIO', descripcion: 'Capacitación empresarial', valor: 30000000, etapa: 'contacto-inicial', fecha: '18/03', campanaId: null, propietario: 'Carlos Pérez', sedeId: 'MDE' },
     { id: 'opp-03', nombre: 'COMFAMA', descripcion: 'Diplomado en bienestar laboral', valor: 38000000, etapa: 'contacto-inicial', fecha: '20/03', campanaId: null, propietario: 'María López', sedeId: 'MDE' },
@@ -24,4 +24,4 @@ UCLA.data.oportunidades = [
 
     { id: 'opp-17', nombre: 'EPM', descripcion: 'Seguridad industrial', valor: 75000000, etapa: 'matricula-confirmada', fecha: '01/03', campanaId: null, propietario: 'Juan Martínez', sedeId: 'MDE' },
     { id: 'opp-18', nombre: 'SENA REGIONAL ANTIOQUIA', descripcion: 'Diplomado técnico en instrumentación', valor: 88000000, etapa: 'matricula-confirmada', fecha: '05/03', campanaId: null, propietario: 'Ana García', sedeId: 'MDE' },
-];
+]);

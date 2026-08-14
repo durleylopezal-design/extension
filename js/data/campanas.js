@@ -13,7 +13,7 @@
 //   - Campaña ↔ Resultados/KPIs: sección "Resultados" de cada registro (ROI se calcula en vivo, no se guarda)
 UCLA.data.productosServicios = ['Diplomados', 'Seminarios', 'Cursos cortos', 'Semilleros', 'Programas de idiomas'];
 
-UCLA.data.campanas = [
+UCLA.data.campanas = UCLA.store.hidratar('campanas', [
     {
         id: 'camp-01', nombre: 'Feria Educativa Medellín 2026', descripcion: 'Campaña de captación en la feria educativa anual de Medellín.', tipo: 'Feria educativa', estado: 'Activa',
         objetivo: 'Captar 150 nuevos leads para programas de Ingeniería y Derecho.', publicoObjetivo: 'Bachilleres próximos a graduarse en colegios de Medellín', segmentacion: ['Bachilleres', 'Grado 11'], fechaInicio: '2026-07-01', fechaFin: '2026-08-31', responsable: 'Ana García', presupuesto: 15000000,
@@ -38,4 +38,4 @@ UCLA.data.campanas = [
         productos: ['Seminarios', 'Cursos cortos'], cuentasIds: ['cta-01'], contactosIds: ['con-01'],
         usuarioCreador: 'María López', fechaCreacion: '2026-07-28', usuarioModificador: 'María López', fechaModificacion: '2026-07-28',
     },
-];
+]);

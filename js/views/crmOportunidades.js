@@ -58,9 +58,8 @@
     }
 
     function render(container) {
-        const filas = UCLA.data.oportunidades.slice();
-
         function pintar() {
+            const filas = UCLA.data.oportunidades;
             UCLA.components.listShell.render(container, {
                 titulo: 'Oportunidades de Matrícula',
                 vistaInicial: 'kanban',
@@ -87,8 +86,7 @@
                         filaId: (f) => f.id,
                         renderTarjeta: tarjetaHtml,
                         onMover: (id, nuevaEtapa) => {
-                            const opp = filas.find((f) => f.id === id);
-                            if (opp) opp.etapa = nuevaEtapa;
+                            UCLA.store.actualizar('oportunidades', id, { etapa: nuevaEtapa });
                             UCLA.components.toast.show('Oportunidad actualizada exitosamente', 'success');
                         },
                     });
@@ -99,8 +97,7 @@
                         titulo: 'Nueva Oportunidad',
                         secciones: secciones(),
                         onGuardar: (datos) => {
-                            filas.unshift({
-                                id: 'opp-' + Date.now(),
+                            UCLA.store.crear('oportunidades', {
                                 nombre: datos.nombre || 'Sin nombre',
                                 descripcion: datos.descripcion || '',
                                 valor: Number(datos.valor) || 0,
@@ -108,6 +105,7 @@
                                 fecha: datos.fecha || '',
                                 propietario: datos.propietario || UCLA.state.usuarioActual.nombre,
                                 sedeId: (datos.sedeId || '').split(' - ')[0] || UCLA.state.usuarioActual.sedeId,
+                                campanaId: null,
                             });
                             pintar();
                         },

@@ -456,8 +456,7 @@
             if (!form.reportValidity()) return;
 
             const radicado = `SF-${new Date().getFullYear()}-${String(UCLA.data.solicitudesFormacion.length + 1).padStart(3, '0')}`;
-            UCLA.data.solicitudesFormacion.unshift({
-                id: 'sf-' + Date.now(),
+            UCLA.store.crear('solicitudesFormacion', {
                 radicado,
                 entidad: container.querySelector('#sfEntidad').value.trim(),
                 nit: container.querySelector('#sfNit').value.trim(),
