@@ -5,6 +5,8 @@
     const CAMPOS_MODULO = ['A', 'Ciudad de registro', 'Creado por', 'Dirección de registro', 'Estado de registro', 'Etiqueta', 'Hora de creación', 'Hora de la última actividad'];
     const ASESORES = ['Ana García', 'Carlos Pérez', 'María López', 'Juan Martínez', UCLA.state.usuarioActual.nombre];
 
+    let clickHandler = null;
+
     function fmtFechaHora(iso) {
         if (!iso) return '';
         const [fecha, hora] = iso.split('T');
@@ -19,13 +21,15 @@
             { clave: 'relacionadoCon', etiqueta: 'Relacionado con', render: (f) => f.relacionadoCon || '-' },
             { clave: 'contactoNombre', etiqueta: 'Nombre de contacto', render: (f) => f.contactoNombre || '-' },
             { clave: 'anfitrion', etiqueta: 'Anfitrión (host)' },
+            { clave: 'acciones', etiqueta: 'Acciones', render: (f) => `
+                <button data-editar-reunion="${f.id}" class="mr-2" style="color: var(--color-primary);" title="Editar"><i class="fas fa-pen text-xs"></i></button>
+                <button data-eliminar-reunion="${f.id}" style="color: var(--color-danger);" title="Eliminar"><i class="fas fa-trash text-xs"></i></button>` },
         ];
     }
 
     function render(container) {
-        const filas = UCLA.data.reuniones.slice();
-
         function pintar() {
+            const filas = UCLA.data.reuniones;
             UCLA.components.listShell.render(container, {
                 titulo: 'Reuniones',
                 columnas: columnas(),
@@ -34,14 +38,40 @@
                 camposModulo: CAMPOS_MODULO,
                 campoOrden: 'inicio',
                 exportName: 'reuniones',
-                botonPrincipal: { etiqueta: 'Crear reunión', onClick: () => abrirModal(filas, pintar) },
+                botonPrincipal: { etiqueta: 'Crear reunión', onClick: () => abrirModal(pintar) },
             });
         }
+
+        if (clickHandler) container.removeEventListener('click', clickHandler);
+        clickHandler = (e) => {
+            const btnEditar = e.target.closest('[data-editar-reunion]');
+            if (btnEditar) {
+                const reunion = UCLA.store.obtener('reuniones', btnEditar.getAttribute('data-editar-reunion'));
+                if (reunion) abrirModal(pintar, reunion);
+                return;
+            }
+            const btnEliminar = e.target.closest('[data-eliminar-reunion]');
+            if (btnEliminar) {
+                const id = btnEliminar.getAttribute('data-eliminar-reunion');
+                const reunion = UCLA.store.obtener('reuniones', id);
+                if (!reunion) return;
+                UCLA.components.confirmModal.abrir({
+                    titulo: 'Eliminar reunión',
+                    mensaje: `¿Eliminar "${reunion.titulo}"? Esta acción no se puede deshacer.`,
+                    onConfirmar: () => {
+                        UCLA.store.eliminar('reuniones', id);
+                        UCLA.components.toast.show('Reunión eliminada', 'success');
+                        pintar();
+                    },
+                });
+            }
+        };
+        container.addEventListener('click', clickHandler);
 
         pintar();
     }
 
-    function abrirModal(filas, alGuardar) {
+    function abrirModal(alGuardar, registroExistente) {
         let modal = document.getElementById('modalInfoReunion');
         if (!modal) {
             modal = document.createElement('div');
@@ -53,39 +83,40 @@
         let participantes = [];
 
         function pintarModal() {
+            const r = registroExistente;
             modal.innerHTML = `
                 <div class="fixed inset-0 bg-black opacity-40" data-mr-cerrar></div>
                 <div class="relative bg-white rounded-xl shadow-2xl max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto p-6">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-bold" style="color: var(--color-primary-dark);">Información de Reunión</h3>
+                        <h3 class="text-lg font-bold" style="color: var(--color-primary-dark);">${r ? 'Editar Reunión' : 'Información de Reunión'}</h3>
                         <button data-mr-cerrar class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
                     </div>
                     <div class="space-y-4">
                         <div>
                             <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Título *</label>
-                            <input id="mrTitulo" type="text" class="input-brand w-full px-3 py-2 text-sm">
+                            <input id="mrTitulo" type="text" value="${r ? r.titulo : ''}" class="input-brand w-full px-3 py-2 text-sm">
                         </div>
                         <div>
                             <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Ubicación</label>
-                            <input id="mrUbicacion" type="text" placeholder="Sala, sede o enlace virtual" class="input-brand w-full px-3 py-2 text-sm">
+                            <input id="mrUbicacion" type="text" value="${r ? r.ubicacion || '' : ''}" placeholder="Sala, sede o enlace virtual" class="input-brand w-full px-3 py-2 text-sm">
                         </div>
                         <label class="flex items-center gap-2 text-sm cursor-pointer" style="color: var(--color-text);">
-                            <input type="checkbox" id="mrTodoElDia"> Todo el día
+                            <input type="checkbox" id="mrTodoElDia" ${r?.todoElDia ? 'checked' : ''}> Todo el día
                         </label>
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">De *</label>
-                                <input id="mrDe" type="datetime-local" class="input-brand w-full px-3 py-2 text-sm">
+                                <input id="mrDe" type="datetime-local" value="${r ? r.inicio || '' : ''}" class="input-brand w-full px-3 py-2 text-sm">
                             </div>
                             <div>
                                 <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">A *</label>
-                                <input id="mrA" type="datetime-local" class="input-brand w-full px-3 py-2 text-sm">
+                                <input id="mrA" type="datetime-local" value="${r ? r.fin || '' : ''}" class="input-brand w-full px-3 py-2 text-sm">
                             </div>
                         </div>
                         <div>
                             <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Anfitrión (host)</label>
                             <select id="mrAnfitrion" class="input-brand w-full px-3 py-2 text-sm">
-                                ${ASESORES.map((a) => `<option>${a}</option>`).join('')}
+                                ${ASESORES.map((a) => `<option ${r && r.anfitrion === a ? 'selected' : ''}>${a}</option>`).join('')}
                             </select>
                         </div>
                         <div class="flex items-center justify-between">
@@ -97,7 +128,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Relacionado con</label>
-                            <input id="mrRelacionado" type="text" placeholder="Ej: Cuenta · TECNOVA S.A.S." class="input-brand w-full px-3 py-2 text-sm">
+                            <input id="mrRelacionado" type="text" value="${r ? r.relacionadoCon || '' : ''}" placeholder="Ej: Cuenta · TECNOVA S.A.S." class="input-brand w-full px-3 py-2 text-sm">
                         </div>
                         <div class="flex items-end gap-2">
                             <div class="flex-1">
@@ -131,7 +162,7 @@
                     </div>
                     <div class="flex justify-end gap-2 pt-5">
                         <button data-mr-cerrar class="px-4 py-2 text-sm rounded-lg" style="color: var(--color-text-muted);">Cancelar</button>
-                        <button id="mrGuardar" class="btn-primary text-sm">Guardar</button>
+                        <button id="mrGuardar" class="btn-primary text-sm">${r ? 'Guardar cambios' : 'Guardar'}</button>
                     </div>
                 </div>`;
 
@@ -164,8 +195,7 @@
                 if (!valido) return;
 
                 const recordatorio = masDetalles ? modal.querySelector('#mrRecordatorio').value : 'Ninguno';
-                filas.unshift({
-                    id: 'reu-' + Date.now(),
+                const datosReunion = {
                     titulo: titulo.value.trim(),
                     ubicacion: modal.querySelector('#mrUbicacion').value,
                     todoElDia: modal.querySelector('#mrTodoElDia').checked,
@@ -173,9 +203,14 @@
                     fin: a.value,
                     anfitrion: modal.querySelector('#mrAnfitrion').value,
                     relacionadoCon: modal.querySelector('#mrRelacionado').value,
-                    contactoNombre: '',
-                });
-                UCLA.components.toast.show('Reunión guardada exitosamente', 'success');
+                };
+                if (registroExistente) {
+                    UCLA.store.actualizar('reuniones', registroExistente.id, datosReunion);
+                    UCLA.components.toast.show('Reunión actualizada exitosamente', 'success');
+                } else {
+                    UCLA.store.crear('reuniones', Object.assign({ contactoNombre: '' }, datosReunion));
+                    UCLA.components.toast.show('Reunión guardada exitosamente', 'success');
+                }
                 if (recordatorio !== 'Ninguno') {
                     UCLA.components.topbar.agregarNotificacion({ titulo: `Recordatorio: ${titulo.value.trim()}`, detalle: `${recordatorio} · ${fmtFechaHora(de.value)}` });
                 }

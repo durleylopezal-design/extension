@@ -58,9 +58,8 @@
     }
 
     function render(container) {
-        const filas = UCLA.data.solicitudesAdmision.slice();
-
         function pintar() {
+            const filas = UCLA.data.solicitudesAdmision;
             UCLA.components.listShell.render(container, {
                 titulo: 'Solicitudes de Admisión',
                 columnas: columnas(),
@@ -76,8 +75,7 @@
                         secciones: secciones(),
                         onGuardar: (datos) => {
                             const docEstado = (marcado) => marcado ? 'Recibido' : 'Pendiente';
-                            filas.unshift({
-                                id: 'sa-' + Date.now(),
+                            UCLA.store.crear('solicitudesAdmision', {
                                 radicado: 'ADM-2026-' + Math.floor(1000 + Math.random() * 8999),
                                 aspirante: datos.aspirante || 'Sin nombre',
                                 documento: datos.documento || '', correo: datos.correo || '', telefono: datos.telefono || '',
@@ -111,7 +109,7 @@
         container.addEventListener('click', clickHandler);
 
         function abrirCambioEstado(id) {
-            const solicitud = filas.find((f) => f.id === id);
+            const solicitud = UCLA.store.obtener('solicitudesAdmision', id);
             if (!solicitud) return;
             let modal = document.getElementById('modalCambiarEstadoAdmision');
             if (!modal) {
@@ -144,15 +142,17 @@
                     modal.querySelector('#ceComentario').style.borderColor = 'var(--color-danger)';
                     return;
                 }
-                solicitud.estado = nuevoEstado;
-                solicitud.observaciones = comentario || solicitud.observaciones;
+                UCLA.store.actualizar('solicitudesAdmision', solicitud.id, {
+                    estado: nuevoEstado,
+                    observaciones: comentario || solicitud.observaciones,
+                });
 
                 if (nuevoEstado === 'Aprobada') {
                     const yaExiste = UCLA.data.contactos.some((c) => `${c.nombre} ${c.apellidos}`.trim() === solicitud.aspirante);
                     if (!yaExiste) {
                         const [nombre, ...resto] = solicitud.aspirante.split(' ');
-                        UCLA.data.contactos.unshift({
-                            id: 'con-' + Date.now(), nombre, apellidos: resto.join(' '), programaAsociado: solicitud.programa,
+                        UCLA.store.crear('contactos', {
+                            nombre, apellidos: resto.join(' '), programaAsociado: solicitud.programa,
                             correo: solicitud.correo, telefono: solicitud.telefono, movil: solicitud.telefono, acudiente: '',
                             institucionAliada: '', ocupacion: '', area: '', fechaNacimiento: '', reportaA: '',
                             propietario: solicitud.revisor || UCLA.state.usuarioActual.nombre, sedeId: solicitud.sedeId,

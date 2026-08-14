@@ -3,6 +3,8 @@
 (function () {
     const CAMPOS_MODULO = ['Apellidos', 'Fuente del posible estudiante', 'Institución aliada relacionada', 'Área o dependencia', 'Fecha de nacimiento', 'Correo electrónico'];
 
+    let clickHandler = null;
+
     function etiquetaActividad(prox) {
         if (!prox) return '';
         const color = prox.estado === 'vencida' ? 'var(--color-danger)' : 'var(--color-success)';
@@ -16,6 +18,9 @@
             { clave: 'correo', etiqueta: 'Correo' },
             { clave: 'movil', etiqueta: 'Teléfono', render: (f) => `<i class="fas fa-phone text-xs mr-1" style="color: var(--color-text-muted);"></i>${f.movil || f.telefono || '-'}` },
             { clave: 'propietario', etiqueta: 'Propietario' },
+            { clave: 'acciones', etiqueta: 'Acciones', render: (f) => `
+                <button data-editar-contacto="${f.id}" class="mr-2" style="color: var(--color-primary);" title="Editar"><i class="fas fa-pen text-xs"></i></button>
+                <button data-eliminar-contacto="${f.id}" style="color: var(--color-danger);" title="Eliminar"><i class="fas fa-trash text-xs"></i></button>` },
         ];
     }
 
@@ -76,10 +81,68 @@
         ];
     }
 
+    function datosDesdeFormulario(datos) {
+        return {
+            nombre: datos.nombre || 'Sin nombre',
+            apellidos: datos.apellidos || '',
+            programaAsociado: datos.programaAsociado || '',
+            correo: datos.correo || '',
+            telefono: datos.telefono || '',
+            otroTelefono: datos.otroTelefono || '',
+            movil: datos.movil || '',
+            acudiente: datos.acudiente || '',
+            conectadoA: datos.conectadoA || '',
+            fuente: datos.fuente || '',
+            institucionAliada: datos.institucionAliada || '',
+            ocupacion: datos.ocupacion || '',
+            area: datos.area || '',
+            telefonoParticular: datos.telefonoParticular || '',
+            fax: datos.fax || '',
+            fechaNacimiento: datos.fechaNacimiento || '',
+            contactoReferencia: datos.contactoReferencia || '',
+            noParticiparCorreo: !!datos.noParticiparCorreo,
+            mensajeria: datos.mensajeria || '',
+            correoSecundario: datos.correoSecundario || '',
+            redSocial: datos.redSocial || '',
+            reportaA: datos.reportaA || '',
+            domPais: datos.domPais || '', domDireccion: datos.domDireccion || '', domCiudad: datos.domCiudad || '', domDepartamento: datos.domDepartamento || '',
+            altPais: datos.altPais || '', altDireccion: datos.altDireccion || '', altCiudad: datos.altCiudad || '', altDepartamento: datos.altDepartamento || '',
+            propietario: datos.propietario || UCLA.state.usuarioActual.nombre,
+        };
+    }
+
     function render(container) {
-        const filas = UCLA.data.contactos.slice();
+        function abrirEditar(id) {
+            const contacto = UCLA.store.obtener('contactos', id);
+            if (!contacto) return;
+            UCLA.components.recordForm.abrir({
+                titulo: 'Editar contacto',
+                secciones: secciones(),
+                datosIniciales: contacto,
+                esEdicion: true,
+                onGuardar: (datos) => {
+                    UCLA.store.actualizar('contactos', id, datosDesdeFormulario(datos));
+                    pintar();
+                },
+            });
+        }
+
+        function confirmarEliminar(id) {
+            const contacto = UCLA.store.obtener('contactos', id);
+            if (!contacto) return;
+            UCLA.components.confirmModal.abrir({
+                titulo: 'Eliminar contacto',
+                mensaje: `¿Eliminar a "${contacto.nombre} ${contacto.apellidos}"? Esta acción no se puede deshacer.`,
+                onConfirmar: () => {
+                    UCLA.store.eliminar('contactos', id);
+                    UCLA.components.toast.show('Contacto eliminado', 'success');
+                    pintar();
+                },
+            });
+        }
 
         function pintar() {
+            const filas = UCLA.data.contactos;
             UCLA.components.listShell.render(container, {
                 titulo: 'Contactos',
                 columnas: columnas(),
@@ -94,22 +157,25 @@
                         titulo: 'Nuevo contacto',
                         secciones: secciones(),
                         onGuardar: (datos) => {
-                            filas.unshift({
-                                id: 'con-' + Date.now(),
-                                nombre: datos.nombre || 'Sin nombre',
-                                apellidos: datos.apellidos || '',
-                                programaAsociado: datos.programaAsociado || '',
-                                correo: datos.correo || '',
-                                movil: datos.movil, telefono: datos.telefono,
-                                propietario: datos.propietario || UCLA.state.usuarioActual.nombre,
+                            UCLA.store.crear('contactos', Object.assign(datosDesdeFormulario(datos), {
+                                sedeId: UCLA.state.usuarioActual.sedeId,
                                 proximaActividad: null,
-                            });
+                            }));
                             pintar();
                         },
                     }),
                 },
             });
         }
+
+        if (clickHandler) container.removeEventListener('click', clickHandler);
+        clickHandler = (e) => {
+            const btnEditar = e.target.closest('[data-editar-contacto]');
+            if (btnEditar) { abrirEditar(btnEditar.getAttribute('data-editar-contacto')); return; }
+            const btnEliminar = e.target.closest('[data-eliminar-contacto]');
+            if (btnEliminar) { confirmarEliminar(btnEliminar.getAttribute('data-eliminar-contacto')); return; }
+        };
+        container.addEventListener('click', clickHandler);
 
         pintar();
     }

@@ -7,6 +7,8 @@
     const PROPOSITOS = ['Información de programa', 'Seguimiento de matrícula', 'Confirmación de documentos', 'Otro'];
     const TIPOS_REGISTRO = { Contacto: 'contactos', Cuenta: 'cuentas', 'Posible estudiante': 'leads', Oportunidad: 'oportunidades' };
 
+    let clickHandler = null;
+
     function nombreRegistro(tipo, obj) {
         if (tipo === 'Contacto') return `${obj.nombre} ${obj.apellidos}`;
         if (tipo === 'Posible estudiante') return `${obj.nombre} ${obj.apellidos}`;
@@ -19,13 +21,15 @@
             { clave: 'direccion', etiqueta: 'Dirección', render: (f) => `<span class="text-xs font-semibold px-2 py-0.5 rounded-full" style="background: ${f.direccion === 'Saliente' ? 'var(--color-primary-50)' : 'var(--color-accent-100)'}; color: ${f.direccion === 'Saliente' ? 'var(--color-primary)' : 'var(--color-accent-dark)'};"><i class="fas fa-phone-${f.direccion === 'Saliente' ? 'arrow-up-right' : 'arrow-down-left'} mr-1"></i>${f.direccion}</span>` },
             { clave: 'relacionadoCon', etiqueta: 'Relacionado con', render: (f) => f.relacionadoCon || '-' },
             { clave: 'contactoNombre', etiqueta: 'Nombre de contacto', render: (f) => f.contactoNombre || '-' },
+            { clave: 'acciones', etiqueta: 'Acciones', render: (f) => `
+                <button data-editar-llamada="${f.id}" class="mr-2" style="color: var(--color-primary);" title="Editar"><i class="fas fa-pen text-xs"></i></button>
+                <button data-eliminar-llamada="${f.id}" style="color: var(--color-danger);" title="Eliminar"><i class="fas fa-trash text-xs"></i></button>` },
         ];
     }
 
     function render(container) {
-        const filas = UCLA.data.llamadas.slice();
-
         function pintar() {
+            const filas = UCLA.data.llamadas;
             UCLA.components.listShell.render(container, {
                 titulo: 'Llamadas',
                 columnas: columnas(),
@@ -39,11 +43,37 @@
                         <i class="fas fa-phone"></i> Registrar una llamada
                     </button>`,
                 onExtraToolbarBind: (root) => {
-                    root.querySelector('#llBtnRegistrar')?.addEventListener('click', () => abrirModal('registrar', filas, pintar));
+                    root.querySelector('#llBtnRegistrar')?.addEventListener('click', () => abrirModal('registrar', pintar));
                 },
-                botonPrincipal: { etiqueta: 'Programar una llamada', onClick: () => abrirModal('programar', filas, pintar) },
+                botonPrincipal: { etiqueta: 'Programar una llamada', onClick: () => abrirModal('programar', pintar) },
             });
         }
+
+        if (clickHandler) container.removeEventListener('click', clickHandler);
+        clickHandler = (e) => {
+            const btnEditar = e.target.closest('[data-editar-llamada]');
+            if (btnEditar) {
+                const llamada = UCLA.store.obtener('llamadas', btnEditar.getAttribute('data-editar-llamada'));
+                if (llamada) abrirModal(llamada.estadoSaliente === 'Programado' ? 'programar' : 'registrar', pintar, llamada);
+                return;
+            }
+            const btnEliminar = e.target.closest('[data-eliminar-llamada]');
+            if (btnEliminar) {
+                const id = btnEliminar.getAttribute('data-eliminar-llamada');
+                const llamada = UCLA.store.obtener('llamadas', id);
+                if (!llamada) return;
+                UCLA.components.confirmModal.abrir({
+                    titulo: 'Eliminar llamada',
+                    mensaje: `¿Eliminar "${llamada.asunto}"? Esta acción no se puede deshacer.`,
+                    onConfirmar: () => {
+                        UCLA.store.eliminar('llamadas', id);
+                        UCLA.components.toast.show('Llamada eliminada', 'success');
+                        pintar();
+                    },
+                });
+            }
+        };
+        container.addEventListener('click', clickHandler);
 
         pintar();
     }
@@ -53,7 +83,7 @@
         return `<datalist id="${id}">${datos.map((d) => `<option value="${nombreRegistro(tipo, d)}">`).join('')}</datalist>`;
     }
 
-    function abrirModal(modo, filas, alGuardar) {
+    function abrirModal(modo, alGuardar, registroExistente) {
         let modal = document.getElementById('modalLlamada');
         if (!modal) {
             modal = document.createElement('div');
@@ -62,12 +92,15 @@
             document.body.appendChild(modal);
         }
         const esProgramar = modo === 'programar';
+        const r = registroExistente;
+        const relTipo = r ? (r.relacionadoCon || '').split(' · ')[0] : null;
+        const relNombre = r ? (r.relacionadoCon || '').split(' · ')[1] : null;
 
         modal.innerHTML = `
             <div class="fixed inset-0 bg-black opacity-40" data-ll-cerrar></div>
             <div class="relative bg-white rounded-xl shadow-2xl max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto p-6">
                 <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-bold" style="color: var(--color-primary-dark);">${esProgramar ? 'Programar una llamada' : 'Registrar una llamada'}</h3>
+                    <h3 class="text-lg font-bold" style="color: var(--color-primary-dark);">${r ? 'Editar llamada' : esProgramar ? 'Programar una llamada' : 'Registrar una llamada'}</h3>
                     <button data-ll-cerrar class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
                 </div>
 
@@ -79,7 +112,7 @@
                             <select id="llTipoLlamada" class="input-brand px-2 py-2 text-sm" style="width: 40%;">
                                 ${Object.keys(TIPOS_REGISTRO).map((t) => `<option ${t === 'Contacto' ? 'selected' : ''}>${t}</option>`).join('')}
                             </select>
-                            <input id="llContacto" list="dlContacto" type="text" placeholder="Buscar..." class="input-brand flex-1 px-3 py-2 text-sm">
+                            <input id="llContacto" list="dlContacto" type="text" value="${r ? r.contactoNombre || '' : ''}" placeholder="Buscar..." class="input-brand flex-1 px-3 py-2 text-sm">
                         </div>
                         <div id="llDatalistContacto">${datalistHtml('dlContacto', 'Contacto')}</div>
                     </div>
@@ -87,9 +120,9 @@
                         <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Relacionado con</label>
                         <div class="flex gap-2">
                             <select id="llTipoRelacionado" class="input-brand px-2 py-2 text-sm" style="width: 40%;">
-                                ${Object.keys(TIPOS_REGISTRO).map((t) => `<option ${t === 'Cuenta' ? 'selected' : ''}>${t}</option>`).join('')}
+                                ${Object.keys(TIPOS_REGISTRO).map((t) => `<option ${t === (relTipo || 'Cuenta') ? 'selected' : ''}>${t}</option>`).join('')}
                             </select>
-                            <input id="llRelacionado" list="dlRelacionado" type="text" placeholder="Buscar..." class="input-brand flex-1 px-3 py-2 text-sm">
+                            <input id="llRelacionado" list="dlRelacionado" type="text" value="${relNombre || ''}" placeholder="Buscar..." class="input-brand flex-1 px-3 py-2 text-sm">
                         </div>
                         <div id="llDatalistRelacionado">${datalistHtml('dlRelacionado', 'Cuenta')}</div>
                     </div>
@@ -108,16 +141,16 @@
                     ${esProgramar ? `
                         <div>
                             <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Fecha y hora de inicio *</label>
-                            <input id="llInicio" type="datetime-local" class="input-brand w-full px-3 py-2 text-sm">
+                            <input id="llInicio" type="datetime-local" value="${r ? r.inicio || '' : ''}" class="input-brand w-full px-3 py-2 text-sm">
                         </div>
                         <div id="llAvisoSolape" class="hidden p-3 rounded-lg text-xs" style="background: var(--color-primary-50); color: var(--color-text);"></div>
                     ` : `
                         <div>
                             <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Duración de la llamada</label>
                             <div class="flex items-center gap-2">
-                                <input id="llMin" type="number" min="0" placeholder="min" class="input-brand w-20 px-3 py-2 text-sm">
+                                <input id="llMin" type="number" min="0" value="${r ? r.duracionMin || '' : ''}" placeholder="min" class="input-brand w-20 px-3 py-2 text-sm">
                                 <span style="color: var(--color-text-muted);">:</span>
-                                <input id="llSeg" type="number" min="0" max="59" placeholder="seg" class="input-brand w-20 px-3 py-2 text-sm">
+                                <input id="llSeg" type="number" min="0" max="59" value="${r ? r.duracionSeg || '' : ''}" placeholder="seg" class="input-brand w-20 px-3 py-2 text-sm">
                             </div>
                         </div>
                     `}
@@ -126,7 +159,7 @@
                         <div class="flex-1">
                             <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Propietario de la llamada</label>
                             <select id="llPropietario" class="input-brand w-full px-3 py-2 text-sm">
-                                ${ASESORES.map((a) => `<option ${a === UCLA.state.usuarioActual.nombre ? 'selected' : ''}>${a}</option>`).join('')}
+                                ${ASESORES.map((a) => `<option ${a === (r ? r.propietario : UCLA.state.usuarioActual.nombre) ? 'selected' : ''}>${a}</option>`).join('')}
                             </select>
                         </div>
                         <button type="button" id="llReasignar" title="Reasignar" class="p-2" style="color: var(--color-primary);"><i class="fas fa-user-pen"></i></button>
@@ -134,7 +167,7 @@
 
                     <div>
                         <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Asunto</label>
-                        <input id="llAsunto" type="text" class="input-brand w-full px-3 py-2 text-sm">
+                        <input id="llAsunto" type="text" value="${r ? r.asunto || '' : ''}" class="input-brand w-full px-3 py-2 text-sm">
                     </div>
 
                     <div>
@@ -148,7 +181,7 @@
                     <div>
                         <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Propósito de la llamada</label>
                         <select id="llProposito" class="input-brand w-full px-3 py-2 text-sm">
-                            ${PROPOSITOS.map((p) => `<option>${p}</option>`).join('')}
+                            ${PROPOSITOS.map((p) => `<option ${r && r.proposito === p ? 'selected' : ''}>${p}</option>`).join('')}
                         </select>
                     </div>
                     ${!esProgramar ? `
@@ -165,7 +198,7 @@
 
                 <div class="flex justify-end gap-2 pt-5">
                     <button data-ll-cerrar class="px-4 py-2 text-sm rounded-lg" style="color: var(--color-text-muted);">Cancelar</button>
-                    <button id="llGuardar" class="btn-primary text-sm">${esProgramar ? 'Programación' : 'Guardar'}</button>
+                    <button id="llGuardar" class="btn-primary text-sm">${r ? 'Guardar cambios' : esProgramar ? 'Programación' : 'Guardar'}</button>
                 </div>
             </div>`;
 
@@ -214,11 +247,10 @@
             if (!valido) return;
 
             const contactoNombre = modal.querySelector('#llContacto').value.trim();
-            const nuevaLlamada = {
-                id: 'lla-' + Date.now(),
+            const datosLlamada = {
                 direccion: 'Saliente',
                 estadoSaliente: esProgramar ? 'Programado' : 'Completado',
-                inicio: esProgramar ? modal.querySelector('#llInicio').value : new Date().toISOString().slice(0, 16),
+                inicio: esProgramar ? modal.querySelector('#llInicio').value : (r ? r.inicio : new Date().toISOString().slice(0, 16)),
                 duracionMin: esProgramar ? 0 : Number(modal.querySelector('#llMin').value || 0),
                 duracionSeg: esProgramar ? 0 : Number(modal.querySelector('#llSeg').value || 0),
                 propietario: modal.querySelector('#llPropietario').value,
@@ -227,12 +259,17 @@
                 contactoNombre,
                 proposito: modal.querySelector('#llProposito').value,
             };
-            filas.unshift(nuevaLlamada);
-            UCLA.components.toast.show(esProgramar ? 'Llamada programada exitosamente' : 'Llamada registrada exitosamente', 'success');
+            if (r) {
+                UCLA.store.actualizar('llamadas', r.id, datosLlamada);
+                UCLA.components.toast.show('Llamada actualizada exitosamente', 'success');
+            } else {
+                UCLA.store.crear('llamadas', datosLlamada);
+                UCLA.components.toast.show(esProgramar ? 'Llamada programada exitosamente' : 'Llamada registrada exitosamente', 'success');
+            }
 
             const recordatorio = modal.querySelector('#llRecordatorio').value;
             if (recordatorio !== 'Ninguno') {
-                UCLA.components.topbar.agregarNotificacion({ titulo: `Recordatorio: ${nuevaLlamada.asunto}`, detalle: recordatorio });
+                UCLA.components.topbar.agregarNotificacion({ titulo: `Recordatorio: ${datosLlamada.asunto}`, detalle: recordatorio });
             }
             modal.classList.add('hidden');
             alGuardar();

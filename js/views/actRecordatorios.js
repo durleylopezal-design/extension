@@ -65,8 +65,6 @@
 
     function render(container) {
         let tabActiva = 'activos';
-        const recordatorios = UCLA.data.recordatorios.slice();
-        const reglas = UCLA.data.reglasAutomaticas.slice();
 
         container.innerHTML = `
             <div class="space-y-4">
@@ -91,7 +89,7 @@
                 UCLA.components.listShell.render(cuerpo, {
                     titulo: 'Recordatorios activos',
                     columnas: columnasRecordatorios(),
-                    filas: recordatorios,
+                    filas: UCLA.data.recordatorios,
                     filaId: (r) => r.id,
                     camposModulo: CAMPOS_RECORDATORIOS,
                     campoOrden: 'fechaDisparo',
@@ -102,7 +100,7 @@
                 UCLA.components.listShell.render(cuerpo, {
                     titulo: 'Reglas automáticas',
                     columnas: columnasReglas(),
-                    filas: reglas,
+                    filas: UCLA.data.reglasAutomaticas,
                     filaId: (r) => r.id,
                     camposModulo: ['Módulo', 'Evento disparador', 'Acción', 'Estado'],
                     campoOrden: 'nombre',
@@ -113,7 +111,7 @@
                             titulo: 'Nueva regla automática',
                             secciones: reglaSecciones(),
                             onGuardar: (datos) => {
-                                reglas.unshift({ id: 'ra-' + Date.now(), nombre: datos.nombre || 'Sin nombre', modulo: datos.modulo || 'CRM', disparador: datos.disparador || 'Creación de registro', condicion: datos.condicion || '', momento: datos.momento || '', accion: datos.accion || 'Crear recordatorio', plantillaId: null, activa: true });
+                                UCLA.store.crear('reglasAutomaticas', { nombre: datos.nombre || 'Sin nombre', modulo: datos.modulo || 'CRM', disparador: datos.disparador || 'Creación de registro', condicion: datos.condicion || '', momento: datos.momento || '', accion: datos.accion || 'Crear recordatorio', plantillaId: null, activa: true });
                                 pintarCuerpo();
                             },
                         }),
@@ -133,21 +131,21 @@
             const posponer = e.target.closest('[data-posponer]');
             const toggle = e.target.closest('[data-toggle-regla]');
             if (disparar) {
-                const r = recordatorios.find((x) => x.id === disparar.getAttribute('data-disparar'));
+                const r = UCLA.store.obtener('recordatorios', disparar.getAttribute('data-disparar'));
                 if (r) {
-                    r.estado = 'Enviado';
+                    UCLA.store.actualizar('recordatorios', r.id, { estado: 'Enviado' });
                     UCLA.components.topbar.agregarNotificacion({ titulo: r.asunto, detalle: `${r.relacionadoCon} · ${r.destinatario}` });
                     pintarCuerpo();
                 }
             } else if (descartar) {
-                const r = recordatorios.find((x) => x.id === descartar.getAttribute('data-descartar'));
-                if (r) { r.estado = 'Descartado'; UCLA.components.toast.show('Recordatorio descartado', 'info'); pintarCuerpo(); }
+                const r = UCLA.store.obtener('recordatorios', descartar.getAttribute('data-descartar'));
+                if (r) { UCLA.store.actualizar('recordatorios', r.id, { estado: 'Descartado' }); UCLA.components.toast.show('Recordatorio descartado', 'info'); pintarCuerpo(); }
             } else if (posponer) {
-                const r = recordatorios.find((x) => x.id === posponer.getAttribute('data-posponer'));
+                const r = UCLA.store.obtener('recordatorios', posponer.getAttribute('data-posponer'));
                 if (r) abrirPosponer(r, pintarCuerpo);
             } else if (toggle) {
-                const r = reglas.find((x) => x.id === toggle.getAttribute('data-toggle-regla'));
-                if (r) { r.activa = toggle.checked; UCLA.components.toast.show(`Regla "${r.nombre}" ${r.activa ? 'activada' : 'desactivada'}`, 'info'); }
+                const r = UCLA.store.obtener('reglasAutomaticas', toggle.getAttribute('data-toggle-regla'));
+                if (r) { UCLA.store.actualizar('reglasAutomaticas', r.id, { activa: toggle.checked }); UCLA.components.toast.show(`Regla "${r.nombre}" ${toggle.checked ? 'activada' : 'desactivada'}`, 'info'); }
             }
         };
         container.addEventListener('click', clickHandler);
@@ -195,15 +193,17 @@
         });
         modal.querySelector('#ppGuardar').addEventListener('click', () => {
             const fechaPersonalizada = modal.querySelector('#ppFecha').value;
+            let nuevaFecha;
             if (fechaPersonalizada) {
-                recordatorio.fechaDisparo = fechaPersonalizada;
+                nuevaFecha = fechaPersonalizada;
             } else if (minutosSeleccionados) {
                 const nueva = new Date(recordatorio.fechaDisparo);
                 nueva.setMinutes(nueva.getMinutes() + minutosSeleccionados);
-                recordatorio.fechaDisparo = nueva.toISOString().slice(0, 16);
+                nuevaFecha = nueva.toISOString().slice(0, 16);
             } else {
                 return;
             }
+            UCLA.store.actualizar('recordatorios', recordatorio.id, { fechaDisparo: nuevaFecha });
             UCLA.components.toast.show('Recordatorio pospuesto', 'success');
             modal.classList.add('hidden');
             alGuardar();

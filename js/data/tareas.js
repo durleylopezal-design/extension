@@ -1,4 +1,4 @@
-UCLA.data.tareas = [
+UCLA.data.tareas = UCLA.store.hidratar('tareas', [
     { id: 'tar-01', asunto: 'Llamar a Andrés Felipe Londoño para confirmar matrícula', prioridad: 'Alta', estado: 'En curso', fechaVencimiento: '2026-08-05', relacionadoCon: 'Oportunidad · TECNOVA', contactoNombre: 'Andrés Felipe Londoño', propietario: 'Carlos Pérez', etiqueta: 'Seguimiento' },
     { id: 'tar-02', asunto: 'Enviar propuesta comercial a GOBERNACIÓN', prioridad: 'Alta', estado: 'No iniciada', fechaVencimiento: '2026-08-04', relacionadoCon: 'Oportunidad · GOBERNACIÓN', contactoNombre: 'Esteban Álvarez Cano', propietario: 'Ana García', etiqueta: 'Propuesta' },
     { id: 'tar-03', asunto: 'Revisar documentación de matrícula - Diego Cárdenas', prioridad: 'Media', estado: 'En curso', fechaVencimiento: '2026-08-06', relacionadoCon: 'Cuenta · BANCOLOMBIA', contactoNombre: 'Diego Cárdenas Ochoa', propietario: 'Juan Martínez', etiqueta: 'Documentación' },
@@ -14,4 +14,4 @@ UCLA.data.tareas = [
     { id: 'tar-13', asunto: 'Actualizar base de datos de egresados vinculados', prioridad: 'Baja', estado: 'No iniciada', fechaVencimiento: '2026-08-14', relacionadoCon: '', contactoNombre: '', propietario: 'Juan Martínez', etiqueta: 'Administrativo' },
     { id: 'tar-14', asunto: 'Confirmar asistencia de Colciencias antes del cierre', prioridad: 'Alta', estado: 'En curso', fechaVencimiento: '2026-08-03', relacionadoCon: 'Oportunidad · COLCIENCIAS', contactoNombre: '', propietario: 'Ana García', etiqueta: 'Seguimiento' },
     { id: 'tar-15', asunto: 'Enviar certificados digitales del Curso Excel Avanzado', prioridad: 'Media', estado: 'No iniciada', fechaVencimiento: '2026-08-12', relacionadoCon: 'Evento · CSO0777', contactoNombre: '', propietario: 'Carlos Pérez', etiqueta: 'Certificados' },
-];
+]);

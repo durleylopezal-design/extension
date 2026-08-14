@@ -1,4 +1,4 @@
-UCLA.data.solicitudesHomologacion = [
+UCLA.data.solicitudesHomologacion = UCLA.store.hidratar('solicitudesHomologacion', [
     {
         id: 'sh-01', radicado: 'HOM-2026-0011', solicitante: 'Mariana Correa Vélez', programaDestino: 'Derecho', institucionOrigen: 'SENA Regional Antioquia', programaOrigen: 'Técnico en Asistencia Jurídica', anoCursado: 2023, evaluador: 'Dr. Fernando Ospina', fechaRadicado: '2026-07-16', estado: 'Aprobada',
         asignaturas: [
@@ -42,4 +42,4 @@ UCLA.data.solicitudesHomologacion = [
             { origen: 'Redes de Computadores', creditos: 3, nota: 3.7, equivalente: 'Redes I', resultado: 'Homologada' },
         ],
     },
-];
+]);

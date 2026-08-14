@@ -8,6 +8,7 @@
     let configKanban = null;
     let vistaActual = 'lista';
     let seleccionEnProgreso = [];
+    let clickHandler = null;
 
     function columnas() {
         return [
@@ -15,6 +16,9 @@
             { clave: 'prioridad', etiqueta: 'Prioridad', render: (f) => badgePrioridad(f.prioridad) },
             { clave: 'relacionadoCon', etiqueta: 'Relacionado con', render: (f) => f.relacionadoCon || '-' },
             { clave: 'contactoNombre', etiqueta: 'Nombre de contacto', render: (f) => f.contactoNombre || '-' },
+            { clave: 'acciones', etiqueta: 'Acciones', render: (f) => `
+                <button data-editar-tarea="${f.id}" class="mr-2" style="color: var(--color-primary);" title="Editar"><i class="fas fa-pen text-xs"></i></button>
+                <button data-eliminar-tarea="${f.id}" style="color: var(--color-danger);" title="Eliminar"><i class="fas fa-trash text-xs"></i></button>` },
         ];
     }
 
@@ -41,10 +45,51 @@
         }];
     }
 
+    function datosDesdeFormulario(datos) {
+        return {
+            asunto: datos.asunto || 'Sin asunto',
+            prioridad: datos.prioridad || 'Media',
+            estado: datos.estado || 'No iniciada',
+            fechaVencimiento: datos.fechaVencimiento || '',
+            relacionadoCon: datos.relacionadoCon || '',
+            contactoNombre: datos.contactoNombre || '',
+            propietario: datos.propietario || UCLA.state.usuarioActual.nombre,
+            etiqueta: datos.etiqueta || '',
+        };
+    }
+
     function render(container) {
-        const filas = UCLA.data.tareas.slice();
+        function abrirEditar(id) {
+            const tarea = UCLA.store.obtener('tareas', id);
+            if (!tarea) return;
+            UCLA.components.recordForm.abrir({
+                titulo: 'Editar tarea',
+                secciones: seccionesFormulario(),
+                datosIniciales: tarea,
+                esEdicion: true,
+                onGuardar: (datos) => {
+                    UCLA.store.actualizar('tareas', id, datosDesdeFormulario(datos));
+                    pintar();
+                },
+            });
+        }
+
+        function confirmarEliminar(id) {
+            const tarea = UCLA.store.obtener('tareas', id);
+            if (!tarea) return;
+            UCLA.components.confirmModal.abrir({
+                titulo: 'Eliminar tarea',
+                mensaje: `¿Eliminar "${tarea.asunto}"? Esta acción no se puede deshacer.`,
+                onConfirmar: () => {
+                    UCLA.store.eliminar('tareas', id);
+                    UCLA.components.toast.show('Tarea eliminada', 'success');
+                    pintar();
+                },
+            });
+        }
 
         function pintar() {
+            const filas = UCLA.data.tareas;
             UCLA.components.listShell.render(container, {
                 titulo: 'Tareas',
                 // listShell.render() reconstruye su estado (tipo de vista, filtros,
@@ -66,17 +111,7 @@
                         titulo: 'Nueva tarea',
                         secciones: seccionesFormulario(),
                         onGuardar: (datos) => {
-                            filas.unshift({
-                                id: 'tar-' + Date.now(),
-                                asunto: datos.asunto || 'Sin asunto',
-                                prioridad: datos.prioridad || 'Media',
-                                estado: datos.estado || 'No iniciada',
-                                fechaVencimiento: datos.fechaVencimiento || '',
-                                relacionadoCon: datos.relacionadoCon || '',
-                                contactoNombre: datos.contactoNombre || '',
-                                propietario: datos.propietario || UCLA.state.usuarioActual.nombre,
-                                etiqueta: datos.etiqueta || '',
-                            });
+                            UCLA.store.crear('tareas', datosDesdeFormulario(datos));
                             pintar();
                         },
                     }),
@@ -105,17 +140,29 @@
                         filas,
                         filaId: (f) => f.id,
                         renderTarjeta: (f) => `
+                            <div class="flex justify-end gap-2 mb-1">
+                                <button data-editar-tarea="${f.id}" draggable="false" title="Editar" style="color: var(--color-text-muted);"><i class="fas fa-pen text-xs"></i></button>
+                                <button data-eliminar-tarea="${f.id}" draggable="false" title="Eliminar" style="color: var(--color-danger);"><i class="fas fa-trash text-xs"></i></button>
+                            </div>
                             <h5 class="font-bold text-gray-800 mb-1">${f.asunto}</h5>
                             ${configKanban.camposSeleccionados.filter((c) => c !== 'Asunto').map((c) => `<p class="text-xs text-gray-500">${c}: ${valorCampo(f, c)}</p>`).join('')}`,
                         onMover: (id, nuevoValor) => {
-                            const tarea = filas.find((f) => f.id === id);
-                            if (tarea) tarea[configKanban.categorizarPor] = nuevoValor;
+                            UCLA.store.actualizar('tareas', id, { [configKanban.categorizarPor]: nuevoValor });
                             UCLA.components.toast.show('Tarea actualizada', 'success');
                         },
                     });
                 },
             });
         }
+
+        if (clickHandler) container.removeEventListener('click', clickHandler);
+        clickHandler = (e) => {
+            const btnEditar = e.target.closest('[data-editar-tarea]');
+            if (btnEditar) { abrirEditar(btnEditar.getAttribute('data-editar-tarea')); return; }
+            const btnEliminar = e.target.closest('[data-eliminar-tarea]');
+            if (btnEliminar) { confirmarEliminar(btnEliminar.getAttribute('data-eliminar-tarea')); return; }
+        };
+        container.addEventListener('click', clickHandler);
 
         pintar();
     }

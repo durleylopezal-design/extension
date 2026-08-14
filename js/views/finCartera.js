@@ -132,15 +132,15 @@
             const tipo = modal.querySelector('#gcTipo').value;
             const resultado = modal.querySelector('#gcResultado').value;
             if (tipo === 'Llamada') {
-                UCLA.data.llamadas.unshift({
-                    id: 'lla-' + Date.now(), direccion: 'Saliente', estadoSaliente: 'Completado',
+                UCLA.store.crear('llamadas', {
+                    direccion: 'Saliente', estadoSaliente: 'Completado',
                     inicio: new Date().toISOString().slice(0, 16), duracionMin: 3, duracionSeg: 0,
                     propietario: UCLA.state.usuarioActual.nombre, asunto: `Gestión de cobro - ${cuenta.estudiante}`,
                     relacionadoCon: `Cartera · ${cuenta.factura}`, contactoNombre: cuenta.estudiante, proposito: 'Seguimiento de matrícula',
                 });
             } else {
-                UCLA.data.tareas.unshift({
-                    id: 'tar-' + Date.now(), asunto: `Seguimiento de cobro - ${cuenta.estudiante}`, prioridad: 'Alta', estado: 'No iniciada',
+                UCLA.store.crear('tareas', {
+                    asunto: `Seguimiento de cobro - ${cuenta.estudiante}`, prioridad: 'Alta', estado: 'No iniciada',
                     fechaVencimiento: modal.querySelector('#gcCompromiso').value || '', relacionadoCon: `Cartera · ${cuenta.factura}`,
                     contactoNombre: cuenta.estudiante, propietario: UCLA.state.usuarioActual.nombre, etiqueta: 'Cartera',
                 });

@@ -21,25 +21,23 @@
     }
 
     function render(container) {
-        const filas = UCLA.data.solicitudesHomologacion.slice();
-
         function pintar() {
             UCLA.components.listShell.render(container, {
                 titulo: 'Solicitudes de Homologación',
                 columnas: columnas(),
-                filas,
+                filas: UCLA.data.solicitudesHomologacion,
                 filaId: (f) => f.id,
                 camposModulo: CAMPOS_MODULO,
                 campoOrden: 'fechaRadicado',
                 exportName: 'solicitudes-homologacion',
-                botonPrincipal: { etiqueta: 'Crear solicitud de homologación', onClick: () => abrirModal(filas, pintar) },
+                botonPrincipal: { etiqueta: 'Crear solicitud de homologación', onClick: () => abrirModal(pintar) },
             });
         }
 
         pintar();
     }
 
-    function abrirModal(filas, alGuardar) {
+    function abrirModal(alGuardar) {
         let modal = document.getElementById('modalHomologacion');
         if (!modal) {
             modal = document.createElement('div');
@@ -133,8 +131,8 @@
             [solicitante, programaDestino].forEach((el) => { if (!el.value.trim()) { el.style.borderColor = 'var(--color-danger)'; valido = false; } });
             if (!valido) return;
 
-            filas.unshift({
-                id: 'sh-' + Date.now(), radicado: 'HOM-2026-' + Math.floor(1000 + Math.random() * 8999),
+            UCLA.store.crear('solicitudesHomologacion', {
+                radicado: 'HOM-2026-' + Math.floor(1000 + Math.random() * 8999),
                 solicitante: solicitante.value.trim(), programaDestino: programaDestino.value.trim(),
                 institucionOrigen: modal.querySelector('#homInstitucion').value, programaOrigen: modal.querySelector('#homProgramaOrigen').value,
                 anoCursado: modal.querySelector('#homAno').value, evaluador: modal.querySelector('#homEvaluador').value,

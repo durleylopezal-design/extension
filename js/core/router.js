@@ -109,7 +109,7 @@
     }
 
     function render(ruta) {
-        const contenedor = document.getElementById('contentArea');
+        let contenedor = document.getElementById('contentArea');
         if (!contenedor) return;
 
         const match = matchRoute(ruta);
@@ -123,7 +123,18 @@
         if (pageTitle) pageTitle.textContent = titulo;
         document.title = titulo + ' · UCLA Extensión CRM';
 
-        contenedor.innerHTML = '';
+        // Se reemplaza #contentArea por un clon vacío en vez de solo vaciar su
+        // innerHTML: varias vistas adjuntan un listener de clic delegado
+        // directo sobre este contenedor (para no re-bindear en cada repintado
+        // interno), pero ese listener vive en el nodo, no en su contenido —
+        // limpiar solo el innerHTML lo deja atado para siempre. Un clon nuevo
+        // descarta cualquier listener de la vista anterior de raíz, sin que
+        // cada módulo tenga que llevar la cuenta de los listeners de los
+        // demás (algo que ya no puede: solo conoce el suyo propio).
+        const limpio = contenedor.cloneNode(false);
+        contenedor.replaceWith(limpio);
+        contenedor = limpio;
+
         if (match && typeof match.vista.render === 'function') {
             match.vista.render(contenedor, match.params);
         } else {

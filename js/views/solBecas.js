@@ -40,9 +40,8 @@
     }
 
     function render(container) {
-        const filas = UCLA.data.solicitudesBecas.slice();
-
         function pintar() {
+            const filas = UCLA.data.solicitudesBecas;
             UCLA.components.listShell.render(container, {
                 titulo: 'Solicitudes de Becas o Descuentos',
                 columnas: columnas(),
@@ -57,8 +56,8 @@
                         titulo: 'Nueva solicitud de beca',
                         secciones: secciones(),
                         onGuardar: (datos) => {
-                            filas.unshift({
-                                id: 'sb-' + Date.now(), radicado: 'BEC-2026-' + Math.floor(1000 + Math.random() * 8999),
+                            UCLA.store.crear('solicitudesBecas', {
+                                radicado: 'BEC-2026-' + Math.floor(1000 + Math.random() * 8999),
                                 solicitante: datos.solicitante || 'Sin nombre', tipo: datos.tipo || 'Beca',
                                 modalidadBeca: datos.modalidadBeca || '', programa: datos.programa || '',
                                 porcentajeSolicitado: Number(datos.porcentajeSolicitado) || 0, porcentajeAprobado: null,
@@ -75,7 +74,7 @@
         }
 
         function abrirResolver(id) {
-            const beca = filas.find((f) => f.id === id);
+            const beca = UCLA.store.obtener('solicitudesBecas', id);
             if (!beca) return;
             let modal = document.getElementById('modalResolverBeca');
             if (!modal) {
@@ -105,9 +104,11 @@
             modal.querySelectorAll('[data-rb-cerrar]').forEach((el) => el.addEventListener('click', () => modal.classList.add('hidden')));
             modal.querySelector('#rbGuardar').addEventListener('click', () => {
                 const estado = modal.querySelector('#rbEstado').value;
-                beca.estado = estado;
-                beca.porcentajeAprobado = estado === 'Aprobada' ? Number(modal.querySelector('#rbPorcentaje').value) || 0 : 0;
-                beca.comentario = modal.querySelector('#rbComentario').value;
+                UCLA.store.actualizar('solicitudesBecas', beca.id, {
+                    estado,
+                    porcentajeAprobado: estado === 'Aprobada' ? Number(modal.querySelector('#rbPorcentaje').value) || 0 : 0,
+                    comentario: modal.querySelector('#rbComentario').value,
+                });
                 UCLA.utils.registrarAuditoria({
                     accion: estado === 'Aprobada' ? 'Aprobó solicitud de beca' : 'Rechazó solicitud de beca',
                     modulo: 'Solicitudes',
