@@ -93,9 +93,9 @@
         getCarpetasPersonalizadas() {
             return read('carpetasInformes', []);
         },
-        crearCarpeta(nombre) {
+        crearCarpeta(nombre, clasificacion = null) {
             const carpetas = read('carpetasInformes', []);
-            const carpeta = { id: 'custom-' + Date.now(), nombre };
+            const carpeta = { id: 'custom-' + Date.now(), nombre, clasificacion };
             carpetas.push(carpeta);
             write('carpetasInformes', carpetas);
             return carpeta;

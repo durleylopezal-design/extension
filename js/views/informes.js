@@ -56,6 +56,8 @@
                     </div>
                 </div>
 
+                <div id="bannerAreaExtension"></div>
+
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                     <table class="w-full">
                         <thead>
@@ -83,9 +85,99 @@
                         <button data-cerrar-modal-carpetas class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
                     </div>
                     <div id="listaCarpetasCustom" class="space-y-2 mb-4 max-h-56 overflow-y-auto"></div>
-                    <div class="flex gap-2">
-                        <input id="nombreCarpetaNueva" type="text" placeholder="Nombre de la carpeta" class="input-brand flex-1 px-3 py-2 text-sm">
-                        <button id="btnCrearCarpeta" class="btn-primary text-sm">Crear</button>
+                    <div class="space-y-3" style="border-top: 1px solid var(--color-border); padding-top: 12px;">
+                        <input id="nombreCarpetaNueva" type="text" placeholder="Nombre de la carpeta" class="input-brand w-full px-3 py-2 text-sm">
+                        <div>
+                            <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Clasificar por</label>
+                            <select id="clasificarPorCarpeta" class="input-brand w-full px-3 py-2 text-sm">
+                                <option value="facultad">Facultad + Programa</option>
+                                <option value="area">Área</option>
+                            </select>
+                        </div>
+                        <div id="camposFacultadPrograma" class="grid grid-cols-2 gap-2">
+                            <select id="facultadCarpeta" class="input-brand px-3 py-2 text-sm">
+                                ${UCLA.data.facultades.map((f) => `<option value="${f.id}">${f.nombre}</option>`).join('')}
+                            </select>
+                            <select id="programaCarpeta" class="input-brand px-3 py-2 text-sm"></select>
+                        </div>
+                        <div id="campoArea" class="hidden">
+                            <select id="areaCarpeta" class="input-brand w-full px-3 py-2 text-sm">
+                                ${UCLA.data.areasCarpetas.map((a) => `<option value="${a}">${a}</option>`).join('')}
+                            </select>
+                        </div>
+                        <button id="btnCrearCarpeta" class="btn-primary text-sm w-full">Crear carpeta</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Nueva Solicitud de Formación (carpeta de Área "Extensión") -->
+            <div id="modalSolicitudFormacion" class="hidden fixed inset-0 z-50 overflow-y-auto modal">
+                <div class="flex items-center justify-center min-h-screen px-4 py-8">
+                    <div class="fixed inset-0 bg-black opacity-50" data-cerrar-modal-solicitud></div>
+                    <div class="relative bg-white rounded-xl shadow-2xl max-w-2xl w-full p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold" style="color: var(--color-primary-dark);">Nueva Solicitud de Formación</h3>
+                            <button data-cerrar-modal-solicitud class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+                        </div>
+                        <form id="formSolicitudFormacion" class="space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Entidad/Empresa *</label>
+                                    <input id="sfEntidad" type="text" required class="input-brand w-full px-3 py-2 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">NIT *</label>
+                                    <input id="sfNit" type="text" required class="input-brand w-full px-3 py-2 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Persona de Contacto *</label>
+                                    <input id="sfContacto" type="text" required class="input-brand w-full px-3 py-2 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Cargo</label>
+                                    <input id="sfCargo" type="text" class="input-brand w-full px-3 py-2 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Correo Electrónico *</label>
+                                    <input id="sfCorreo" type="email" required class="input-brand w-full px-3 py-2 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Teléfono</label>
+                                    <input id="sfTelefono" type="tel" class="input-brand w-full px-3 py-2 text-sm">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Objetivo de la Formación *</label>
+                                <textarea id="sfObjetivo" required rows="3" class="input-brand w-full px-3 py-2 text-sm"></textarea>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Sede Preferida</label>
+                                    <select id="sfSede" class="input-brand w-full px-3 py-2 text-sm">
+                                        ${UCLA.state.SEDES.map((s) => `<option value="${s.codigo}">${s.nombre}</option>`).join('')}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Facultad Sugerida</label>
+                                    <select id="sfFacultad" class="input-brand w-full px-3 py-2 text-sm">
+                                        ${UCLA.data.facultades.map((f) => `<option value="${f.id}">${f.nombre}</option>`).join('')}
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Adjuntar Documentos</label>
+                                <div class="border-2 border-dashed rounded-lg p-6 text-center" style="border-color: var(--color-border);">
+                                    <i class="fas fa-cloud-upload-alt text-2xl mb-2" style="color: var(--color-text-muted);"></i>
+                                    <p class="text-sm" style="color: var(--color-text-muted);">Arrastre archivos aquí o haga clic para adjuntar</p>
+                                    <p class="text-xs mt-1" style="color: var(--color-text-muted);">PDF, DOCX hasta 10MB</p>
+                                    <input type="file" class="hidden" accept=".pdf,.docx">
+                                </div>
+                            </div>
+                            <div class="flex justify-end gap-2 pt-2">
+                                <button type="button" data-cerrar-modal-solicitud class="px-4 py-2 text-sm rounded-lg" style="color: var(--color-text-muted);">Cancelar</button>
+                                <button type="submit" class="btn-primary text-sm">Radicar Solicitud</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -93,11 +185,44 @@
 
         pintarCarpetaDropdown(container);
         pintarTabla(container);
+        pintarBanner(container);
         bind(container);
     }
 
     function carpetasCustom() {
         return UCLA.state.getCarpetasPersonalizadas();
+    }
+
+    function carpetaCustomActiva() {
+        if (carpetaActiva.tipo !== 'custom') return null;
+        return carpetasCustom().find((c) => c.id === carpetaActiva.id) || null;
+    }
+
+    function etiquetaClasificacion(c) {
+        if (!c.clasificacion) return '';
+        if (c.clasificacion.tipo === 'area') return `Área: ${c.clasificacion.area}`;
+        const fac = UCLA.data.facultades.find((f) => f.id === c.clasificacion.facultadId);
+        const prog = fac?.programas.find((p) => p.id === c.clasificacion.programaId);
+        return `${fac?.nombre || 'Facultad'}${prog ? ' · ' + prog.nombre : ''}`;
+    }
+
+    function pintarBanner(container) {
+        const banner = container.querySelector('#bannerAreaExtension');
+        const custom = carpetaCustomActiva();
+        const esExtension = custom?.clasificacion?.tipo === 'area' && custom.clasificacion.area === 'Extensión';
+        banner.innerHTML = esExtension ? `
+            <div class="flex items-center justify-between bg-white rounded-xl shadow-lg p-4" style="border-left: 4px solid var(--color-accent);">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-file-circle-plus text-xl" style="color: var(--color-accent-dark);"></i>
+                    <div>
+                        <p class="text-sm font-semibold" style="color: var(--color-text);">Carpeta de Área: Extensión</p>
+                        <p class="text-xs" style="color: var(--color-text-muted);">Radique aquí las solicitudes de formación de empresas y entidades externas.</p>
+                    </div>
+                </div>
+                <button id="btnNuevaSolicitudFormacion" class="btn-accent text-sm">
+                    <i class="fas fa-plus"></i> Nueva Solicitud de Formación
+                </button>
+            </div>` : '';
     }
 
     function pintarCarpetaDropdown(container) {
@@ -125,7 +250,7 @@
             <button type="button" data-carpeta-tipo="custom" data-carpeta-id="${c.id}" data-carpeta-etiqueta="${c.nombre}"
                 class="w-full flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-50 text-left">
                 <i class="fas fa-folder-open w-4" style="color: var(--color-accent);"></i>
-                <span class="flex-1" style="color: var(--color-text);">${c.nombre}</span>
+                <span class="flex-1" style="color: var(--color-text);">${c.nombre}${etiquetaClasificacion(c) ? `<span class="block text-xs" style="color: var(--color-text-muted);">${etiquetaClasificacion(c)}</span>` : ''}</span>
             </button>`).join('');
 
         panel.innerHTML = `
@@ -189,11 +314,17 @@
             ? lista.map((c) => `
                 <div class="flex items-center gap-2 px-3 py-2 rounded-lg" style="background: var(--color-primary-50);">
                     <i class="fas fa-folder-open" style="color: var(--color-accent);"></i>
-                    <span class="flex-1 text-sm" style="color: var(--color-text);">${c.nombre}</span>
+                    <span class="flex-1 text-sm" style="color: var(--color-text);">${c.nombre}${etiquetaClasificacion(c) ? ` <span style="color: var(--color-text-muted);">- ${etiquetaClasificacion(c)}</span>` : ''}</span>
                     <button data-renombrar-carpeta="${c.id}" title="Renombrar" style="color: var(--color-primary);"><i class="fas fa-pen text-xs"></i></button>
                     <button data-eliminar-carpeta="${c.id}" title="Eliminar" style="color: var(--color-danger);"><i class="fas fa-trash text-xs"></i></button>
                 </div>`).join('')
             : `<p class="text-sm" style="color: var(--color-text-muted);">Aún no hay carpetas personalizadas.</p>`;
+    }
+
+    function actualizarProgramasCarpeta(container) {
+        const facultadId = container.querySelector('#facultadCarpeta').value;
+        const fac = UCLA.data.facultades.find((f) => f.id === facultadId);
+        container.querySelector('#programaCarpeta').innerHTML = (fac?.programas || []).map((p) => `<option value="${p.id}">${p.nombre}</option>`).join('');
     }
 
     function bind(container) {
@@ -239,12 +370,14 @@
                 panel.classList.add('hidden');
                 pintarCarpetaDropdown(container);
                 pintarTabla(container);
+                pintarBanner(container);
                 return;
             }
             if (e.target.closest('#btnAdministrarCarpetas')) {
                 panelAbierto = false;
                 panel.classList.add('hidden');
                 pintarCarpetasCustom(container);
+                actualizarProgramasCarpeta(container);
                 container.querySelector('#modalCarpetas').classList.remove('hidden');
             }
             if (e.target.closest('#btnAnaliticaAvanzada')) {
@@ -269,13 +402,26 @@
         modal.querySelectorAll('[data-cerrar-modal-carpetas]').forEach((el) => {
             el.addEventListener('click', () => modal.classList.add('hidden'));
         });
+
+        const clasificarPor = container.querySelector('#clasificarPorCarpeta');
+        clasificarPor.addEventListener('change', () => {
+            const esArea = clasificarPor.value === 'area';
+            container.querySelector('#camposFacultadPrograma').classList.toggle('hidden', esArea);
+            container.querySelector('#campoArea').classList.toggle('hidden', !esArea);
+        });
+        container.querySelector('#facultadCarpeta').addEventListener('change', () => actualizarProgramasCarpeta(container));
+
         container.querySelector('#btnCrearCarpeta').addEventListener('click', () => {
             const input = container.querySelector('#nombreCarpetaNueva');
             if (!input.value.trim()) return;
-            UCLA.state.crearCarpeta(input.value.trim());
+            const clasificacion = clasificarPor.value === 'area'
+                ? { tipo: 'area', area: container.querySelector('#areaCarpeta').value }
+                : { tipo: 'facultad', facultadId: container.querySelector('#facultadCarpeta').value, programaId: container.querySelector('#programaCarpeta').value };
+            UCLA.state.crearCarpeta(input.value.trim(), clasificacion);
             input.value = '';
             pintarCarpetasCustom(container);
             pintarCarpetaDropdown(container);
+            UCLA.components.toast.show('Carpeta creada exitosamente', 'success');
         });
         modal.addEventListener('click', (e) => {
             const renombrar = e.target.closest('[data-renombrar-carpeta]');
@@ -293,6 +439,44 @@
                 pintarCarpetasCustom(container);
                 pintarCarpetaDropdown(container);
             }
+        });
+
+        const modalSolicitud = container.querySelector('#modalSolicitudFormacion');
+        container.querySelector('#bannerAreaExtension').addEventListener('click', (e) => {
+            if (e.target.closest('#btnNuevaSolicitudFormacion')) {
+                modalSolicitud.classList.remove('hidden');
+            }
+        });
+        modalSolicitud.querySelectorAll('[data-cerrar-modal-solicitud]').forEach((el) => {
+            el.addEventListener('click', () => modalSolicitud.classList.add('hidden'));
+        });
+        container.querySelector('#formSolicitudFormacion').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const form = e.target;
+            if (!form.reportValidity()) return;
+
+            const radicado = `SF-${new Date().getFullYear()}-${String(UCLA.data.solicitudesFormacion.length + 1).padStart(3, '0')}`;
+            UCLA.data.solicitudesFormacion.unshift({
+                id: 'sf-' + Date.now(),
+                radicado,
+                entidad: container.querySelector('#sfEntidad').value.trim(),
+                nit: container.querySelector('#sfNit').value.trim(),
+                contacto: container.querySelector('#sfContacto').value.trim(),
+                cargo: container.querySelector('#sfCargo').value.trim(),
+                correo: container.querySelector('#sfCorreo').value.trim(),
+                telefono: container.querySelector('#sfTelefono').value.trim(),
+                objetivo: container.querySelector('#sfObjetivo').value.trim(),
+                sedeId: container.querySelector('#sfSede').value,
+                facultadId: container.querySelector('#sfFacultad').value,
+                estado: 'En revisión',
+                fechaRadicado: new Date().toISOString().slice(0, 10),
+                documentos: [],
+            });
+            UCLA.utils.registrarAuditoria({ accion: 'Radicó solicitud de formación', modulo: 'Informes', detalle: `${radicado} - ${container.querySelector('#sfEntidad').value.trim()}` });
+            UCLA.components.toast.show(`Solicitud radicada exitosamente - Radicado ${radicado}`, 'success');
+
+            form.reset();
+            modalSolicitud.classList.add('hidden');
         });
     }
 

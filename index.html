@@ -293,7 +293,7 @@
                             <input type="checkbox" class="rounded" style="accent-color: var(--color-primary);">
                             <span class="text-sm" style="color: var(--color-text-muted);">Recordarme</span>
                         </label>
-                        <a href="#" class="text-sm font-medium hover:underline" style="color: var(--color-primary-light);">¿Olvidó su contraseña?</a>
+                        <a href="#" id="linkOlvidoPassword" class="text-sm font-medium hover:underline" style="color: var(--color-primary-light);">¿Olvidó su contraseña?</a>
                     </div>
 
                     <button type="submit" class="btn-primary w-full py-3 text-base">
@@ -305,9 +305,46 @@
                     <div class="flex justify-center gap-2">
                         <span class="sede-badge" style="background: var(--color-accent-100); color: var(--color-primary); border: 1px solid var(--color-accent);"><i class="fas fa-map-marker-alt"></i> Medellín</span>
                     </div>
-                    <p class="text-xs mt-2" style="color: var(--color-text-muted);">© 2026. Todos los derechos reservados.</p>
-                    <p class="text-xs mt-1" style="color: var(--color-text-muted);">Creado por semillero de investigación IAXpert S.R.C V1.0</p>
+                    <p class="text-xs mt-2" style="color: var(--color-text-muted);">© 2026 Todos los derechos reservados. [TUS INICIALES]</p>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="login-backdrop fixed inset-0 z-50 hidden flex items-center justify-center modal">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md transform transition-all overflow-hidden">
+
+            <!-- Barra bicromática superior -->
+            <div class="brand-topbar"></div>
+
+            <!-- Cabecera institucional -->
+            <div class="text-center pt-8 pb-6 px-8" style="background: linear-gradient(180deg, var(--color-primary-50) 0%, #ffffff 100%);">
+                <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%); border: 3px solid var(--color-accent);">
+                    <i class="fas fa-key text-white text-3xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold" style="color: var(--color-primary);">Recuperar contraseña</h2>
+                <p class="text-sm mt-1" style="color: var(--color-text-muted);">Le enviaremos un enlace de recuperación a su correo institucional</p>
+            </div>
+
+            <div class="px-8 pb-8">
+                <form id="forgotPasswordForm" class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1.5" style="color: var(--color-primary);">Correo Institucional</label>
+                        <div class="relative">
+                            <i class="fas fa-envelope absolute left-3 top-3.5" style="color: var(--color-primary-light);"></i>
+                            <input type="email" id="forgotEmail" required class="input-brand w-full pl-10 pr-4 py-3 text-sm" placeholder="usuario@amigo.edu.co">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary w-full py-3 text-base">
+                        <i class="fas fa-paper-plane mr-2"></i> Enviar enlace de recuperación
+                    </button>
+
+                    <button type="button" id="btnVolverLogin" class="w-full py-2 text-sm font-medium text-center hover:underline" style="background: none; color: var(--color-primary-light);">
+                        <i class="fas fa-arrow-left mr-1"></i> Volver a iniciar sesión
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -641,12 +678,15 @@
     <script src="js/data/leads.js"></script>
     <script src="js/data/contactos.js"></script>
     <script src="js/data/oportunidades.js"></script>
+    <script src="js/data/campanas.js"></script>
     <script src="js/data/documentos.js"></script>
     <script src="js/data/tareas.js"></script>
     <script src="js/data/reuniones.js"></script>
     <script src="js/data/llamadas.js"></script>
     <script src="js/data/solicitudesAdmision.js"></script>
     <script src="js/data/solicitudesBecas.js"></script>
+    <script src="js/data/solicitudesFormacion.js"></script>
+    <script src="js/data/facultades.js"></script>
     <script src="js/data/solicitudesHomologacion.js"></script>
     <script src="js/data/egresados.js"></script>
     <script src="js/data/recordatorios.js"></script>
@@ -678,6 +718,7 @@
     <script src="js/views/crmPrevisiones.js"></script>
     <script src="js/views/crmDocumentos.js"></script>
     <script src="js/views/crmCampanas.js"></script>
+    <script src="js/views/crmCampanaDetalle.js"></script>
     <script src="js/views/eventos.js"></script>
     <script src="js/views/financiero.js"></script>
     <script src="js/views/solicitudes.js"></script>

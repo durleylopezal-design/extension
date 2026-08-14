@@ -40,46 +40,83 @@
         ];
     }
 
+    function secciones() {
+        return [{
+            titulo: 'Información de la oportunidad',
+            camposIzquierda: [
+                { clave: 'nombre', etiqueta: 'Nombre', tipo: 'text', obligatorio: true },
+                { clave: 'valor', etiqueta: 'Valor', tipo: 'number' },
+                { clave: 'etapa', etiqueta: 'Etapa', tipo: 'select', opciones: ETAPAS.map((e) => e.id + ' - ' + e.etiqueta) },
+                { clave: 'sedeId', etiqueta: 'Sede', tipo: 'select', opciones: UCLA.state.SEDES.map((s) => s.codigo + ' - ' + s.nombre) },
+            ],
+            camposDerecha: [
+                { clave: 'descripcion', etiqueta: 'Descripción', tipo: 'textarea' },
+                { clave: 'fecha', etiqueta: 'Fecha de cierre estimada', tipo: 'date' },
+                { clave: 'propietario', etiqueta: 'Propietario', tipo: 'text' },
+            ],
+        }];
+    }
+
     function render(container) {
         const filas = UCLA.data.oportunidades.slice();
 
-        UCLA.components.listShell.render(container, {
-            titulo: 'Oportunidades de Matrícula',
-            vistaInicial: 'kanban',
-            columnas: columnasLista(),
-            filas,
-            filaId: (f) => f.id,
-            camposModulo: CAMPOS_MODULO,
-            campoOrden: 'nombre',
-            exportName: 'oportunidades',
-            extraToolbarHtml: `
-                <div class="flex items-center gap-1 px-3 py-1.5 text-sm rounded-lg border" style="border-color: var(--color-border); color: var(--color-text);">
-                    <span class="font-semibold uppercase text-xs" style="color: var(--color-text-muted);">STAGEVIEW</span>
-                    <button id="oppEditarFlujo" title="Editar flujo de etapas" class="ml-2" style="color: var(--color-primary);"><i class="fas fa-pen text-xs"></i></button>
-                </div>`,
-            onExtraToolbarBind: (root) => {
-                root.querySelector('#oppEditarFlujo')?.addEventListener('click', () => {
-                    UCLA.components.toast.show('Edición del flujo de etapas - función simulada', 'info');
-                });
-            },
-            renderKanban: (cuerpo) => {
-                UCLA.components.kanbanBoard.render(cuerpo, {
-                    columnas: ETAPAS,
-                    filas,
-                    filaId: (f) => f.id,
-                    renderTarjeta: tarjetaHtml,
-                    onMover: (id, nuevaEtapa) => {
-                        const opp = filas.find((f) => f.id === id);
-                        if (opp) opp.etapa = nuevaEtapa;
-                        UCLA.components.toast.show('Oportunidad actualizada exitosamente', 'success');
-                    },
-                });
-            },
-            botonPrincipal: {
-                etiqueta: 'Crear Oportunidad',
-                onClick: () => UCLA.components.modal.open('nuevaOportunidadModal'),
-            },
-        });
+        function pintar() {
+            UCLA.components.listShell.render(container, {
+                titulo: 'Oportunidades de Matrícula',
+                vistaInicial: 'kanban',
+                columnas: columnasLista(),
+                filas,
+                filaId: (f) => f.id,
+                camposModulo: CAMPOS_MODULO,
+                campoOrden: 'nombre',
+                exportName: 'oportunidades',
+                extraToolbarHtml: `
+                    <div class="flex items-center gap-1 px-3 py-1.5 text-sm rounded-lg border" style="border-color: var(--color-border); color: var(--color-text);">
+                        <span class="font-semibold uppercase text-xs" style="color: var(--color-text-muted);">STAGEVIEW</span>
+                        <button id="oppEditarFlujo" title="Editar flujo de etapas" class="ml-2" style="color: var(--color-primary);"><i class="fas fa-pen text-xs"></i></button>
+                    </div>`,
+                onExtraToolbarBind: (root) => {
+                    root.querySelector('#oppEditarFlujo')?.addEventListener('click', () => {
+                        UCLA.components.toast.show('Edición del flujo de etapas - función simulada', 'info');
+                    });
+                },
+                renderKanban: (cuerpo) => {
+                    UCLA.components.kanbanBoard.render(cuerpo, {
+                        columnas: ETAPAS,
+                        filas,
+                        filaId: (f) => f.id,
+                        renderTarjeta: tarjetaHtml,
+                        onMover: (id, nuevaEtapa) => {
+                            const opp = filas.find((f) => f.id === id);
+                            if (opp) opp.etapa = nuevaEtapa;
+                            UCLA.components.toast.show('Oportunidad actualizada exitosamente', 'success');
+                        },
+                    });
+                },
+                botonPrincipal: {
+                    etiqueta: 'Crear Oportunidad',
+                    onClick: () => UCLA.components.recordForm.abrir({
+                        titulo: 'Nueva Oportunidad',
+                        secciones: secciones(),
+                        onGuardar: (datos) => {
+                            filas.unshift({
+                                id: 'opp-' + Date.now(),
+                                nombre: datos.nombre || 'Sin nombre',
+                                descripcion: datos.descripcion || '',
+                                valor: Number(datos.valor) || 0,
+                                etapa: (datos.etapa || '').split(' - ')[0] || ETAPAS[0].id,
+                                fecha: datos.fecha || '',
+                                propietario: datos.propietario || UCLA.state.usuarioActual.nombre,
+                                sedeId: (datos.sedeId || '').split(' - ')[0] || UCLA.state.usuarioActual.sedeId,
+                            });
+                            pintar();
+                        },
+                    }),
+                },
+            });
+        }
+
+        pintar();
     }
 
     UCLA.views['crm/oportunidades'] = { render };

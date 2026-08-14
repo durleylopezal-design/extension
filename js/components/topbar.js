@@ -78,7 +78,7 @@
                             <i class="fas fa-plus"></i> Nuevo
                         </button>
                         <div id="menuNuevo" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border py-2 z-20" style="border-color: var(--color-border);">
-                            <button type="button" data-modal="nuevaOportunidadModal" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 flex items-center gap-2"><i class="fas fa-bullseye w-4" style="color: var(--color-primary);"></i> Nueva Oportunidad</button>
+                            <button type="button" data-ruta="crm/oportunidades" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 flex items-center gap-2"><i class="fas fa-bullseye w-4" style="color: var(--color-primary);"></i> Nueva Oportunidad</button>
                             <button type="button" data-modal="nuevoEventoModal" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 flex items-center gap-2"><i class="fas fa-calendar-plus w-4" style="color: var(--color-primary);"></i> Nuevo Evento</button>
                             <button type="button" data-modal="nuevaSolicitudModal" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 flex items-center gap-2"><i class="fas fa-file-circle-plus w-4" style="color: var(--color-primary);"></i> Nueva Solicitud</button>
                         </div>
@@ -148,6 +148,12 @@
         menuNuevo.querySelectorAll('[data-modal]').forEach((btn) => {
             btn.addEventListener('click', () => {
                 UCLA.components.modal.open(btn.getAttribute('data-modal'));
+                cerrarMenusFlotantes();
+            });
+        });
+        menuNuevo.querySelectorAll('[data-ruta]').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                UCLA.router.navigate(btn.getAttribute('data-ruta'));
                 cerrarMenusFlotantes();
             });
         });
