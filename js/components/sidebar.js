@@ -189,7 +189,7 @@
                         <i class="fas fa-sign-out-alt"></i>
                     </button>
                 </div>
-                <p class="text-[10px] text-center mt-3" style="color: rgba(255,255,255,0.35);">Creado por semillero de investigación IAXpert S.R.C V1.0</p>
+                <p class="text-[10px] text-center mt-3" style="color: rgba(255,255,255,0.35);">© 2026 Todos los derechos reservados. S.R.C</p>
             </div>`;
     }
 
