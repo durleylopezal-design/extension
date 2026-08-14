@@ -10,7 +10,8 @@
         'Último estado de correo electrónico', 'Cadencias',
     ];
 
-    function render(container, { camposModulo, onBuscar }) {
+    function render(container, { camposModulo, onBuscar, onCambioCampos, camposActivos }) {
+        const activos = camposActivos || [];
         container.innerHTML = `
             <div class="bg-white rounded-xl shadow-lg p-4 w-64 flex-shrink-0">
                 <div class="relative mb-4">
@@ -33,16 +34,26 @@
                     <div class="space-y-1.5">
                         ${camposModulo.map((f) => `
                             <label class="flex items-center gap-2 text-sm cursor-pointer" style="color: var(--color-text);">
-                                <input type="checkbox" data-filtro-campo>${f}
+                                <input type="checkbox" data-filtro-campo value="${f}" ${activos.includes(f) ? 'checked' : ''}>${f}
                             </label>`).join('')}
                     </div>
                 </div>
             </div>`;
 
         container.querySelector('#filtroBuscador').addEventListener('input', UCLA.utils.debounce((e) => onBuscar(e.target.value), 200));
-        container.querySelectorAll('[data-filtro-sistema], [data-filtro-campo]').forEach((chk) => {
+        container.querySelectorAll('[data-filtro-sistema]').forEach((chk) => {
             chk.addEventListener('change', () => {
                 if (chk.checked) UCLA.components.toast.show('Filtro aplicado (simulado)', 'info');
+            });
+        });
+        container.querySelectorAll('[data-filtro-campo]').forEach((chk) => {
+            chk.addEventListener('change', () => {
+                if (onCambioCampos) {
+                    const marcados = Array.from(container.querySelectorAll('[data-filtro-campo]:checked')).map((el) => el.value);
+                    onCambioCampos(marcados);
+                } else if (chk.checked) {
+                    UCLA.components.toast.show('Filtro aplicado (simulado)', 'info');
+                }
             });
         });
     }

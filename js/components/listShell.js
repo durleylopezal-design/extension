@@ -17,7 +17,7 @@
     let cerrarMenusHandler = null;
 
     function render(container, config) {
-        const estado = { filtroTexto: '', panelAbierto: false, ordenAsc: true, vista: config.vistaInicial || 'lista' };
+        const estado = { filtroTexto: '', panelAbierto: false, ordenAsc: true, vista: config.vistaInicial || 'lista', camposActivos: [] };
 
         container.innerHTML = `
             <div class="space-y-4">
@@ -81,6 +81,9 @@
                 const t = estado.filtroTexto.trim().toLowerCase();
                 filas = filas.filter((f) => JSON.stringify(f).toLowerCase().includes(t));
             }
+            if (config.filtrarPorCampos && estado.camposActivos && estado.camposActivos.length) {
+                filas = filas.filter((f) => config.filtrarPorCampos(f, estado.camposActivos));
+            }
             const campoOrden = config.campoOrden || config.columnas[0].clave;
             filas = filas.slice().sort((a, b) => {
                 const va = a[campoOrden];
@@ -100,6 +103,10 @@
             const cuerpo = container.querySelector('#lsCuerpo');
             if (estado.vista === 'kanban' && config.renderKanban) {
                 config.renderKanban(cuerpo);
+                return;
+            }
+            if (config.vistas && config.vistas[estado.vista]) {
+                config.vistas[estado.vista](cuerpo, filasVisibles());
                 return;
             }
             UCLA.components.dataTable.render(cuerpo, {
@@ -124,6 +131,8 @@
                 UCLA.components.filterPanel.render(panel, {
                     camposModulo: config.camposModulo || [],
                     onBuscar: (texto) => { estado.filtroTexto = texto; UCLA.components.dataTable.resetPagina(container.querySelector('#lsCuerpo')); pintarCuerpo(); },
+                    camposActivos: estado.camposActivos,
+                    onCambioCampos: config.filtrarPorCampos ? (activos) => { estado.camposActivos = activos; pintarCuerpo(); } : undefined,
                 });
             }
         });
@@ -139,12 +148,9 @@
         container.querySelectorAll('[data-vista]').forEach((btn) => {
             btn.addEventListener('click', () => {
                 const tipo = btn.getAttribute('data-vista');
-                if (tipo !== 'lista' && tipo !== 'kanban') {
-                    UCLA.components.toast.show('Esta vista se simulará en una próxima iteración', 'info');
-                    return;
-                }
-                if (tipo === 'kanban' && !config.renderKanban) {
-                    UCLA.components.toast.show('Esta sección no tiene vista Kanban', 'info');
+                const disponible = tipo === 'lista' || (tipo === 'kanban' && config.renderKanban) || (config.vistas && config.vistas[tipo]);
+                if (!disponible) {
+                    UCLA.components.toast.show('Esta sección no tiene esta vista disponible', 'info');
                     return;
                 }
                 estado.vista = tipo;
