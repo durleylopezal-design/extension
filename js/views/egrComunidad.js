@@ -49,8 +49,8 @@
         clickHandler = (e) => {
             const btn = e.target.closest('[data-like]');
             if (!btn) return;
-            const p = UCLA.data.publicacionesComunidad.find((x) => x.id === btn.getAttribute('data-like'));
-            if (p) { p.likes++; pintar(); }
+            const p = UCLA.store.obtener('publicacionesComunidad', btn.getAttribute('data-like'));
+            if (p) { UCLA.store.actualizar('publicacionesComunidad', p.id, { likes: p.likes + 1 }); pintar(); }
         };
         container.addEventListener('click', clickHandler);
 
@@ -86,8 +86,8 @@
         modal.querySelector('#npGuardar').addEventListener('click', () => {
             const titulo = modal.querySelector('#npTitulo');
             if (!titulo.value.trim()) { titulo.style.borderColor = 'var(--color-danger)'; return; }
-            UCLA.data.publicacionesComunidad.unshift({
-                id: 'pub-' + Date.now(), autorEgresadoId: UCLA.data.egresados[0].id, fecha: new Date().toISOString().slice(0, 10),
+            UCLA.store.crear('publicacionesComunidad', {
+                autorEgresadoId: UCLA.data.egresados[0].id, fecha: new Date().toISOString().slice(0, 10),
                 tipo: modal.querySelector('#npTipo').value, titulo: titulo.value.trim(), contenido: modal.querySelector('#npContenido').value, likes: 0,
             });
             UCLA.components.toast.show('Publicación creada', 'success');

@@ -81,7 +81,7 @@
         modal.querySelector('#sgGuardar').addEventListener('click', () => {
             const nota = modal.querySelector('#sgNota');
             if (!nota.value.trim()) { nota.style.borderColor = 'var(--color-danger)'; return; }
-            UCLA.data.interaccionesAlianza.unshift({ id: 'ia-' + Date.now(), cuentaId: convenio.cuentaId, tipo: 'llamada', fecha: new Date().toISOString().slice(0, 10), titulo: 'Seguimiento de convenio', detalle: nota.value.trim() });
+            UCLA.store.crear('interaccionesAlianza', { cuentaId: convenio.cuentaId, tipo: 'llamada', fecha: new Date().toISOString().slice(0, 10), titulo: 'Seguimiento de convenio', detalle: nota.value.trim() });
             UCLA.components.toast.show('Seguimiento registrado', 'success');
             modal.classList.add('hidden');
             alGuardar();

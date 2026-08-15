@@ -1,6 +1,6 @@
 // diasMora se guarda precalculado (no se deriva de "hoy" en tiempo real) para
 // mantener la demo estable: valores negativos = aún no vence.
-UCLA.data.cuentasPorCobrar = [
+UCLA.data.cuentasPorCobrar = UCLA.store.hidratar('cuentasPorCobrar', [
     { id: 'cxc-01', estudiante: 'Tomás Vargas Salazar', programa: 'Administración de Empresas', factura: 'FAC-2026-1209', valorTotal: 2800000, abonado: 900000, saldo: 1900000, fechaVencimiento: '2026-08-20', diasMora: -17, estado: 'Al día', gestor: 'Carlos Pérez', acuerdoPago: null },
     { id: 'cxc-02', estudiante: 'Gabriela Suárez Henao', programa: 'Administración de Empresas', factura: 'FAC-2026-1213', valorTotal: 2600000, abonado: 0, saldo: 2600000, fechaVencimiento: '2026-08-06', diasMora: -3, estado: 'Por vencer', gestor: 'Ana García', acuerdoPago: null },
     { id: 'cxc-03', estudiante: 'Isabella Ospina Cardona', programa: 'Ciencias Económicas', factura: 'FAC-2026-1220', valorTotal: 2400000, abonado: 1200000, saldo: 1200000, fechaVencimiento: '2026-07-25', diasMora: 9, estado: 'Vencida', gestor: 'María López', acuerdoPago: null },
@@ -14,4 +14,4 @@ UCLA.data.cuentasPorCobrar = [
     { id: 'cxc-11', estudiante: 'Silvia Juliana Arboleda Isaza', programa: 'Derecho', factura: 'FAC-2026-1228', valorTotal: 2900000, abonado: 2900000, saldo: 0, fechaVencimiento: '2026-06-01', diasMora: 0, estado: 'Al día', gestor: 'María López', acuerdoPago: null },
     { id: 'cxc-12', estudiante: 'Ramiro Antonio Bedoya León', programa: 'Ciencias Económicas', factura: 'FAC-2026-1229', valorTotal: 2400000, abonado: 1000000, saldo: 1400000, fechaVencimiento: '2026-02-10', diasMora: 174, estado: 'Vencida', gestor: 'Juan Martínez', acuerdoPago: null },
     { id: 'cxc-13', estudiante: 'Claudia Patricia Ríos Duque', programa: 'Psicología', factura: 'FAC-2026-1230', valorTotal: 2700000, abonado: 900000, saldo: 1800000, fechaVencimiento: '2026-08-15', diasMora: -12, estado: 'Al día', gestor: 'Carlos Pérez', acuerdoPago: null },
-];
+]);

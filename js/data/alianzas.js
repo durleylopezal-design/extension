@@ -27,7 +27,7 @@ UCLA.data.programasAlianza = [
     { id: 'pa-08', cuentaId: 'cta-15', convenioId: 'conv-10', nombre: 'Diplomado en Bienestar Organizacional', modalidad: 'Virtual', cupoMaximo: 30, inscritos: 6, fechaInicio: '2026-11-01', estado: 'Programado' },
 ];
 
-UCLA.data.interaccionesAlianza = [
+UCLA.data.interaccionesAlianza = UCLA.store.hidratar('interaccionesAlianza', [
     { id: 'ia-01', cuentaId: 'cta-01', tipo: 'correo', fecha: '2026-07-10', titulo: 'Propuesta de renovación anticipada', detalle: 'Se envió propuesta de renovación con nuevas condiciones de descuento.' },
     { id: 'ia-02', cuentaId: 'cta-01', tipo: 'llamada', fecha: '2026-06-15', titulo: 'Seguimiento semestral del convenio', detalle: 'Revisión de cupos utilizados y satisfacción de los empleados inscritos.' },
     { id: 'ia-03', cuentaId: 'cta-02', tipo: 'evento', fecha: '2026-05-20', titulo: 'Participación en feria de formación técnica', detalle: 'SENA participó como aliado en la feria de programas técnicos.' },
@@ -36,4 +36,4 @@ UCLA.data.interaccionesAlianza = [
     { id: 'ia-06', cuentaId: 'cta-05', tipo: 'correo', fecha: '2026-07-28', titulo: 'Alerta de vencimiento próximo', detalle: 'Convenio próximo a vencer, pendiente de gestión de renovación.' },
     { id: 'ia-07', cuentaId: 'cta-07', tipo: 'evento', fecha: '2026-04-04', titulo: 'Cierre del semillero de ciencias', detalle: 'Ceremonia de cierre con entrega de reconocimientos a estudiantes.' },
     { id: 'ia-08', cuentaId: 'cta-09', tipo: 'llamada', fecha: '2026-07-15', titulo: 'Planeación de rueda de negocios', detalle: 'Definición de agenda y empresas invitadas para la rueda de negocios.' },
-];
+]);

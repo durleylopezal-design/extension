@@ -1,4 +1,4 @@
-UCLA.data.pagos = [
+UCLA.data.pagos = UCLA.store.hidratar('pagos', [
     { id: 'pag-01', recibo: 'REC-2026-3301', estudiante: 'Andrés Felipe Londoño Marín', programa: 'Ingeniería de Sistemas', concepto: 'Matrícula', valorBruto: 3200000, descuento: 0, valor: 3200000, medioPago: 'Transferencia', fecha: '2026-07-20', estado: 'Pagado', facturaAsociada: 'FAC-2026-1201', sedeId: 'MDE' },
     { id: 'pag-02', recibo: 'REC-2026-3302', estudiante: 'Valentina Restrepo Gómez', programa: 'Ingeniería de Sistemas', concepto: 'Matrícula', valorBruto: 3200000, descuento: 1600000, valor: 1600000, medioPago: 'PSE', fecha: '2026-07-22', estado: 'Pagado', facturaAsociada: 'FAC-2026-1202', sedeId: 'MDE' },
     { id: 'pag-03', recibo: 'REC-2026-3303', estudiante: 'Mariana Correa Vélez', programa: 'Derecho', concepto: 'Matrícula', valorBruto: 2900000, descuento: 0, valor: 2900000, medioPago: 'Convenio', fecha: '2026-07-18', estado: 'Pagado', facturaAsociada: 'FAC-2026-1203', sedeId: 'MZL' },
@@ -14,4 +14,4 @@ UCLA.data.pagos = [
     { id: 'pag-13', recibo: 'REC-2026-3313', estudiante: 'Gabriela Suárez Henao', programa: 'Administración de Empresas', concepto: 'Cuota', valorBruto: 850000, descuento: 0, valor: 850000, medioPago: 'PSE', fecha: '2026-08-02', estado: 'Pendiente', facturaAsociada: 'FAC-2026-1213', sedeId: 'MZL' },
     { id: 'pag-14', recibo: 'REC-2026-3314', estudiante: 'Samuel Aristizábal Cano', programa: 'Ingeniería Industrial', concepto: 'Matrícula', valorBruto: 3000000, descuento: 750000, valor: 2250000, medioPago: 'Convenio', fecha: '2026-07-08', estado: 'Pagado', facturaAsociada: 'FAC-2026-1214', sedeId: 'MDE' },
     { id: 'pag-15', recibo: 'REC-2026-3315', estudiante: 'Mateo Franco Bedoya', programa: 'Derecho', concepto: 'Matrícula', valorBruto: 2900000, descuento: 1015000, valor: 1885000, medioPago: 'Transferencia', fecha: '2026-07-19', estado: 'Pagado', facturaAsociada: 'FAC-2026-1215', sedeId: 'MDE' },
-];
+]);

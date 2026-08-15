@@ -53,9 +53,8 @@
     }
 
     function render(container) {
-        const filas = UCLA.data.cuentasPorCobrar.slice();
-
         function pintar() {
+            const filas = UCLA.data.cuentasPorCobrar;
             container.innerHTML = `
                 <div id="finCarteraStats" class="mb-4"></div>
                 <div id="finCarteraLista" class="mb-4"></div>
@@ -91,8 +90,8 @@
         clickHandler = (e) => {
             const gestion = e.target.closest('[data-gestion]');
             const acuerdo = e.target.closest('[data-acuerdo]');
-            if (gestion) abrirGestionCobro(filas.find((f) => f.id === gestion.getAttribute('data-gestion')));
-            else if (acuerdo) abrirAcuerdoPago(filas.find((f) => f.id === acuerdo.getAttribute('data-acuerdo')), pintar);
+            if (gestion) abrirGestionCobro(UCLA.store.obtener('cuentasPorCobrar', gestion.getAttribute('data-gestion')));
+            else if (acuerdo) abrirAcuerdoPago(UCLA.store.obtener('cuentasPorCobrar', acuerdo.getAttribute('data-acuerdo')), pintar);
         };
         container.addEventListener('click', clickHandler);
 
@@ -198,8 +197,10 @@
             });
 
             modal.querySelector('#apGuardar').addEventListener('click', () => {
-                cuenta.estado = 'En acuerdo de pago';
-                cuenta.acuerdoPago = { activo: true, cuotas: cuotasGeneradas };
+                UCLA.store.actualizar('cuentasPorCobrar', cuenta.id, {
+                    estado: 'En acuerdo de pago',
+                    acuerdoPago: { activo: true, cuotas: cuotasGeneradas },
+                });
                 UCLA.components.toast.show('Acuerdo de pago creado', 'success');
                 modal.classList.add('hidden');
                 alGuardar();

@@ -32,9 +32,8 @@
     }
 
     function render(container) {
-        const filas = UCLA.data.pagos.slice();
-
         function pintar() {
+            const filas = UCLA.data.pagos;
             container.innerHTML = `<div id="finPagosStats" class="mb-4"></div><div id="finPagosLista"></div>`;
             UCLA.components.statCards.render(container.querySelector('#finPagosStats'), stats(filas));
             UCLA.components.listShell.render(container.querySelector('#finPagosLista'), {
@@ -45,7 +44,7 @@
                 camposModulo: CAMPOS_MODULO,
                 campoOrden: 'fecha',
                 exportName: 'pagos',
-                botonPrincipal: { etiqueta: 'Registrar pago', onClick: () => abrirModal(filas, pintar) },
+                botonPrincipal: { etiqueta: 'Registrar pago', onClick: () => abrirModal(pintar) },
             });
         }
 
@@ -56,7 +55,7 @@
         return UCLA.data.solicitudesBecas.filter((b) => b.estado === 'Aprobada' && (!estudiante || b.solicitante.toLowerCase().includes(estudiante.toLowerCase())));
     }
 
-    function abrirModal(filas, alGuardar) {
+    function abrirModal(alGuardar) {
         let modal = document.getElementById('modalRegistrarPago');
         if (!modal) {
             modal = document.createElement('div');
@@ -162,8 +161,8 @@
                     const beca = UCLA.data.solicitudesBecas.find((b) => b.id === modal.querySelector('#rpBeca').value);
                     if (beca) descuento = Math.round(valorBruto * (beca.porcentajeAprobado / 100));
                 }
-                filas.unshift({
-                    id: 'pag-' + Date.now(), recibo: 'REC-2026-' + Math.floor(3400 + Math.random() * 500),
+                UCLA.store.crear('pagos', {
+                    recibo: 'REC-2026-' + Math.floor(3400 + Math.random() * 500),
                     estudiante: estudiante.value.trim(), programa: modal.querySelector('#rpPrograma').value,
                     concepto: modal.querySelector('#rpConcepto').value, valorBruto, descuento, valor: valorBruto - descuento,
                     medioPago: modal.querySelector('#rpMedio').value, fecha: modal.querySelector('#rpFecha').value || new Date().toISOString().slice(0, 10),
