@@ -109,78 +109,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Modal Nueva Solicitud de Formación (carpeta de Área "Extensión") -->
-            <div id="modalSolicitudFormacion" class="hidden fixed inset-0 z-50 overflow-y-auto modal">
-                <div class="flex items-center justify-center min-h-screen px-4 py-8">
-                    <div class="fixed inset-0 bg-black opacity-50" data-cerrar-modal-solicitud></div>
-                    <div class="relative bg-white rounded-xl shadow-2xl max-w-2xl w-full p-6">
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-xl font-bold" style="color: var(--color-primary-dark);">Nueva Solicitud de Formación</h3>
-                            <button data-cerrar-modal-solicitud class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
-                        </div>
-                        <form id="formSolicitudFormacion" class="space-y-4">
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Entidad/Empresa *</label>
-                                    <input id="sfEntidad" type="text" required class="input-brand w-full px-3 py-2 text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">NIT *</label>
-                                    <input id="sfNit" type="text" required class="input-brand w-full px-3 py-2 text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Persona de Contacto *</label>
-                                    <input id="sfContacto" type="text" required class="input-brand w-full px-3 py-2 text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Cargo</label>
-                                    <input id="sfCargo" type="text" class="input-brand w-full px-3 py-2 text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Correo Electrónico *</label>
-                                    <input id="sfCorreo" type="email" required class="input-brand w-full px-3 py-2 text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Teléfono</label>
-                                    <input id="sfTelefono" type="tel" class="input-brand w-full px-3 py-2 text-sm">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Objetivo de la Formación *</label>
-                                <textarea id="sfObjetivo" required rows="3" class="input-brand w-full px-3 py-2 text-sm"></textarea>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Sede Preferida</label>
-                                    <select id="sfSede" class="input-brand w-full px-3 py-2 text-sm">
-                                        ${UCLA.state.SEDES.map((s) => `<option value="${s.codigo}">${s.nombre}</option>`).join('')}
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Facultad Sugerida</label>
-                                    <select id="sfFacultad" class="input-brand w-full px-3 py-2 text-sm">
-                                        ${UCLA.data.facultades.map((f) => `<option value="${f.id}">${f.nombre}</option>`).join('')}
-                                    </select>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Adjuntar Documentos</label>
-                                <div class="border-2 border-dashed rounded-lg p-6 text-center" style="border-color: var(--color-border);">
-                                    <i class="fas fa-cloud-upload-alt text-2xl mb-2" style="color: var(--color-text-muted);"></i>
-                                    <p class="text-sm" style="color: var(--color-text-muted);">Arrastre archivos aquí o haga clic para adjuntar</p>
-                                    <p class="text-xs mt-1" style="color: var(--color-text-muted);">PDF, DOCX hasta 10MB</p>
-                                    <input type="file" class="hidden" accept=".pdf,.docx">
-                                </div>
-                            </div>
-                            <div class="flex justify-end gap-2 pt-2">
-                                <button type="button" data-cerrar-modal-solicitud class="px-4 py-2 text-sm rounded-lg" style="color: var(--color-text-muted);">Cancelar</button>
-                                <button type="submit" class="btn-primary text-sm">Radicar Solicitud</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
         `;
 
         pintarCarpetaDropdown(container);
@@ -441,43 +369,277 @@
             }
         });
 
-        const modalSolicitud = container.querySelector('#modalSolicitudFormacion');
         container.querySelector('#bannerAreaExtension').addEventListener('click', (e) => {
             if (e.target.closest('#btnNuevaSolicitudFormacion')) {
-                modalSolicitud.classList.remove('hidden');
+                abrirModalSolicitud(null, () => {});
             }
         });
-        modalSolicitud.querySelectorAll('[data-cerrar-modal-solicitud]').forEach((el) => {
-            el.addEventListener('click', () => modalSolicitud.classList.add('hidden'));
+    }
+
+    // Modal "Nueva/Editar Solicitud de Formación" — singleton en document.body
+    // (no dentro del container de esta vista) para poder reutilizarlo también
+    // desde js/views/solicitudes.js (ruta solicitudes/seguimiento) al editar
+    // un registro existente, sin duplicar la definición de los campos.
+    let modalSolicitudEl = null;
+    let solicitudEnEdicion = null;
+    let archivosPendientes = []; // File[] seleccionados en esta apertura del modal, aún sin subir
+    let onGuardarSolicitud = null;
+
+    function asegurarModalSolicitud() {
+        if (modalSolicitudEl) return modalSolicitudEl;
+        modalSolicitudEl = document.createElement('div');
+        modalSolicitudEl.id = 'modalSolicitudFormacion';
+        modalSolicitudEl.className = 'hidden fixed inset-0 z-50 overflow-y-auto modal';
+        modalSolicitudEl.innerHTML = `
+            <div class="flex items-center justify-center min-h-screen px-4 py-8">
+                <div class="fixed inset-0 bg-black opacity-50" data-cerrar-modal-solicitud></div>
+                <div class="relative bg-white rounded-xl shadow-2xl max-w-2xl w-full p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 id="sfTitulo" class="text-xl font-bold" style="color: var(--color-primary-dark);">Nueva Solicitud de Formación</h3>
+                        <button data-cerrar-modal-solicitud class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+                    </div>
+                    <form id="formSolicitudFormacion" class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Entidad/Empresa *</label>
+                                <input id="sfEntidad" type="text" required class="input-brand w-full px-3 py-2 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">NIT *</label>
+                                <input id="sfNit" type="text" required class="input-brand w-full px-3 py-2 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Persona de Contacto *</label>
+                                <input id="sfContacto" type="text" required class="input-brand w-full px-3 py-2 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Cargo</label>
+                                <input id="sfCargo" type="text" class="input-brand w-full px-3 py-2 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Correo Electrónico *</label>
+                                <input id="sfCorreo" type="email" required class="input-brand w-full px-3 py-2 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Teléfono</label>
+                                <input id="sfTelefono" type="tel" class="input-brand w-full px-3 py-2 text-sm">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Objetivo de la Formación *</label>
+                            <textarea id="sfObjetivo" required rows="3" class="input-brand w-full px-3 py-2 text-sm"></textarea>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Sede Preferida</label>
+                                <select id="sfSede" class="input-brand w-full px-3 py-2 text-sm">
+                                    ${UCLA.state.SEDES.map((s) => `<option value="${s.codigo}">${s.nombre}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Facultad Sugerida</label>
+                                <select id="sfFacultad" class="input-brand w-full px-3 py-2 text-sm">
+                                    ${UCLA.data.facultades.map((f) => `<option value="${f.id}">${f.nombre}</option>`).join('')}
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Adjuntar Documentos</label>
+                            <div id="sfDropzone" class="border-2 border-dashed rounded-lg p-6 text-center cursor-pointer" style="border-color: var(--color-border);">
+                                <i class="fas fa-cloud-upload-alt text-2xl mb-2" style="color: var(--color-text-muted);"></i>
+                                <p class="text-sm" style="color: var(--color-text-muted);">Arrastre archivos aquí o haga clic para adjuntar</p>
+                                <p class="text-xs mt-1" style="color: var(--color-text-muted);">PDF, DOCX hasta 10MB</p>
+                                <input id="sfInputArchivo" type="file" class="hidden" accept=".pdf,.doc,.docx" multiple>
+                            </div>
+                            <p id="sfErrorArchivo" class="hidden text-xs mt-1" style="color: var(--color-danger);"></p>
+                            <div id="sfAdjuntosGuardados" class="space-y-1 mt-2"></div>
+                            <div id="sfAdjuntosPendientes" class="space-y-1 mt-2"></div>
+                        </div>
+                        <div class="flex justify-end gap-2 pt-2">
+                            <button type="button" data-cerrar-modal-solicitud class="px-4 py-2 text-sm rounded-lg" style="color: var(--color-text-muted);">Cancelar</button>
+                            <button type="submit" id="sfBtnGuardar" class="btn-primary text-sm">Radicar Solicitud</button>
+                        </div>
+                    </form>
+                </div>
+            </div>`;
+        document.body.appendChild(modalSolicitudEl);
+        bindModalSolicitud(modalSolicitudEl);
+        return modalSolicitudEl;
+    }
+
+    function cerrarModalSolicitud() {
+        if (modalSolicitudEl) modalSolicitudEl.classList.add('hidden');
+        solicitudEnEdicion = null;
+        archivosPendientes = [];
+        onGuardarSolicitud = null;
+    }
+
+    function pintarAdjuntosPendientes(modal) {
+        modal.querySelector('#sfAdjuntosPendientes').innerHTML = archivosPendientes.map((f, idx) => `
+            <div class="flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-sm" style="background: var(--color-accent-50); border: 1px dashed var(--color-accent);">
+                <span class="flex-1 truncate" style="color: var(--color-text);"><i class="fas fa-clock mr-1" style="color: var(--color-accent-dark);"></i>${f.name} <span class="text-xs" style="color: var(--color-text-muted);">(por subir)</span></span>
+                <span class="text-xs whitespace-nowrap" style="color: var(--color-text-muted);">${(f.size / 1024).toFixed(0)} KB</span>
+                <button type="button" data-quitar-pendiente="${idx}" title="Quitar" style="color: var(--color-danger);"><i class="fas fa-times text-xs"></i></button>
+            </div>`).join('');
+    }
+
+    function pintarAdjuntosGuardados(modal) {
+        const cont = modal.querySelector('#sfAdjuntosGuardados');
+        if (!solicitudEnEdicion) { cont.innerHTML = ''; return; }
+        UCLA.archivos.listar(solicitudEnEdicion.id).then((archivos) => {
+            if (modalSolicitudEl.classList.contains('hidden')) return; // el modal se cerró mientras cargaba
+            cont.innerHTML = archivos.map((a) => `
+                <div class="flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-sm" style="background: var(--color-primary-50);">
+                    <span class="flex-1 truncate" style="color: var(--color-text);"><i class="fas fa-file-lines mr-1" style="color: var(--color-primary);"></i>${a.nombre}</span>
+                    <span class="text-xs whitespace-nowrap" style="color: var(--color-text-muted);">${(a.tamano / 1024).toFixed(0)} KB</span>
+                    <button type="button" data-descargar-adjunto="${a.id}" title="Descargar" style="color: var(--color-primary);"><i class="fas fa-download text-xs"></i></button>
+                    <button type="button" data-eliminar-adjunto="${a.id}" title="Eliminar" style="color: var(--color-danger);"><i class="fas fa-trash text-xs"></i></button>
+                </div>`).join('');
         });
-        container.querySelector('#formSolicitudFormacion').addEventListener('submit', (e) => {
+    }
+
+    function bindModalSolicitud(modal) {
+        modal.querySelectorAll('[data-cerrar-modal-solicitud]').forEach((el) => {
+            el.addEventListener('click', cerrarModalSolicitud);
+        });
+
+        const dropzone = modal.querySelector('#sfDropzone');
+        const inputArchivo = modal.querySelector('#sfInputArchivo');
+        dropzone.addEventListener('click', () => inputArchivo.click());
+        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('drag-over'); });
+        dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('drag-over');
+            agregarArchivos(modal, e.dataTransfer.files);
+        });
+        inputArchivo.addEventListener('change', () => {
+            agregarArchivos(modal, inputArchivo.files);
+            inputArchivo.value = '';
+        });
+
+        function agregarArchivos(modal, fileList) {
+            const errorEl = modal.querySelector('#sfErrorArchivo');
+            errorEl.classList.add('hidden');
+            for (const file of fileList) {
+                const error = UCLA.archivos.TAMANO_MAXIMO && file.size > UCLA.archivos.TAMANO_MAXIMO
+                    ? 'El archivo supera el tamaño máximo de 10MB.'
+                    : (!/\.(pdf|docx?|PDF|DOCX?)$/.test(file.name) ? 'Solo se permiten archivos PDF o DOCX.' : null);
+                if (error) {
+                    errorEl.textContent = `${file.name}: ${error}`;
+                    errorEl.classList.remove('hidden');
+                    continue;
+                }
+                archivosPendientes.push(file);
+            }
+            pintarAdjuntosPendientes(modal);
+        }
+
+        modal.addEventListener('click', (e) => {
+            const quitar = e.target.closest('[data-quitar-pendiente]');
+            if (quitar) {
+                archivosPendientes.splice(Number(quitar.getAttribute('data-quitar-pendiente')), 1);
+                pintarAdjuntosPendientes(modal);
+                return;
+            }
+            const descargar = e.target.closest('[data-descargar-adjunto]');
+            if (descargar) {
+                const id = descargar.getAttribute('data-descargar-adjunto');
+                UCLA.archivos.obtenerBlobUrl(id).then((url) => {
+                    if (!url) return;
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.target = '_blank';
+                    a.rel = 'noopener';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    setTimeout(() => URL.revokeObjectURL(url), 1000);
+                });
+                return;
+            }
+            const eliminar = e.target.closest('[data-eliminar-adjunto]');
+            if (eliminar) {
+                UCLA.archivos.eliminar(eliminar.getAttribute('data-eliminar-adjunto')).then(() => {
+                    pintarAdjuntosGuardados(modal);
+                    UCLA.components.toast.show('Adjunto eliminado', 'success');
+                });
+            }
+        });
+
+        modal.querySelector('#formSolicitudFormacion').addEventListener('submit', async (e) => {
             e.preventDefault();
             const form = e.target;
             if (!form.reportValidity()) return;
 
-            const radicado = `SF-${new Date().getFullYear()}-${String(UCLA.data.solicitudesFormacion.length + 1).padStart(3, '0')}`;
-            UCLA.store.crear('solicitudesFormacion', {
-                radicado,
-                entidad: container.querySelector('#sfEntidad').value.trim(),
-                nit: container.querySelector('#sfNit').value.trim(),
-                contacto: container.querySelector('#sfContacto').value.trim(),
-                cargo: container.querySelector('#sfCargo').value.trim(),
-                correo: container.querySelector('#sfCorreo').value.trim(),
-                telefono: container.querySelector('#sfTelefono').value.trim(),
-                objetivo: container.querySelector('#sfObjetivo').value.trim(),
-                sedeId: container.querySelector('#sfSede').value,
-                facultadId: container.querySelector('#sfFacultad').value,
-                estado: 'En revisión',
-                fechaRadicado: new Date().toISOString().slice(0, 10),
-                documentos: [],
-            });
-            UCLA.utils.registrarAuditoria({ accion: 'Radicó solicitud de formación', modulo: 'Informes', detalle: `${radicado} - ${container.querySelector('#sfEntidad').value.trim()}` });
-            UCLA.components.toast.show(`Solicitud radicada exitosamente - Radicado ${radicado}`, 'success');
+            const datos = {
+                entidad: modal.querySelector('#sfEntidad').value.trim(),
+                nit: modal.querySelector('#sfNit').value.trim(),
+                contacto: modal.querySelector('#sfContacto').value.trim(),
+                cargo: modal.querySelector('#sfCargo').value.trim(),
+                correo: modal.querySelector('#sfCorreo').value.trim(),
+                telefono: modal.querySelector('#sfTelefono').value.trim(),
+                objetivo: modal.querySelector('#sfObjetivo').value.trim(),
+                sedeId: modal.querySelector('#sfSede').value,
+                facultadId: modal.querySelector('#sfFacultad').value,
+            };
 
-            form.reset();
-            modalSolicitud.classList.add('hidden');
+            const btnGuardar = modal.querySelector('#sfBtnGuardar');
+            btnGuardar.disabled = true;
+
+            let solicitud;
+            const esEdicion = !!solicitudEnEdicion;
+            if (esEdicion) {
+                solicitud = UCLA.store.actualizar('solicitudesFormacion', solicitudEnEdicion.id, datos);
+                UCLA.utils.registrarAuditoria({ accion: 'Editó solicitud de formación', modulo: 'Informes', detalle: `${solicitud.radicado} - ${datos.entidad}` });
+            } else {
+                const radicado = `SF-${new Date().getFullYear()}-${String(UCLA.data.solicitudesFormacion.length + 1).padStart(3, '0')}`;
+                solicitud = UCLA.store.crear('solicitudesFormacion', Object.assign({ radicado, estado: 'En revisión', fechaRadicado: new Date().toISOString().slice(0, 10), documentos: [] }, datos));
+                UCLA.utils.registrarAuditoria({ accion: 'Radicó solicitud de formación', modulo: 'Informes', detalle: `${radicado} - ${datos.entidad}` });
+            }
+
+            for (const file of archivosPendientes) {
+                await UCLA.archivos.guardar(solicitud.id, file);
+            }
+
+            btnGuardar.disabled = false;
+            UCLA.components.toast.show(esEdicion ? 'Solicitud actualizada exitosamente' : `Solicitud radicada exitosamente - Radicado ${solicitud.radicado}`, 'success');
+
+            const callback = onGuardarSolicitud;
+            cerrarModalSolicitud();
+            if (callback) callback(solicitud);
         });
     }
 
-    UCLA.views['informes'] = { render };
+    function abrirModalSolicitud(registroExistente, alGuardar) {
+        const modal = asegurarModalSolicitud();
+        solicitudEnEdicion = registroExistente || null;
+        onGuardarSolicitud = alGuardar || null;
+        archivosPendientes = [];
+
+        const form = modal.querySelector('#formSolicitudFormacion');
+        form.reset();
+        modal.querySelector('#sfErrorArchivo').classList.add('hidden');
+        modal.querySelector('#sfTitulo').textContent = registroExistente ? 'Editar Solicitud de Formación' : 'Nueva Solicitud de Formación';
+        modal.querySelector('#sfBtnGuardar').textContent = registroExistente ? 'Guardar cambios' : 'Radicar Solicitud';
+
+        if (registroExistente) {
+            modal.querySelector('#sfEntidad').value = registroExistente.entidad || '';
+            modal.querySelector('#sfNit').value = registroExistente.nit || '';
+            modal.querySelector('#sfContacto').value = registroExistente.contacto || '';
+            modal.querySelector('#sfCargo').value = registroExistente.cargo || '';
+            modal.querySelector('#sfCorreo').value = registroExistente.correo || '';
+            modal.querySelector('#sfTelefono').value = registroExistente.telefono || '';
+            modal.querySelector('#sfObjetivo').value = registroExistente.objetivo || '';
+            if (registroExistente.sedeId) modal.querySelector('#sfSede').value = registroExistente.sedeId;
+            if (registroExistente.facultadId) modal.querySelector('#sfFacultad').value = registroExistente.facultadId;
+        }
+
+        pintarAdjuntosPendientes(modal);
+        pintarAdjuntosGuardados(modal);
+
+        modal.classList.remove('hidden');
+    }
+
+    UCLA.views['informes'] = { render, abrirModalSolicitud };
 })();

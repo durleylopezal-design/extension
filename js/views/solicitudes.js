@@ -1,90 +1,127 @@
-// Solicitudes y Propuestas — flujo de aprobación Vo.Bo., migrado del prototipo original.
+// Solicitudes · Seguimiento y Estados — listShell real sobre
+// UCLA.data.solicitudesFormacion (mismo dominio que radica el modal "Nueva
+// Solicitud de Formación" de Informes, js/views/informes.js). Crear/editar
+// reutiliza UCLA.views['informes'].abrirModalSolicitud para no duplicar la
+// definición de campos ni la lógica de adjuntos reales (IndexedDB).
 (function () {
+    const CAMPOS_MODULO = ['Estado', 'Sede', 'Facultad', 'Fecha de radicado'];
+    const ESTADOS = ['En revisión', 'Aprobada', 'Rechazada'];
+
+    // Delegación de eventos sobre `container` (ver nota igual en solAdmision.js
+    // sobre por qué se guarda la referencia del handler).
+    let clickHandler = null;
+
+    function nombreSede(sedeId) {
+        return UCLA.state.SEDES.find((s) => s.codigo === sedeId)?.nombre || sedeId || '-';
+    }
+
+    function nombreFacultad(facultadId) {
+        return UCLA.data.facultades.find((f) => f.id === facultadId)?.nombre || '-';
+    }
+
+    function columnas() {
+        return [
+            { clave: 'radicado', etiqueta: 'Radicado', render: (s) => `<span class="font-medium" style="color: var(--color-primary);">${s.radicado}</span>` },
+            { clave: 'entidad', etiqueta: 'Entidad/Empresa' },
+            { clave: 'contacto', etiqueta: 'Contacto', render: (s) => `${s.contacto}${s.correo ? `<span class="block text-xs" style="color: var(--color-text-muted);">${s.correo}</span>` : ''}` },
+            { clave: 'sedeId', etiqueta: 'Sede', render: (s) => nombreSede(s.sedeId) },
+            { clave: 'facultadId', etiqueta: 'Facultad', render: (s) => nombreFacultad(s.facultadId) },
+            { clave: 'estado', etiqueta: 'Estado', render: (s) => UCLA.utils.badgeEstado(s.estado) },
+            { clave: 'fechaRadicado', etiqueta: 'Fecha de radicado', render: (s) => UCLA.utils.formatoFecha(s.fechaRadicado) },
+            { clave: 'acciones', etiqueta: 'Acciones', render: (s) => `
+                <button data-cambiar-estado-sf="${s.id}" class="mr-2 text-xs font-medium hover:underline" style="color: var(--color-primary);">Cambiar estado</button>
+                <button data-editar-sf="${s.id}" class="mr-2" style="color: var(--color-primary);" title="Editar"><i class="fas fa-pen text-xs"></i></button>
+                <button data-eliminar-sf="${s.id}" style="color: var(--color-danger);" title="Eliminar"><i class="fas fa-trash text-xs"></i></button>` },
+        ];
+    }
+
     function render(container) {
-        container.innerHTML = `
-            <div class="space-y-6">
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-lg font-bold text-gray-800">Flujo de Aprobación (Vo.Bo.)</h3>
-                        <button onclick="openModal('nuevaSolicitudModal')" class="btn-primary">
-                            <i class="fas fa-plus"></i> Nueva Solicitud
-                        </button>
+        function pintar() {
+            const filas = UCLA.data.solicitudesFormacion;
+            UCLA.components.listShell.render(container, {
+                titulo: 'Solicitudes de Formación',
+                columnas: columnas(),
+                filas,
+                filaId: (s) => s.id,
+                camposModulo: CAMPOS_MODULO,
+                campoOrden: 'fechaRadicado',
+                exportName: 'solicitudes-formacion',
+                botonPrincipal: {
+                    etiqueta: 'Nueva Solicitud de Formación',
+                    onClick: () => UCLA.views['informes'].abrirModalSolicitud(null, () => pintar()),
+                },
+            });
+        }
+
+        if (clickHandler) container.removeEventListener('click', clickHandler);
+        clickHandler = (e) => {
+            const btnEditar = e.target.closest('[data-editar-sf]');
+            if (btnEditar) {
+                const solicitud = UCLA.store.obtener('solicitudesFormacion', btnEditar.getAttribute('data-editar-sf'));
+                if (solicitud) UCLA.views['informes'].abrirModalSolicitud(solicitud, () => pintar());
+                return;
+            }
+            const btnCambiarEstado = e.target.closest('[data-cambiar-estado-sf]');
+            if (btnCambiarEstado) { abrirCambioEstado(btnCambiarEstado.getAttribute('data-cambiar-estado-sf')); return; }
+            const btnEliminar = e.target.closest('[data-eliminar-sf]');
+            if (btnEliminar) { confirmarEliminar(btnEliminar.getAttribute('data-eliminar-sf')); return; }
+        };
+        container.addEventListener('click', clickHandler);
+
+        function abrirCambioEstado(id) {
+            const solicitud = UCLA.store.obtener('solicitudesFormacion', id);
+            if (!solicitud) return;
+            let modal = document.getElementById('modalCambiarEstadoFormacion');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'modalCambiarEstadoFormacion';
+                modal.className = 'fixed inset-0 z-50 flex items-center justify-center modal';
+                document.body.appendChild(modal);
+            }
+            modal.innerHTML = `
+                <div class="fixed inset-0 bg-black opacity-40" data-cesf-cerrar></div>
+                <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 p-6">
+                    <h3 class="text-lg font-bold mb-1" style="color: var(--color-primary-dark);">Cambiar estado</h3>
+                    <p class="text-sm mb-4" style="color: var(--color-text-muted);">${solicitud.radicado} · ${solicitud.entidad}</p>
+                    <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Nuevo estado</label>
+                    <select id="cesfEstado" class="input-brand w-full px-3 py-2 text-sm mb-3">
+                        ${ESTADOS.map((e) => `<option ${e === solicitud.estado ? 'selected' : ''}>${e}</option>`).join('')}
+                    </select>
+                    <div class="flex justify-end gap-2 pt-2">
+                        <button data-cesf-cerrar class="px-4 py-2 text-sm rounded-lg" style="color: var(--color-text-muted);">Cancelar</button>
+                        <button id="cesfGuardar" class="btn-primary text-sm">Guardar</button>
                     </div>
+                </div>`;
+            modal.querySelectorAll('[data-cesf-cerrar]').forEach((el) => el.addEventListener('click', () => modal.classList.add('hidden')));
+            modal.querySelector('#cesfGuardar').addEventListener('click', () => {
+                const nuevoEstado = modal.querySelector('#cesfEstado').value;
+                UCLA.store.actualizar('solicitudesFormacion', solicitud.id, { estado: nuevoEstado });
+                UCLA.utils.registrarAuditoria({ accion: 'Cambió estado de solicitud de formación', modulo: 'Solicitudes', detalle: `${solicitud.radicado} - ${solicitud.entidad}: ${nuevoEstado}` });
+                UCLA.components.toast.show(`Solicitud actualizada a "${nuevoEstado}"`, 'success');
+                modal.classList.add('hidden');
+                pintar();
+            });
+            modal.classList.remove('hidden');
+        }
 
-                    <div class="space-y-4" id="solicitudesList">
-                        <div class="border rounded-xl p-6 hover:shadow-lg transition-shadow">
-                            <div class="flex items-start justify-between">
-                                <div class="flex gap-4">
-                                    <div class="w-12 h-12 bg-accent-100 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-file-alt text-xl" style="color: var(--color-primary);"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-bold text-gray-800 text-lg">SOL-2026-0042</h4>
-                                        <p class="text-gray-600">Formación en liderazgo organizacional - GRUPO ÉXITO</p>
-                                        <div class="flex items-center gap-4 mt-2 text-sm text-gray-500">
-                                            <span><i class="fas fa-building"></i> NIT: 890.123.456-7</span>
-                                            <span><i class="fas fa-calendar"></i> Recibida: 05/04/2026</span>
-                                            <span><i class="fas fa-user"></i> Solicitante: Juan Martínez</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <span class="px-3 py-1 rounded-full text-sm font-medium" style="background: var(--color-accent-100); color: var(--color-accent-dark);">En Revisión</span>
-                                    <p class="text-sm text-gray-500 mt-2">Responsable: Dra. Patricia López</p>
-                                </div>
-                            </div>
+        function confirmarEliminar(id) {
+            const solicitud = UCLA.store.obtener('solicitudesFormacion', id);
+            if (!solicitud) return;
+            UCLA.components.confirmModal.abrir({
+                titulo: 'Eliminar solicitud de formación',
+                mensaje: `¿Eliminar "${solicitud.radicado} - ${solicitud.entidad}"? También se eliminarán sus documentos adjuntos. Esta acción no se puede deshacer.`,
+                onConfirmar: () => {
+                    UCLA.store.eliminar('solicitudesFormacion', id);
+                    UCLA.archivos.eliminarDeSolicitud(id).then(() => {
+                        UCLA.utils.registrarAuditoria({ accion: 'Eliminó solicitud de formación', modulo: 'Solicitudes', detalle: `${solicitud.radicado} - ${solicitud.entidad}` });
+                        UCLA.components.toast.show('Solicitud eliminada', 'success');
+                        pintar();
+                    });
+                },
+            });
+        }
 
-                            <div class="mt-6">
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-sm font-medium text-gray-700">Progreso de Aprobación</span>
-                                    <span class="text-sm text-gray-500">2 de 4 Vo.Bo.</span>
-                                </div>
-                                <div class="flex gap-2">
-                                    <div class="flex-1 h-2 rounded-full relative group cursor-pointer" style="background: var(--color-primary);">
-                                        <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                            Extensión: Aprobado<br>05/04/2026 10:30
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 h-2 rounded-full relative group cursor-pointer" style="background: var(--color-primary);">
-                                        <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                            Financiera: Aprobado<br>06/04/2026 14:15
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 h-2 rounded-full animate-pulse relative group cursor-pointer" style="background: var(--color-accent);">
-                                        <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                            Programa: Pendiente
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 bg-gray-200 h-2 rounded-full relative group cursor-pointer">
-                                        <div class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                            OCRI: Pendiente
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between mt-1 text-xs text-gray-500">
-                                    <span>Extensión</span>
-                                    <span>Financiera</span>
-                                    <span>Programa</span>
-                                    <span>OCRI</span>
-                                </div>
-                            </div>
-
-                            <div class="mt-4 flex gap-2">
-                                <button class="btn-primary text-sm">
-                                    <i class="fas fa-eye"></i> Ver Detalle
-                                </button>
-                                <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200">
-                                    <i class="fas fa-file-pdf"></i> Ver Propuesta
-                                </button>
-                                <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-gray-200">
-                                    <i class="fas fa-history"></i> Historial
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
+        pintar();
     }
 
     UCLA.views['solicitudes/seguimiento'] = { render };
