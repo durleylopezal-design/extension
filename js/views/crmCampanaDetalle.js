@@ -48,7 +48,40 @@
                     { texto: valorRoi === null ? 'ROI: -' : `ROI: ${(valorRoi * 100).toFixed(0)}%`, color: valorRoi === null ? 'var(--color-neutral-dark, #6B6F72)' : valorRoi >= 0 ? 'var(--color-success)' : 'var(--color-danger)' },
                 ],
                 acciones: [
-                    { etiqueta: 'Editar', onClick: () => UCLA.components.toast.show('Edición de campaña - función simulada', 'info') },
+                    {
+                        etiqueta: 'Eliminar',
+                        onClick: () => UCLA.components.confirmModal.abrir({
+                            titulo: 'Eliminar campaña',
+                            mensaje: `¿Eliminar "${campana.nombre}"? Esta acción no se puede deshacer.`,
+                            onConfirmar: () => {
+                                UCLA.store.eliminar('campanas', campana.id);
+                                UCLA.utils.registrarAuditoria({ accion: 'Eliminó campaña de mercadeo', modulo: 'CRM', detalle: campana.nombre });
+                                UCLA.components.toast.show('Campaña eliminada', 'success');
+                                UCLA.router.navigate('crm/campanas');
+                            },
+                        }),
+                    },
+                    {
+                        etiqueta: 'Editar', principal: true,
+                        onClick: () => {
+                            const vistaLista = UCLA.views['crm/campanas'];
+                            UCLA.components.recordForm.abrir({
+                                titulo: 'Editar campaña',
+                                secciones: vistaLista.secciones(),
+                                datosIniciales: vistaLista.datosParaEditar(campana),
+                                esEdicion: true,
+                                onGuardar: (datos) => {
+                                    const ahora = new Date().toISOString().slice(0, 10);
+                                    UCLA.store.actualizar('campanas', campana.id, Object.assign(vistaLista.datosDesdeFormulario(datos), {
+                                        usuarioModificador: UCLA.state.usuarioActual.nombre,
+                                        fechaModificacion: ahora,
+                                    }));
+                                    UCLA.utils.registrarAuditoria({ accion: 'Editó campaña de mercadeo', modulo: 'CRM', detalle: campana.nombre });
+                                    render(container, params);
+                                },
+                            });
+                        },
+                    },
                 ],
             },
             pestanas: [

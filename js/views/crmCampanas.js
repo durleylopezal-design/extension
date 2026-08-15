@@ -7,6 +7,8 @@
     const ESTADOS = ['Planeada', 'Activa', 'Pausada', 'Completada', 'Cancelada'];
     const CAMPOS_MODULO = ['Tipo', 'Estado', 'Responsable'];
 
+    let clickHandler = null;
+
     function roi(c) {
         if (!c.costos) return null;
         return (c.ingresos - c.costos) / c.costos;
@@ -28,6 +30,9 @@
             { clave: 'fechaFin', etiqueta: 'Fin', render: (c) => c.fechaFin ? UCLA.utils.formatoFecha(c.fechaFin) : '-' },
             { clave: 'presupuesto', etiqueta: 'Presupuesto', render: (c) => UCLA.utils.formatoCOP(c.presupuesto) },
             { clave: 'roi', etiqueta: 'ROI', render: roiHtml },
+            { clave: 'acciones', etiqueta: 'Acciones', render: (c) => `
+                <button data-editar-campana="${c.id}" class="mr-2" style="color: var(--color-primary);" title="Editar"><i class="fas fa-pen text-xs"></i></button>
+                <button data-eliminar-campana="${c.id}" style="color: var(--color-danger);" title="Eliminar"><i class="fas fa-trash text-xs"></i></button>` },
         ];
     }
 
@@ -88,7 +93,78 @@
         ];
     }
 
+    function datosDesdeFormulario(datos) {
+        return {
+            nombre: datos.nombre || 'Sin nombre',
+            descripcion: datos.descripcion || '',
+            tipo: datos.tipo || TIPOS[0],
+            estado: datos.estado || ESTADOS[0],
+            objetivo: datos.objetivo || '',
+            publicoObjetivo: datos.publicoObjetivo || '',
+            segmentacion: (datos.segmentacion || '').split(',').map((s) => s.trim()).filter(Boolean),
+            fechaInicio: datos.fechaInicio || '',
+            fechaFin: datos.fechaFin || '',
+            responsable: datos.responsable || UCLA.state.usuarioActual.nombre,
+            presupuesto: Number(datos.presupuesto) || 0,
+            canales: (datos.canales || '').split(',').map((s) => s.trim()).filter(Boolean),
+            contenido: datos.contenido || '',
+            cta: datos.cta || '',
+            landingPage: datos.landingPage || '',
+            frecuencia: datos.frecuencia || '',
+            alcance: Number(datos.alcance) || 0,
+            interacciones: Number(datos.interacciones) || 0,
+            leads: Number(datos.leads) || 0,
+            leadsCalificados: Number(datos.leadsCalificados) || 0,
+            oportunidades: Number(datos.oportunidades) || 0,
+            ventas: Number(datos.ventas) || 0,
+            ingresos: Number(datos.ingresos) || 0,
+            costos: Number(datos.costos) || 0,
+        };
+    }
+
+    function datosParaEditar(campana) {
+        return Object.assign({}, campana, {
+            segmentacion: (campana.segmentacion || []).join(', '),
+            canales: (campana.canales || []).join(', '),
+        });
+    }
+
     function render(container) {
+        function abrirEditar(id) {
+            const campana = UCLA.store.obtener('campanas', id);
+            if (!campana) return;
+            UCLA.components.recordForm.abrir({
+                titulo: 'Editar campaña',
+                secciones: secciones(),
+                datosIniciales: datosParaEditar(campana),
+                esEdicion: true,
+                onGuardar: (datos) => {
+                    const ahora = new Date().toISOString().slice(0, 10);
+                    UCLA.store.actualizar('campanas', id, Object.assign(datosDesdeFormulario(datos), {
+                        usuarioModificador: UCLA.state.usuarioActual.nombre,
+                        fechaModificacion: ahora,
+                    }));
+                    UCLA.utils.registrarAuditoria({ accion: 'Editó campaña de mercadeo', modulo: 'CRM', detalle: campana.nombre });
+                    pintar();
+                },
+            });
+        }
+
+        function confirmarEliminar(id) {
+            const campana = UCLA.store.obtener('campanas', id);
+            if (!campana) return;
+            UCLA.components.confirmModal.abrir({
+                titulo: 'Eliminar campaña',
+                mensaje: `¿Eliminar "${campana.nombre}"? Esta acción no se puede deshacer.`,
+                onConfirmar: () => {
+                    UCLA.store.eliminar('campanas', id);
+                    UCLA.utils.registrarAuditoria({ accion: 'Eliminó campaña de mercadeo', modulo: 'CRM', detalle: campana.nombre });
+                    UCLA.components.toast.show('Campaña eliminada', 'success');
+                    pintar();
+                },
+            });
+        }
+
         function pintar() {
             const filas = UCLA.data.campanas;
             UCLA.components.listShell.render(container, {
@@ -106,32 +182,8 @@
                         secciones: secciones(),
                         onGuardar: (datos) => {
                             const ahora = new Date().toISOString().slice(0, 10);
-                            const nueva = UCLA.store.crear('campanas', {
-                                nombre: datos.nombre || 'Sin nombre',
-                                descripcion: datos.descripcion || '',
-                                tipo: datos.tipo || TIPOS[0],
-                                estado: datos.estado || ESTADOS[0],
-                                objetivo: datos.objetivo || '',
-                                publicoObjetivo: datos.publicoObjetivo || '',
-                                segmentacion: (datos.segmentacion || '').split(',').map((s) => s.trim()).filter(Boolean),
-                                fechaInicio: datos.fechaInicio || '',
-                                fechaFin: datos.fechaFin || '',
-                                responsable: datos.responsable || UCLA.state.usuarioActual.nombre,
-                                presupuesto: Number(datos.presupuesto) || 0,
-                                canales: (datos.canales || '').split(',').map((s) => s.trim()).filter(Boolean),
-                                contenido: datos.contenido || '',
-                                cta: datos.cta || '',
-                                landingPage: datos.landingPage || '',
-                                frecuencia: datos.frecuencia || '',
+                            const nueva = UCLA.store.crear('campanas', Object.assign(datosDesdeFormulario(datos), {
                                 contenidos: [],
-                                alcance: Number(datos.alcance) || 0,
-                                interacciones: Number(datos.interacciones) || 0,
-                                leads: Number(datos.leads) || 0,
-                                leadsCalificados: Number(datos.leadsCalificados) || 0,
-                                oportunidades: Number(datos.oportunidades) || 0,
-                                ventas: Number(datos.ventas) || 0,
-                                ingresos: Number(datos.ingresos) || 0,
-                                costos: Number(datos.costos) || 0,
                                 productos: [],
                                 cuentasIds: [],
                                 contactosIds: [],
@@ -139,7 +191,7 @@
                                 fechaCreacion: ahora,
                                 usuarioModificador: UCLA.state.usuarioActual.nombre,
                                 fechaModificacion: ahora,
-                            });
+                            }));
                             UCLA.utils.registrarAuditoria({ accion: 'Creó campaña de mercadeo', modulo: 'CRM', detalle: nueva.nombre });
                             pintar();
                         },
@@ -148,8 +200,17 @@
             });
         }
 
+        if (clickHandler) container.removeEventListener('click', clickHandler);
+        clickHandler = (e) => {
+            const btnEditar = e.target.closest('[data-editar-campana]');
+            if (btnEditar) { abrirEditar(btnEditar.getAttribute('data-editar-campana')); return; }
+            const btnEliminar = e.target.closest('[data-eliminar-campana]');
+            if (btnEliminar) { confirmarEliminar(btnEliminar.getAttribute('data-eliminar-campana')); return; }
+        };
+        container.addEventListener('click', clickHandler);
+
         pintar();
     }
 
-    UCLA.views['crm/campanas'] = { render };
+    UCLA.views['crm/campanas'] = { render, secciones, datosDesdeFormulario, datosParaEditar };
 })();
