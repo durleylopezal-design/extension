@@ -316,7 +316,7 @@
                 <h4 class="text-sm font-medium" style="color: var(--color-text-muted);">${c.titulo}</h4>
             </div>
             <p class="text-xs" style="color: var(--color-text-muted);">${c.modulo} · ${c.campo} · ${c.periodo}</p>
-            <p class="text-xs mt-2 italic" style="color: var(--color-neutral);">Componente simulado - sin datos reales conectados.</p>`;
+            <p class="text-xs mt-2 italic" style="color: var(--color-neutral);">Componente simulado: sin datos reales conectados.</p>`;
     }
 
     // ---------- Drag & drop para reordenar ----------
@@ -422,7 +422,7 @@
         });
         container.querySelector('#btnGaleria').addEventListener('click', () => {
             modalAgregar.classList.add('hidden');
-            UCLA.components.toast.show('Galería de componentes prediseñados - función simulada', 'info');
+            UCLA.components.toast.show('Galería de componentes prediseñados: función simulada', 'info');
         });
 
         container.querySelector('#formConfigurarComponente').addEventListener('submit', (e) => {

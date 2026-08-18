@@ -91,7 +91,7 @@
 
         container.querySelector('#abrirWorkdrive').addEventListener('click', (e) => {
             e.preventDefault();
-            UCLA.components.toast.show('WorkDrive institucional - integración simulada', 'info');
+            UCLA.components.toast.show('WorkDrive institucional: integración simulada', 'info');
         });
     }
 

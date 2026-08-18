@@ -93,7 +93,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="lg:col-span-2 bg-white rounded-xl shadow-lg overflow-hidden" style="border-top: 4px solid var(--color-primary);">
                         <div class="flex items-center justify-between p-6 pb-4">
-                            <h3 class="section-title text-base">Ingresos por Mes — ${sede.nombre}</h3>
+                            <h3 class="section-title text-base">Ingresos por Mes ${sede.nombre}</h3>
                             <span class="tab-active px-3 py-1 text-sm rounded-lg font-semibold">2026</span>
                         </div>
                         <div class="chart-container px-6 pb-6">
@@ -103,7 +103,7 @@
 
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden" style="border-top: 4px solid var(--color-accent);">
                         <div class="p-6 pb-2">
-                            <h3 class="section-title text-base mb-4">Participantes por Segmento — ${sede.nombre}</h3>
+                            <h3 class="section-title text-base mb-4">Participantes por Segmento ${sede.nombre}</h3>
                         </div>
                         <div class="chart-container px-6">
                             <canvas id="segmentosChart"></canvas>
@@ -155,7 +155,7 @@
 
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden" style="border-top: 4px solid var(--color-accent);">
                         <div class="flex items-center justify-between px-6 py-4" style="border-bottom: 1px solid var(--color-border);">
-                            <h3 class="section-title text-base">Top 5 Eventos por Excedente — ${sede.nombre}</h3>
+                            <h3 class="section-title text-base">Top 5 Eventos por Excedente ${sede.nombre}</h3>
                             <button onclick="UCLA.router.navigate('eventos/gestion')" class="text-sm font-semibold hover:underline" style="color: var(--color-primary-light);">Ver todos</button>
                         </div>
                         ${top5Html(top5, sede)}

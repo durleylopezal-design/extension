@@ -135,7 +135,7 @@
                 const estudiante = modal.querySelector('#rpEstudiante').value;
                 const becas = becasVigentesDe(estudiante);
                 modal.querySelector('#rpBeca').innerHTML = becas.length
-                    ? becas.map((b) => `<option value="${b.id}">${b.solicitante} - ${b.modalidadBeca} (${b.porcentajeAprobado}%)</option>`).join('')
+                    ? becas.map((b) => `<option value="${b.id}">${b.solicitante}, ${b.modalidadBeca} (${b.porcentajeAprobado}%)</option>`).join('')
                     : `<option value="">Sin descuentos vigentes para este estudiante</option>`;
                 recalcular();
             }

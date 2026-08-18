@@ -57,7 +57,7 @@
                 camposModulo: CAMPOS_MODULO,
                 campoOrden: 'fecha',
                 exportName: 'conciliacion-pagos',
-                botonPrincipal: { etiqueta: 'Cargar extracto bancario', onClick: () => UCLA.components.toast.show('Carga de extracto bancario - función simulada', 'info') },
+                botonPrincipal: { etiqueta: 'Cargar extracto bancario', onClick: () => UCLA.components.toast.show('Carga de extracto bancario: función simulada', 'info') },
             });
         }
 
@@ -89,7 +89,7 @@
                 <p class="text-sm mb-4" style="color: var(--color-text-muted);">${mov.referencia} · ${UCLA.utils.formatoCOP(mov.valor)} · ${UCLA.utils.formatoFecha(mov.fecha)}</p>
                 <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Pago asociado</label>
                 <select id="ccPago" class="input-brand w-full px-3 py-2 text-sm mb-4">
-                    ${candidatos.length ? candidatos.map((p) => `<option value="${p.id}">${p.recibo} - ${p.estudiante} - ${UCLA.utils.formatoCOP(p.valor)}</option>`).join('') : '<option value="">No hay pagos pendientes de conciliar</option>'}
+                    ${candidatos.length ? candidatos.map((p) => `<option value="${p.id}">${p.recibo}, ${p.estudiante}, ${UCLA.utils.formatoCOP(p.valor)}</option>`).join('') : '<option value="">No hay pagos pendientes de conciliar</option>'}
                 </select>
                 <div class="flex justify-end gap-2">
                     <button data-cc-cerrar class="px-4 py-2 text-sm rounded-lg" style="color: var(--color-text-muted);">Cancelar</button>

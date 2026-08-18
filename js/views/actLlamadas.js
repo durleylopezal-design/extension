@@ -216,7 +216,7 @@
             modal.querySelector('#llDatalistRelacionado').innerHTML = datalistHtml('dlRelacionado', e.target.value);
         });
         modal.querySelector('#llContacto').addEventListener('input', actualizarAsunto);
-        modal.querySelector('#llReasignar').addEventListener('click', () => UCLA.components.toast.show('Reasignación de propietario - función simulada', 'info'));
+        modal.querySelector('#llReasignar').addEventListener('click', () => UCLA.components.toast.show('Reasignación de propietario: función simulada', 'info'));
         actualizarAsunto();
 
         if (esProgramar) {

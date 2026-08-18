@@ -33,7 +33,7 @@
                     ...(convenios().length ? [{ texto: convenios().length + ' convenio(s)', color: 'var(--color-primary)' }] : []),
                 ],
                 acciones: [
-                    { etiqueta: 'Editar', onClick: () => UCLA.components.toast.show('Edición de perfil - función simulada', 'info') },
+                    { etiqueta: 'Editar', onClick: () => UCLA.components.toast.show('Edición de perfil: función simulada', 'info') },
                     { etiqueta: 'Registrar interacción', principal: true, onClick: () => abrirRegistrarInteraccion(cuenta, () => UCLA.router.navigate('alianzas/empresas/' + cuenta.id)) },
                 ],
             },

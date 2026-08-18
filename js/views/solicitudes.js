@@ -96,7 +96,7 @@
             modal.querySelector('#cesfGuardar').addEventListener('click', () => {
                 const nuevoEstado = modal.querySelector('#cesfEstado').value;
                 UCLA.store.actualizar('solicitudesFormacion', solicitud.id, { estado: nuevoEstado });
-                UCLA.utils.registrarAuditoria({ accion: 'Cambió estado de solicitud de formación', modulo: 'Solicitudes', detalle: `${solicitud.radicado} - ${solicitud.entidad}: ${nuevoEstado}` });
+                UCLA.utils.registrarAuditoria({ accion: 'Cambió estado de solicitud de formación', modulo: 'Solicitudes', detalle: `${solicitud.radicado}, ${solicitud.entidad}: ${nuevoEstado}` });
                 UCLA.components.toast.show(`Solicitud actualizada a "${nuevoEstado}"`, 'success');
                 modal.classList.add('hidden');
                 pintar();
@@ -109,11 +109,11 @@
             if (!solicitud) return;
             UCLA.components.confirmModal.abrir({
                 titulo: 'Eliminar solicitud de formación',
-                mensaje: `¿Eliminar "${solicitud.radicado} - ${solicitud.entidad}"? También se eliminarán sus documentos adjuntos. Esta acción no se puede deshacer.`,
+                mensaje: `¿Eliminar "${solicitud.radicado}, ${solicitud.entidad}"? También se eliminarán sus documentos adjuntos. Esta acción no se puede deshacer.`,
                 onConfirmar: () => {
                     UCLA.store.eliminar('solicitudesFormacion', id);
                     UCLA.archivos.eliminarDeSolicitud(id).then(() => {
-                        UCLA.utils.registrarAuditoria({ accion: 'Eliminó solicitud de formación', modulo: 'Solicitudes', detalle: `${solicitud.radicado} - ${solicitud.entidad}` });
+                        UCLA.utils.registrarAuditoria({ accion: 'Eliminó solicitud de formación', modulo: 'Solicitudes', detalle: `${solicitud.radicado}, ${solicitud.entidad}` });
                         UCLA.components.toast.show('Solicitud eliminada', 'success');
                         pintar();
                     });

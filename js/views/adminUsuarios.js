@@ -47,7 +47,7 @@
                         validar: (datos) => !UCLA.utils.esCorreoInstitucional(datos.correo) ? 'El correo debe ser institucional (@amigo.edu.co)' : null,
                         onGuardar: (datos) => {
                             UCLA.data.usuariosSistema.unshift({ id: 'usr-' + Date.now(), nombre: datos.nombre || 'Sin nombre', correo: datos.correo || '', rol: datos.rol || 'Asesor', sedeId: datos.sedeId || 'MDE', estado: 'Activo', ultimoAcceso: null });
-                            UCLA.utils.registrarAuditoria({ accion: 'Invitó nuevo usuario', modulo: 'Administración', detalle: `${datos.correo || ''} - rol ${datos.rol || 'Asesor'}` });
+                            UCLA.utils.registrarAuditoria({ accion: 'Invitó nuevo usuario', modulo: 'Administración', detalle: `${datos.correo || ''}, rol ${datos.rol || 'Asesor'}` });
                             pintar();
                         },
                     }),

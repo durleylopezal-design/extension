@@ -16,7 +16,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <h3 class="text-xl font-bold text-gray-800">Consolidado Mensual - FO-MI-194</h3>
-                                <p class="text-gray-500">Año 2026 - Todas las sedes</p>
+                                <p class="text-gray-500">Año 2026, Todas las sedes</p>
                             </div>
                             <div class="flex gap-2">
                                 <button onclick="UCLA.utils.exportCSV('consolidado-mensual', UCLA.data.consolidado)" class="btn-primary">

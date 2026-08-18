@@ -64,14 +64,14 @@
                             <div class="flex items-center gap-2"><i class="fas fa-boxes-stacked" style="color: var(--color-primary);"></i> Importación al módulo Inventario</div>
                         </div>
                         <div class="mt-2 text-xs">
-                            <a href="#" data-iw-toast="Video explicativo - función simulada" class="hover:underline" style="color: var(--color-primary);">Ver video</a> ·
-                            <a href="#" data-iw-toast="Más información - función simulada" class="hover:underline" style="color: var(--color-primary);">Saber más</a>
+                            <a href="#" data-iw-toast="Video explicativo: función simulada" class="hover:underline" style="color: var(--color-primary);">Ver video</a> ·
+                            <a href="#" data-iw-toast="Más información: función simulada" class="hover:underline" style="color: var(--color-primary);">Saber más</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex items-center justify-between px-6 py-4" style="border-top: 1px solid var(--color-border);">
-                    <a href="#" data-iw-toast="Migración desde otro sistema - función simulada" class="text-xs font-medium hover:underline" style="color: var(--color-primary);">Migrar datos desde otro sistema</a>
+                    <a href="#" data-iw-toast="Migración desde otro sistema: función simulada" class="text-xs font-medium hover:underline" style="color: var(--color-primary);">Migrar datos desde otro sistema</a>
                     <div class="flex gap-2">
                         <button data-iw-cerrar class="px-4 py-2 text-sm rounded-lg" style="color: var(--color-text-muted);">Cancelar</button>
                         <button id="iwSiguiente" class="btn-primary text-sm opacity-50 cursor-not-allowed" disabled>Siguiente</button>
@@ -89,7 +89,7 @@
         });
         overlayEl.querySelector('#iwClasica').addEventListener('click', (e) => {
             e.preventDefault();
-            UCLA.components.toast.show('Importación clásica - función simulada', 'info');
+            UCLA.components.toast.show('Importación clásica: función simulada', 'info');
         });
 
         overlayEl.querySelector('#iwBuscarArchivos').addEventListener('click', () => overlayEl.querySelector('#iwInputArchivo').click());

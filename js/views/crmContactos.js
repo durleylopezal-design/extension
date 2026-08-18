@@ -57,7 +57,7 @@
                 ],
             },
             {
-                titulo: 'Información de la dirección - Domicilio postal',
+                titulo: 'Información de la dirección: Domicilio postal',
                 camposIzquierda: [
                     { clave: 'domPais', etiqueta: 'País o región', tipo: 'text' },
                     { clave: 'domDireccion', etiqueta: 'Dirección', tipo: 'text' },
@@ -68,7 +68,7 @@
                 ],
             },
             {
-                titulo: 'Información de la dirección - Dirección alterna',
+                titulo: 'Información de la dirección: Dirección alterna',
                 camposIzquierda: [
                     { clave: 'altPais', etiqueta: 'País o región', tipo: 'text' },
                     { clave: 'altDireccion', etiqueta: 'Dirección', tipo: 'text' },

@@ -18,13 +18,13 @@
                 { icono: 'fa-magnifying-glass-chart', titulo: 'Predecir y analizar', descripcion: 'Analice los resultados y establezca una meta ideal para los próximos periodos académicos.' },
             ],
             botones: [
-                { id: 'configurar', etiqueta: 'Configurar ahora', principal: true, onClick: () => UCLA.components.toast.show('Configuración de previsiones - función simulada', 'info') },
+                { id: 'configurar', etiqueta: 'Configurar ahora', principal: true, onClick: () => UCLA.components.toast.show('Configuración de previsiones: función simulada', 'info') },
             ],
         });
 
         container.querySelector('#previsionesAyuda').addEventListener('click', (e) => {
             e.preventDefault();
-            UCLA.components.toast.show('Centro de ayuda - función simulada', 'info');
+            UCLA.components.toast.show('Centro de ayuda: función simulada', 'info');
         });
     }
 

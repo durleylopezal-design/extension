@@ -29,7 +29,7 @@
                     { texto: egresado.sedeId, color: 'var(--color-primary)' },
                 ],
                 acciones: [
-                    { etiqueta: 'Editar', onClick: () => UCLA.components.toast.show('Edición de perfil - función simulada', 'info') },
+                    { etiqueta: 'Editar', onClick: () => UCLA.components.toast.show('Edición de perfil: función simulada', 'info') },
                     { etiqueta: 'Registrar interacción', onClick: () => abrirRegistrarInteraccion(egresado, () => UCLA.router.navigate('egresados/perfil/' + egresado.id)) },
                     { etiqueta: 'Enviar encuesta', principal: true, onClick: () => UCLA.components.toast.show('Encuesta de seguimiento enviada (simulado)', 'success') },
                 ],

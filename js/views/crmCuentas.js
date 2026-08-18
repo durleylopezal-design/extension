@@ -41,12 +41,12 @@
                 ],
             },
             {
-                titulo: 'Información de la dirección - Facturación',
+                titulo: 'Información de la dirección: Facturación',
                 camposIzquierda: [{ clave: 'facDireccion', etiqueta: 'Dirección', tipo: 'text' }],
                 camposDerecha: [{ clave: 'facCiudad', etiqueta: 'Ciudad', tipo: 'text' }],
             },
             {
-                titulo: 'Información de la dirección - Envío',
+                titulo: 'Información de la dirección: Envío',
                 camposIzquierda: [{ clave: 'envDireccion', etiqueta: 'Dirección', tipo: 'text' }],
                 camposDerecha: [{ clave: 'envCiudad', etiqueta: 'Ciudad', tipo: 'text' }],
             },

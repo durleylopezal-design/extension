@@ -309,7 +309,7 @@
                 container.querySelector('#modalCarpetas').classList.remove('hidden');
             }
             if (e.target.closest('#btnAnaliticaAvanzada')) {
-                UCLA.components.toast.show('Analítica avanzada UCLA - función simulada', 'info');
+                UCLA.components.toast.show('Analítica avanzada UCLA: función simulada', 'info');
             }
         });
 
@@ -591,11 +591,11 @@
             const esEdicion = !!solicitudEnEdicion;
             if (esEdicion) {
                 solicitud = UCLA.store.actualizar('solicitudesFormacion', solicitudEnEdicion.id, datos);
-                UCLA.utils.registrarAuditoria({ accion: 'Editó solicitud de formación', modulo: 'Informes', detalle: `${solicitud.radicado} - ${datos.entidad}` });
+                UCLA.utils.registrarAuditoria({ accion: 'Editó solicitud de formación', modulo: 'Informes', detalle: `${solicitud.radicado}, ${datos.entidad}` });
             } else {
                 const radicado = `SF-${new Date().getFullYear()}-${String(UCLA.data.solicitudesFormacion.length + 1).padStart(3, '0')}`;
                 solicitud = UCLA.store.crear('solicitudesFormacion', Object.assign({ radicado, estado: 'En revisión', fechaRadicado: new Date().toISOString().slice(0, 10), documentos: [] }, datos));
-                UCLA.utils.registrarAuditoria({ accion: 'Radicó solicitud de formación', modulo: 'Informes', detalle: `${radicado} - ${datos.entidad}` });
+                UCLA.utils.registrarAuditoria({ accion: 'Radicó solicitud de formación', modulo: 'Informes', detalle: `${radicado}, ${datos.entidad}` });
             }
 
             for (const file of archivosPendientes) {
@@ -603,7 +603,7 @@
             }
 
             btnGuardar.disabled = false;
-            UCLA.components.toast.show(esEdicion ? 'Solicitud actualizada exitosamente' : `Solicitud radicada exitosamente - Radicado ${solicitud.radicado}`, 'success');
+            UCLA.components.toast.show(esEdicion ? 'Solicitud actualizada exitosamente' : `Solicitud radicada exitosamente (Radicado ${solicitud.radicado})`, 'success');
 
             const callback = onGuardarSolicitud;
             cerrarModalSolicitud();

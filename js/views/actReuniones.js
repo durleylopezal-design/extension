@@ -181,7 +181,7 @@
                 UCLA.components.toast.show('Participante agregado (simulado)', 'info');
             });
             modal.querySelector('#mrEditarRecurrencia').addEventListener('click', () => {
-                UCLA.components.toast.show('Configuración de recurrencia - función simulada', 'info');
+                UCLA.components.toast.show('Configuración de recurrencia: función simulada', 'info');
             });
             modal.querySelector('#mrGuardar').addEventListener('click', () => {
                 const de = modal.querySelector('#mrDe');

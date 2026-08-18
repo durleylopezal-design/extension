@@ -180,7 +180,7 @@
             if (btn.getAttribute('data-accion') === 'importar') {
                 UCLA.components.importWizard.abrir({ modulo: config.titulo });
             } else {
-                UCLA.components.toast.show('Combinar registros - función simulada', 'info');
+                UCLA.components.toast.show('Combinar registros: función simulada', 'info');
             }
             cerrarMenus();
         });
@@ -198,7 +198,7 @@
             const accion = btn.getAttribute('data-accion');
             if (accion === 'exportar') UCLA.utils.exportCSV(config.exportName || 'export', filasVisibles());
             else if (accion === 'imprimir') UCLA.utils.exportPDF();
-            else UCLA.components.toast.show('Correo masivo - función simulada', 'info');
+            else UCLA.components.toast.show('Correo masivo: función simulada', 'info');
             cerrarMenus();
         });
 

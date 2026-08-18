@@ -117,7 +117,7 @@
                 </select>
                 <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Resultado</label>
                 <select id="gcResultado" class="input-brand w-full px-3 py-2 text-sm mb-3">
-                    <option>Contactado - promete pago</option><option>No contactado</option><option>Rechaza pago</option><option>Solicita acuerdo de pago</option>
+                    <option>Contactado, promete pago</option><option>No contactado</option><option>Rechaza pago</option><option>Solicita acuerdo de pago</option>
                 </select>
                 <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Compromiso de pago</label>
                 <input id="gcCompromiso" type="date" class="input-brand w-full px-3 py-2 text-sm">
@@ -134,12 +134,12 @@
                 UCLA.store.crear('llamadas', {
                     direccion: 'Saliente', estadoSaliente: 'Completado',
                     inicio: new Date().toISOString().slice(0, 16), duracionMin: 3, duracionSeg: 0,
-                    propietario: UCLA.state.usuarioActual.nombre, asunto: `Gestión de cobro - ${cuenta.estudiante}`,
+                    propietario: UCLA.state.usuarioActual.nombre, asunto: `Gestión de cobro: ${cuenta.estudiante}`,
                     relacionadoCon: `Cartera · ${cuenta.factura}`, contactoNombre: cuenta.estudiante, proposito: 'Seguimiento de matrícula',
                 });
             } else {
                 UCLA.store.crear('tareas', {
-                    asunto: `Seguimiento de cobro - ${cuenta.estudiante}`, prioridad: 'Alta', estado: 'No iniciada',
+                    asunto: `Seguimiento de cobro: ${cuenta.estudiante}`, prioridad: 'Alta', estado: 'No iniciada',
                     fechaVencimiento: modal.querySelector('#gcCompromiso').value || '', relacionadoCon: `Cartera · ${cuenta.factura}`,
                     contactoNombre: cuenta.estudiante, propietario: UCLA.state.usuarioActual.nombre, etiqueta: 'Cartera',
                 });
