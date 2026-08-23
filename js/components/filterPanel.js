@@ -1,32 +1,19 @@
-// Panel lateral izquierdo de filtros, usado por listShell.js en las 7
-// secciones de CRM. El buscador filtra de verdad (vía callback); las
-// secciones "Filtros definidos por el sistema" y "Filtrar por campos" son
-// fieles visualmente pero presentacionales (coherente con el resto del
-// prototipo — no hay backend que resuelva combinaciones de filtros reales).
+// Panel lateral izquierdo de filtros, usado por listShell.js en los módulos
+// de listado. El buscador filtra de verdad (vía callback); "Filtrar por
+// campos" también es real cuando la vista pasa filtrarPorCampos a listShell
+// (p. ej. Solicitudes, Oportunidades) — si no, listShell simula el toast.
 (function () {
-    const FILTROS_SISTEMA = [
-        'Acción en registro', 'Acción en registros relacionados', 'Actividades', 'Bloqueado',
-        'Campañas', 'Registros modificados', 'Registros no modificados',
-        'Último estado de correo electrónico', 'Cadencias',
-    ];
-
     function render(container, { camposModulo, onBuscar, onCambioCampos, camposActivos, textoActual }) {
         const activos = camposActivos || [];
+        const hayAlgoQueLimpiar = !!(textoActual || '').trim() || activos.length > 0;
         container.innerHTML = `
             <div class="bg-white rounded-xl shadow-lg p-4 w-full lg:w-64 lg:flex-shrink-0">
-                <div class="relative mb-4">
-                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-xs" style="color: var(--color-text-muted);"></i>
-                    <input id="filtroBuscador" type="text" placeholder="Buscar en esta vista" value="${(textoActual || '').replace(/"/g, '&quot;')}" class="input-brand w-full pl-8 pr-3 py-2 text-sm">
-                </div>
-
-                <div class="mb-4">
-                    <p class="text-xs font-semibold uppercase mb-2" style="color: var(--color-text-muted);">Filtros definidos por el sistema</p>
-                    <div class="space-y-1.5">
-                        ${FILTROS_SISTEMA.map((f) => `
-                            <label class="flex items-center gap-2 text-sm cursor-pointer" style="color: var(--color-text);">
-                                <input type="checkbox" data-filtro-sistema>${f}
-                            </label>`).join('')}
+                <div class="flex items-center justify-between mb-4">
+                    <div class="relative flex-1">
+                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-xs" style="color: var(--color-text-muted);"></i>
+                        <input id="filtroBuscador" type="text" placeholder="Buscar en esta vista" value="${(textoActual || '').replace(/"/g, '&quot;')}" class="input-brand w-full pl-8 pr-3 py-2 text-sm">
                     </div>
+                    ${hayAlgoQueLimpiar ? `<button type="button" id="filtroLimpiar" class="ml-2 text-xs font-medium hover:underline flex-shrink-0" style="color: var(--color-primary);">Limpiar</button>` : ''}
                 </div>
 
                 <div>
@@ -41,10 +28,10 @@
             </div>`;
 
         container.querySelector('#filtroBuscador').addEventListener('input', UCLA.utils.debounce((e) => onBuscar(e.target.value), 200));
-        container.querySelectorAll('[data-filtro-sistema]').forEach((chk) => {
-            chk.addEventListener('change', () => {
-                if (chk.checked) UCLA.components.toast.show('Filtro aplicado (simulado)', 'info');
-            });
+        container.querySelector('#filtroLimpiar')?.addEventListener('click', () => {
+            onBuscar('');
+            if (onCambioCampos) onCambioCampos([]);
+            render(container, { camposModulo, onBuscar, onCambioCampos, camposActivos: [], textoActual: '' });
         });
         container.querySelectorAll('[data-filtro-campo]').forEach((chk) => {
             chk.addEventListener('change', () => {
@@ -58,5 +45,5 @@
         });
     }
 
-    UCLA.components.filterPanel = { render, FILTROS_SISTEMA };
+    UCLA.components.filterPanel = { render };
 })();

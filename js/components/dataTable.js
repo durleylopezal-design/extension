@@ -12,7 +12,7 @@
     // tabla se autogestiona con su propio WeakMap (comportamiento anterior),
     // útil para los llamados directos que no envuelven un `container` estable
     // entre repintados (p. ej. la vista dividida de Oportunidades).
-    function render(container, { columnas, filas, filaId, onFilaClick, paginaControlada, onPaginaCambiada }) {
+    function render(container, { columnas, filas, filaId, onFilaClick, paginaControlada, onPaginaCambiada, mensajeVacio }) {
         const controlada = typeof paginaControlada === 'number';
         if (!controlada) {
             if (!paginaPorContenedor.has(container)) paginaPorContenedor.set(container, 1);
@@ -32,7 +32,10 @@
         if (!filas.length) {
             container.innerHTML = `
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                    <div class="p-12 text-center text-sm" style="color: var(--color-text-muted);">No se encontraron registros.</div>
+                    <div class="p-12 text-center">
+                        <i class="fas fa-filter-circle-xmark text-2xl mb-2" style="color: var(--color-neutral);"></i>
+                        <p class="text-sm" style="color: var(--color-text-muted);">${mensajeVacio || 'No se encontraron registros.'}</p>
+                    </div>
                 </div>`;
             return;
         }
@@ -93,5 +96,5 @@
         paginaPorContenedor.set(container, 1);
     }
 
-    UCLA.components.dataTable = { render, resetPagina };
+    UCLA.components.dataTable = { render, resetPagina, PAGINA_SIZE };
 })();

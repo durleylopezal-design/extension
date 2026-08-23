@@ -125,6 +125,23 @@
             return filas;
         }
 
+        // Al crear (o editar) un registro, `config.enfocarId` permite pedirle a
+        // listShell que muestre la página donde ese registro quedó, en vez de
+        // dejar la página tal cual estaba. Es necesario porque el listado
+        // siempre ordena por `campoOrden` (p. ej. fecha de radicado): un
+        // registro nuevo NO necesariamente cae en la página 1 solo por ser
+        // nuevo — si hay registros con fecha posterior (datos de ejemplo con
+        // fechas "futuras" respecto a la fecha real del sistema, entre otros
+        // casos), puede terminar en la última página, invisible en la vista
+        // que el usuario tenía abierta aunque el registro sí se haya guardado
+        // correctamente. Se resuelve una sola vez aquí (no dentro de
+        // pintarCuerpo) para no "perseguir" al usuario si luego cambia de
+        // página manualmente dentro de esta misma visita a la vista.
+        if (config.enfocarId) {
+            const idx = filasVisibles().findIndex((f) => config.filaId(f) === config.enfocarId);
+            if (idx !== -1) estado.pagina = Math.floor(idx / UCLA.components.dataTable.PAGINA_SIZE) + 1;
+        }
+
         function pintarCuerpo() {
             const cuerpo = container.querySelector('#lsCuerpo');
             if (estado.vista === 'kanban' && config.renderKanban) {
@@ -135,6 +152,7 @@
                 config.vistas[estado.vista](cuerpo, filasVisibles());
                 return;
             }
+            const hayFiltroActivo = !!estado.filtroTexto.trim() || (estado.camposActivos && estado.camposActivos.length > 0);
             UCLA.components.dataTable.render(cuerpo, {
                 columnas: config.columnas,
                 filas: filasVisibles(),
@@ -142,6 +160,7 @@
                 onFilaClick: config.onFilaClick,
                 paginaControlada: estado.pagina,
                 onPaginaCambiada: (p) => { estado.pagina = p; pintarCuerpo(); },
+                mensajeVacio: hayFiltroActivo ? `No se encontraron ${config.nombrePlural || 'registros'} con los filtros seleccionados.` : undefined,
             });
         }
 
@@ -151,19 +170,25 @@
         }
 
         // Filtro lateral
+        function pintarFiltro() {
+            const panel = container.querySelector('#lsFiltro');
+            UCLA.components.filterPanel.render(panel, {
+                camposModulo: config.camposModulo || [],
+                textoActual: estado.filtroTexto,
+                // No repinta el panel de filtro en cada tecleo (perdería el foco del
+                // input a mitad de la búsqueda); el botón "Limpiar" se pone al día
+                // la próxima vez que el panel se repinte (casilla marcada, o al
+                // cerrar y volver a abrir el panel).
+                onBuscar: (texto) => { estado.filtroTexto = texto; estado.pagina = 1; pintarCuerpo(); },
+                camposActivos: estado.camposActivos,
+                onCambioCampos: config.filtrarPorCampos ? (activos) => { estado.camposActivos = activos; estado.pagina = 1; pintarCuerpo(); pintarFiltro(); } : undefined,
+            });
+        }
         container.querySelector('#lsBtnFiltrar').addEventListener('click', () => {
             estado.panelAbierto = !estado.panelAbierto;
             const panel = container.querySelector('#lsFiltro');
             panel.classList.toggle('hidden', !estado.panelAbierto);
-            if (estado.panelAbierto) {
-                UCLA.components.filterPanel.render(panel, {
-                    camposModulo: config.camposModulo || [],
-                    textoActual: estado.filtroTexto,
-                    onBuscar: (texto) => { estado.filtroTexto = texto; estado.pagina = 1; pintarCuerpo(); },
-                    camposActivos: estado.camposActivos,
-                    onCambioCampos: config.filtrarPorCampos ? (activos) => { estado.camposActivos = activos; estado.pagina = 1; pintarCuerpo(); } : undefined,
-                });
-            }
+            if (estado.panelAbierto) pintarFiltro();
         });
 
         // Orden
