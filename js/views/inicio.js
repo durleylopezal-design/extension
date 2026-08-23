@@ -62,14 +62,14 @@
 
                 <div class="rounded-2xl shadow-lg overflow-hidden relative" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary) 55%, var(--color-accent-100) 130%);">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-0 m-1 rounded-2xl overflow-hidden" style="background: #ffffff;">
-                        <div class="p-8">
+                        <div class="p-5 sm:p-8">
                             <h2 class="text-2xl font-bold" style="color: var(--color-primary-dark);">Configure su CRM de UCLA Extensión</h2>
                             <p class="mt-2 text-sm" style="color: var(--color-text-muted);">Haga que su gestión académica sea más inteligente y conectada</p>
 
                             <div class="mt-6 space-y-3" id="pasosLista"></div>
                         </div>
 
-                        <div class="p-8 flex items-center" style="background: var(--color-primary-50);">
+                        <div class="p-5 sm:p-8 flex items-center" style="background: var(--color-primary-50);">
                             <div id="panelDerecho" class="w-full transition-opacity duration-300"></div>
                         </div>
                     </div>

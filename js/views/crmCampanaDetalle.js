@@ -142,6 +142,7 @@
                         const lista = leadsRelacionados();
                         c.innerHTML = lista.length ? `
                             <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                                <div class="overflow-x-auto">
                                 <table class="w-full text-sm">
                                     <thead class="table-head-branded"><tr>
                                         <th class="px-4 py-3 text-left">Nombre</th><th class="px-4 py-3 text-left">Programa de interés</th><th class="px-4 py-3 text-left">Estado</th><th class="px-4 py-3 text-left">Propietario</th>
@@ -150,6 +151,7 @@
                                         ${lista.map((l) => `<tr><td class="px-4 py-3"><a href="#/crm/leads" class="hover:underline" style="color: var(--color-primary);">${l.nombre} ${l.apellidos}</a></td><td class="px-4 py-3">${l.programaInteres}</td><td class="px-4 py-3">${UCLA.utils.badgeEstado(l.estado)}</td><td class="px-4 py-3">${l.propietario}</td></tr>`).join('')}
                                     </tbody>
                                 </table>
+                                </div>
                             </div>` : `<div class="bg-white rounded-xl shadow-lg p-10 text-center text-sm" style="color: var(--color-text-muted);">Sin leads asociados a esta campaña todavía.</div>`;
                     },
                 },
@@ -159,6 +161,7 @@
                         const lista = oportunidadesRelacionadas();
                         c.innerHTML = lista.length ? `
                             <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                                <div class="overflow-x-auto">
                                 <table class="w-full text-sm">
                                     <thead class="table-head-branded"><tr>
                                         <th class="px-4 py-3 text-left">Nombre</th><th class="px-4 py-3 text-left">Etapa</th><th class="px-4 py-3 text-left">Valor</th><th class="px-4 py-3 text-left">Propietario</th>
@@ -167,6 +170,7 @@
                                         ${lista.map((o) => `<tr><td class="px-4 py-3"><a href="#/crm/oportunidades" class="hover:underline" style="color: var(--color-primary);">${o.nombre}</a></td><td class="px-4 py-3">${o.etapa}</td><td class="px-4 py-3">${UCLA.utils.formatoCOP(o.valor)}</td><td class="px-4 py-3">${o.propietario}</td></tr>`).join('')}
                                     </tbody>
                                 </table>
+                                </div>
                             </div>` : `<div class="bg-white rounded-xl shadow-lg p-10 text-center text-sm" style="color: var(--color-text-muted);">Sin oportunidades asociadas a esta campaña todavía.</div>`;
                     },
                 },

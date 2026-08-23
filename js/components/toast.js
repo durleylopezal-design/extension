@@ -3,7 +3,7 @@
 (function () {
     function show(message, type = 'info') {
         const div = document.createElement('div');
-        div.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-xl text-white transform transition-all duration-300 translate-y-0 z-50 ${
+        div.className = `fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:max-w-sm px-6 py-3 rounded-lg shadow-xl text-white transform transition-all duration-300 translate-y-0 z-50 ${
             type === 'success' ? 'bg-green-600' : type === 'error' ? 'bg-red-600' : ''
         }`;
         if (type === 'info') {

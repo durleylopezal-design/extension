@@ -80,13 +80,13 @@
         }
         modal.innerHTML = `
             <div class="fixed inset-0 bg-black opacity-40" data-de-cerrar></div>
-            <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 p-6">
-                <div class="flex items-center justify-between mb-1">
+            <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto p-4 sm:p-6">
+                <div class="flex items-center justify-between flex-wrap gap-2 mb-1">
                     <h3 class="text-lg font-bold" style="color: var(--color-primary-dark);">${evento.nombre}</h3>
                     ${UCLA.utils.badgeEstado(evento.estado)}
                 </div>
                 <p class="text-sm mb-4" style="color: var(--color-text-muted);">${evento.codigo}</p>
-                <div class="grid grid-cols-2 gap-3 text-sm mb-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-4">
                     <div><p class="text-xs font-medium" style="color: var(--color-text-muted);">Fechas</p><p>${UCLA.utils.formatoFecha(evento.fechaInicio)} - ${UCLA.utils.formatoFecha(evento.fechaFin)}</p></div>
                     <div><p class="text-xs font-medium" style="color: var(--color-text-muted);">Modalidad</p><p>${evento.modalidad}</p></div>
                     <div><p class="text-xs font-medium" style="color: var(--color-text-muted);">Facultad</p><p>${evento.facultad}</p></div>

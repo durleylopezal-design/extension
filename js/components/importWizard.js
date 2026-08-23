@@ -15,16 +15,16 @@
         overlayEl.innerHTML = `
             <div class="fixed inset-0 bg-black opacity-40" data-iw-cerrar></div>
             <div class="relative bg-white rounded-xl shadow-2xl max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-                <div class="flex items-center justify-between px-6 py-4" style="border-bottom: 1px solid var(--color-border);">
+                <div class="flex items-center justify-between flex-wrap gap-2 px-4 sm:px-6 py-3 sm:py-4" style="border-bottom: 1px solid var(--color-border);">
                     <h3 id="iwTitulo" class="text-lg font-bold" style="color: var(--color-primary-dark);"></h3>
-                    <div class="flex items-center gap-4">
-                        <a href="#" id="iwClasica" class="text-xs font-medium hover:underline" style="color: var(--color-primary);">Cambiar a importación clásica</a>
+                    <div class="flex items-center gap-3 sm:gap-4">
+                        <a href="#" id="iwClasica" class="hidden sm:inline text-xs font-medium hover:underline" style="color: var(--color-primary);">Cambiar a importación clásica</a>
                         <button data-iw-cerrar style="color: var(--color-text-muted);"><i class="fas fa-circle-question"></i></button>
                         <button data-iw-cerrar class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
                     </div>
                 </div>
 
-                <div class="flex items-center justify-between px-6 py-4 overflow-x-auto" style="border-bottom: 1px solid var(--color-border);">
+                <div class="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 overflow-x-auto" style="border-bottom: 1px solid var(--color-border);">
                     ${PASOS.map((p, i) => `
                         <div class="flex items-center flex-shrink-0">
                             <div class="flex items-center gap-2">
@@ -35,8 +35,8 @@
                         </div>`).join('')}
                 </div>
 
-                <div class="p-6">
-                    <div id="iwZonaCarga" class="rounded-xl p-10 text-center" style="border: 2px dashed var(--color-border);">
+                <div class="p-4 sm:p-6">
+                    <div id="iwZonaCarga" class="rounded-xl p-6 sm:p-10 text-center" style="border: 2px dashed var(--color-border);">
                         <i class="fas fa-file-arrow-up text-3xl mb-3" style="color: var(--color-primary);"></i>
                         <p class="text-sm font-medium" style="color: var(--color-text);">Arrastre y suelte los archivos aquí</p>
                         <p class="text-xs my-2" style="color: var(--color-text-muted);">o</p>
@@ -70,9 +70,9 @@
                     </div>
                 </div>
 
-                <div class="flex items-center justify-between px-6 py-4" style="border-top: 1px solid var(--color-border);">
-                    <a href="#" data-iw-toast="Migración desde otro sistema: función simulada" class="text-xs font-medium hover:underline" style="color: var(--color-primary);">Migrar datos desde otro sistema</a>
-                    <div class="flex gap-2">
+                <div class="flex items-center justify-between flex-wrap gap-2 px-4 sm:px-6 py-3 sm:py-4" style="border-top: 1px solid var(--color-border);">
+                    <a href="#" data-iw-toast="Migración desde otro sistema: función simulada" class="hidden sm:inline text-xs font-medium hover:underline" style="color: var(--color-primary);">Migrar datos desde otro sistema</a>
+                    <div class="flex gap-2 ml-auto">
                         <button data-iw-cerrar class="px-4 py-2 text-sm rounded-lg" style="color: var(--color-text-muted);">Cancelar</button>
                         <button id="iwSiguiente" class="btn-primary text-sm opacity-50 cursor-not-allowed" disabled>Siguiente</button>
                     </div>

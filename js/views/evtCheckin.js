@@ -32,11 +32,11 @@
                             <h3 class="text-lg font-bold" style="color: var(--color-primary-dark);">Check-in de Asistencia</h3>
                             <p id="ciContador" class="text-sm mt-1" style="color: var(--color-text-muted);">${presentes} de ${total.length} confirmados registrados como presentes</p>
                         </div>
-                        <div class="flex gap-2">
-                            <select id="ciEvento" class="px-3 py-2 text-sm rounded-lg border" style="border-color: var(--color-border);">
+                        <div class="flex flex-wrap gap-2 w-full sm:w-auto">
+                            <select id="ciEvento" class="px-3 py-2 text-sm rounded-lg border w-full sm:w-auto" style="border-color: var(--color-border);">
                                 ${UCLA.data.eventos.map((e) => `<option value="${e.codigo}" ${e.codigo === eventoCodigo ? 'selected' : ''}>${e.nombre}</option>`).join('')}
                             </select>
-                            <input id="ciBuscar" type="text" placeholder="Buscar por nombre o documento..." value="${busqueda}" class="px-3 py-2 text-sm rounded-lg border w-64" style="border-color: var(--color-border);">
+                            <input id="ciBuscar" type="text" placeholder="Buscar por nombre o documento..." value="${busqueda}" class="px-3 py-2 text-sm rounded-lg border w-full sm:w-64" style="border-color: var(--color-border);">
                         </div>
                     </div>
                     <div id="ciTabla"></div>

@@ -69,9 +69,9 @@
                     </div>
                 </div>
 
-                <div class="flex items-start gap-4">
-                    <div id="lsFiltro" class="hidden"></div>
-                    <div id="lsCuerpo" class="flex-1 min-w-0"></div>
+                <div class="flex flex-col lg:flex-row items-start gap-4">
+                    <div id="lsFiltro" class="hidden w-full lg:w-auto"></div>
+                    <div id="lsCuerpo" class="flex-1 min-w-0 w-full"></div>
                 </div>
             </div>`;
 

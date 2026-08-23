@@ -250,9 +250,9 @@
                 seleccionadaDividida = filas[0]?.id || null;
             }
             cuerpo.innerHTML = `
-                <div class="flex gap-4 items-start">
-                    <div class="w-80 flex-shrink-0" id="oppListaDividida"></div>
-                    <div class="flex-1 min-w-0" id="oppDetalleDividida"></div>
+                <div class="flex flex-col lg:flex-row gap-4 items-start">
+                    <div class="w-full lg:w-80 lg:flex-shrink-0" id="oppListaDividida"></div>
+                    <div class="flex-1 min-w-0 w-full" id="oppDetalleDividida"></div>
                 </div>`;
 
             function pintarLista() {
@@ -283,7 +283,7 @@
                                 <button data-eliminar-opp="${f.id}" class="px-3 py-1.5 text-sm rounded-lg border" style="border-color: var(--color-danger); color: var(--color-danger);">Eliminar</button>
                             </div>
                         </div>
-                        <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                             <div><p class="text-xs font-medium" style="color: var(--color-text-muted);">Valor</p><p style="color: var(--color-text);">${UCLA.utils.formatoCOP(f.valor)}</p></div>
                             <div><p class="text-xs font-medium" style="color: var(--color-text-muted);">Sede</p><p style="color: var(--color-text);">${f.sedeId}</p></div>
                             <div><p class="text-xs font-medium" style="color: var(--color-text-muted);">Propietario</p><p style="color: var(--color-text);">${f.propietario}</p></div>

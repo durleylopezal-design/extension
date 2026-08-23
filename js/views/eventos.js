@@ -34,6 +34,7 @@
                 </div>
 
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="overflow-x-auto">
                     <table class="w-full">
                         <thead class="table-head-branded">
                             <tr>
@@ -48,6 +49,7 @@
                         </thead>
                         <tbody class="divide-y divide-gray-200" id="eventosTable"></tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         `;

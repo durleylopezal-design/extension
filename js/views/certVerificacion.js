@@ -41,7 +41,7 @@
                         <i class="fas ${valido ? 'fa-circle-check' : 'fa-circle-exclamation'} text-2xl" style="color: ${valido ? 'var(--color-success)' : 'var(--color-danger)'};"></i>
                         <p class="text-sm font-semibold" style="color: ${valido ? 'var(--color-success)' : 'var(--color-danger)'};">${valido ? 'Certificado válido' : 'Certificado revocado'}</p>
                     </div>
-                    <div class="grid grid-cols-2 gap-3 text-sm">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                         <div><p class="text-xs font-medium" style="color: var(--color-text-muted);">Destinatario</p><p>${certificado.destinatario}</p></div>
                         <div><p class="text-xs font-medium" style="color: var(--color-text-muted);">Evento</p><p>${evento ? evento.nombre : certificado.eventoCodigo}</p></div>
                         <div><p class="text-xs font-medium" style="color: var(--color-text-muted);">Fecha de emisión</p><p>${UCLA.utils.formatoFecha(certificado.fechaEmision)}</p></div>

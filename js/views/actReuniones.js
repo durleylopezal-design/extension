@@ -103,7 +103,7 @@
                         <label class="flex items-center gap-2 text-sm cursor-pointer" style="color: var(--color-text);">
                             <input type="checkbox" id="mrTodoElDia" ${r?.todoElDia ? 'checked' : ''}> Todo el día
                         </label>
-                        <div class="grid grid-cols-2 gap-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">De *</label>
                                 <input id="mrDe" type="datetime-local" value="${r ? r.inicio || '' : ''}" class="input-brand w-full px-3 py-2 text-sm">

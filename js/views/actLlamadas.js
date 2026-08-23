@@ -127,7 +127,7 @@
                         <div id="llDatalistRelacionado">${datalistHtml('dlRelacionado', 'Cuenta')}</div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Tipo de llamada</label>
                             <input type="text" value="Saliente" disabled class="w-full px-3 py-2 text-sm rounded-lg" style="background: var(--color-neutral-100, #F0F2F3); color: var(--color-text-muted); border: 1.5px solid var(--color-border);">

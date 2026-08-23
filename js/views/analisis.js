@@ -88,9 +88,9 @@
             </div>
 
             <!-- Modal: configurar componente nuevo -->
-            <div id="modalConfigurarComponente" class="hidden fixed inset-0 z-50 flex items-center justify-center modal">
+            <div id="modalConfigurarComponente" class="hidden fixed inset-0 z-50 flex items-center justify-center modal p-4">
                 <div class="fixed inset-0 bg-black opacity-40" data-cerrar="modalConfigurarComponente"></div>
-                <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
+                <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-4 sm:p-6">
                     <h3 class="text-lg font-bold mb-4" style="color: var(--color-primary-dark);">Configurar componente</h3>
                     <form id="formConfigurarComponente" class="space-y-3">
                         <div>
@@ -104,7 +104,7 @@
                             <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Campo a medir</label>
                             <input id="cfgCampo" type="text" placeholder="Ej: Matrículas confirmadas" class="input-brand w-full px-3 py-2 text-sm">
                         </div>
-                        <div class="grid grid-cols-2 gap-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Periodo</label>
                                 <select id="cfgPeriodo" class="input-brand w-full px-3 py-2 text-sm">
@@ -127,9 +127,9 @@
             </div>
 
             <!-- Modal: crear panel -->
-            <div id="modalCrearPanel" class="hidden fixed inset-0 z-50 flex items-center justify-center modal">
+            <div id="modalCrearPanel" class="hidden fixed inset-0 z-50 flex items-center justify-center modal p-4">
                 <div class="fixed inset-0 bg-black opacity-40" data-cerrar="modalCrearPanel"></div>
-                <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
+                <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-4 sm:p-6">
                     <h3 class="text-lg font-bold mb-4" style="color: var(--color-primary-dark);">Crear panel de información</h3>
                     <form id="formCrearPanel" class="space-y-3">
                         <div>
@@ -155,7 +155,7 @@
             </div>
 
             <!-- Asistente de bienvenida (solo primera visita) -->
-            <div id="asistenteAnalisis" class="hidden fixed inset-0 z-50 flex items-center justify-center modal"></div>
+            <div id="asistenteAnalisis" class="hidden fixed inset-0 z-50 flex items-center justify-center modal p-4"></div>
         `;
 
         pintarSelectorPaneles(container);
@@ -298,6 +298,7 @@
     function renderTablaAsesores(c) {
         return `
             <h4 class="text-sm font-medium mb-3" style="color: var(--color-text-muted);">${c.titulo}</h4>
+            <div class="overflow-x-auto">
             <table class="w-full text-sm">
                 <tbody>
                     ${c.filas.map((f) => `
@@ -306,7 +307,8 @@
                             <td class="py-2 text-right font-bold" style="color: var(--color-primary);">${f.matriculas}</td>
                         </tr>`).join('')}
                 </tbody>
-            </table>`;
+            </table>
+            </div>`;
     }
 
     function renderGenerico(c) {
@@ -346,10 +348,10 @@
         if (pasoAsistente === 1) {
             modal.innerHTML = `
                 <div class="fixed inset-0 bg-black opacity-40"></div>
-                <div class="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-8 text-center">
+                <div class="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8 text-center">
                     <h3 class="text-xl font-bold" style="color: var(--color-primary-dark);">Estas son las funciones que le ofrece el panel de control de Análisis</h3>
                     <p class="text-sm mt-2" style="color: var(--color-text-muted);">Diez componentes analíticos con una interfaz basada en acciones de arrastrar y soltar</p>
-                    <div class="grid grid-cols-3 gap-4 my-6">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 my-6">
                         ${['fa-filter', 'fa-chart-pie', 'fa-bullseye', 'fa-dollar-sign', 'fa-scale-balanced', 'fa-star'].map((ic) => `
                             <div class="aspect-video rounded-lg flex items-center justify-center" style="background: var(--color-primary-100);">
                                 <i class="fas ${ic} text-2xl" style="color: var(--color-primary);"></i>
@@ -364,15 +366,15 @@
         } else {
             modal.innerHTML = `
                 <div class="fixed inset-0 bg-black opacity-40"></div>
-                <div class="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-8">
-                    <div class="flex items-start justify-between mb-1">
+                <div class="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-8">
+                    <div class="flex items-start justify-between flex-wrap gap-2 mb-1">
                         <h3 class="text-xl font-bold flex items-center gap-2" style="color: var(--color-primary-dark);">
                             Estas son las funciones que le ofrece el panel de control de Análisis
                             <i class="fas fa-circle-question text-sm" style="color: var(--color-text-muted);"></i>
                         </h3>
                         <a href="#" id="verificarEdiciones" class="text-xs font-medium hover:underline flex-shrink-0 ml-4" style="color: var(--color-primary);">Comprobar ediciones compatibles</a>
                     </div>
-                    <div class="grid grid-cols-5 gap-4 my-6">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 my-6">
                         ${PASO2_ICONOS.map((nombre, i) => `
                             <div class="text-center">
                                 <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);">

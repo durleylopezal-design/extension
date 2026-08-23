@@ -67,7 +67,7 @@
         }
         modal.innerHTML = `
             <div class="fixed inset-0 bg-black opacity-40" data-np-cerrar></div>
-            <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 p-6">
+            <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto p-4 sm:p-6">
                 <h3 class="text-lg font-bold mb-4" style="color: var(--color-primary-dark);">Nueva publicación</h3>
                 <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Tipo</label>
                 <select id="npTipo" class="input-brand w-full px-3 py-2 text-sm mb-3">

@@ -60,10 +60,12 @@
                         const lista = convenios();
                         c.innerHTML = lista.length ? `
                             <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                                <div class="overflow-x-auto">
                                 <table class="w-full text-sm">
                                     <thead><tr style="border-bottom: 2px solid var(--color-primary-100);"><th class="px-4 py-3 text-left text-xs font-semibold uppercase" style="color: var(--color-text-muted);">Convenio</th><th class="px-4 py-3 text-left text-xs font-semibold uppercase" style="color: var(--color-text-muted);">Tipo</th><th class="px-4 py-3 text-left text-xs font-semibold uppercase" style="color: var(--color-text-muted);">Vigencia hasta</th></tr></thead>
                                     <tbody>${lista.map((cv) => `<tr style="border-bottom: 1px solid var(--color-border);"><td class="px-4 py-3">${cv.nombre}</td><td class="px-4 py-3">${cv.tipo}</td><td class="px-4 py-3">${UCLA.utils.formatoFecha(cv.fechaFin)}</td></tr>`).join('')}</tbody>
                                 </table>
+                                </div>
                             </div>` : `<div class="bg-white rounded-xl shadow-lg p-10 text-center text-sm" style="color: var(--color-text-muted);">Sin convenios asociados.</div>`;
                     },
                 },
@@ -73,10 +75,12 @@
                         const lista = programas();
                         c.innerHTML = lista.length ? `
                             <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                                <div class="overflow-x-auto">
                                 <table class="w-full text-sm">
                                     <thead><tr style="border-bottom: 2px solid var(--color-primary-100);"><th class="px-4 py-3 text-left text-xs font-semibold uppercase" style="color: var(--color-text-muted);">Programa</th><th class="px-4 py-3 text-left text-xs font-semibold uppercase" style="color: var(--color-text-muted);">Modalidad</th><th class="px-4 py-3 text-left text-xs font-semibold uppercase" style="color: var(--color-text-muted);">Inscritos</th><th class="px-4 py-3 text-left text-xs font-semibold uppercase" style="color: var(--color-text-muted);">Estado</th></tr></thead>
                                     <tbody>${lista.map((p) => `<tr style="border-bottom: 1px solid var(--color-border);"><td class="px-4 py-3">${p.nombre}</td><td class="px-4 py-3">${p.modalidad}</td><td class="px-4 py-3">${p.inscritos} / ${p.cupoMaximo}</td><td class="px-4 py-3">${UCLA.utils.badgeEstado(p.estado)}</td></tr>`).join('')}</tbody>
                                 </table>
+                                </div>
                             </div>` : `<div class="bg-white rounded-xl shadow-lg p-10 text-center text-sm" style="color: var(--color-text-muted);">Sin programas en alianza registrados.</div>`;
                     },
                 },
@@ -102,7 +106,7 @@
         }
         modal.innerHTML = `
             <div class="fixed inset-0 bg-black opacity-40" data-ia-cerrar></div>
-            <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 p-6">
+            <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto p-4 sm:p-6">
                 <h3 class="text-lg font-bold mb-4" style="color: var(--color-primary-dark);">Registrar interacción</h3>
                 <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Tipo</label>
                 <select id="iaTipo" class="input-brand w-full px-3 py-2 text-sm mb-3">

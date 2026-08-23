@@ -169,7 +169,7 @@
         ];
         modal.innerHTML = `
             <div class="fixed inset-0 bg-black opacity-40" data-pp-cerrar></div>
-            <div class="relative bg-white rounded-xl shadow-2xl max-w-sm w-full mx-4 p-6">
+            <div class="relative bg-white rounded-xl shadow-2xl max-w-sm w-full mx-4 max-h-[90vh] overflow-y-auto p-4 sm:p-6">
                 <h3 class="text-lg font-bold mb-4" style="color: var(--color-primary-dark);">Posponer recordatorio</h3>
                 <div class="space-y-2">
                     ${opciones.map((o) => `<button data-pp-opcion="${o.minutos}" class="w-full text-left px-4 py-2 rounded-lg border text-sm hover:bg-gray-50" style="border-color: var(--color-border);">${o.etiqueta}</button>`).join('')}

@@ -47,18 +47,19 @@
                                 <span id="etiquetaCarpetaActiva"></span>
                                 <i class="fas fa-chevron-down text-xs transition-transform"></i>
                             </button>
-                            <div id="panelCarpetas" class="hidden absolute left-0 mt-2 w-80 bg-white rounded-lg shadow-xl border z-30" style="border-color: var(--color-border);"></div>
+                            <div id="panelCarpetas" class="hidden absolute left-0 mt-2 w-80 max-w-[90vw] bg-white rounded-lg shadow-xl border z-30" style="border-color: var(--color-border);"></div>
                         </div>
                     </div>
-                    <div class="relative">
+                    <div class="relative w-full sm:w-auto">
                         <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-sm" style="color: var(--color-text-muted);"></i>
-                        <input id="buscarRegistros" type="text" placeholder="Buscar registros" class="input-brand pl-9 pr-4 py-2 text-sm w-64">
+                        <input id="buscarRegistros" type="text" placeholder="Buscar registros" class="input-brand pl-9 pr-4 py-2 text-sm w-full sm:w-64">
                     </div>
                 </div>
 
                 <div id="bannerAreaExtension"></div>
 
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="overflow-x-auto">
                     <table class="w-full">
                         <thead>
                             <tr style="border-bottom: 2px solid var(--color-primary-100);">
@@ -72,14 +73,15 @@
                         </thead>
                         <tbody id="filasInformes"></tbody>
                     </table>
+                    </div>
                     <div id="estadoVacioInformes" class="hidden p-12 text-center text-sm" style="color: var(--color-text-muted);">No se encontraron informes en esta carpeta.</div>
                 </div>
             </div>
 
             <!-- Modal Administrar Carpetas -->
-            <div id="modalCarpetas" class="hidden fixed inset-0 z-50 flex items-center justify-center modal">
+            <div id="modalCarpetas" class="hidden fixed inset-0 z-50 flex items-center justify-center modal p-4">
                 <div class="fixed inset-0 bg-black opacity-50" data-cerrar-modal-carpetas></div>
-                <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
+                <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-4 sm:p-6">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-bold" style="color: var(--color-primary-dark);">Administrar Carpetas</h3>
                         <button data-cerrar-modal-carpetas class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
@@ -94,7 +96,7 @@
                                 <option value="area">Área</option>
                             </select>
                         </div>
-                        <div id="camposFacultadPrograma" class="grid grid-cols-2 gap-2">
+                        <div id="camposFacultadPrograma" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             <select id="facultadCarpeta" class="input-brand px-3 py-2 text-sm">
                                 ${UCLA.data.facultades.map((f) => `<option value="${f.id}">${f.nombre}</option>`).join('')}
                             </select>
@@ -393,13 +395,13 @@
         modalSolicitudEl.innerHTML = `
             <div class="flex items-center justify-center min-h-screen px-4 py-8">
                 <div class="fixed inset-0 bg-black opacity-50" data-cerrar-modal-solicitud></div>
-                <div class="relative bg-white rounded-xl shadow-2xl max-w-2xl w-full p-6">
+                <div class="relative bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-4 sm:p-6">
                     <div class="flex justify-between items-center mb-6">
                         <h3 id="sfTitulo" class="text-xl font-bold" style="color: var(--color-primary-dark);">Nueva Solicitud de Formación</h3>
                         <button data-cerrar-modal-solicitud class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
                     </div>
                     <form id="formSolicitudFormacion" class="space-y-4">
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Entidad/Empresa *</label>
                                 <input id="sfEntidad" type="text" required class="input-brand w-full px-3 py-2 text-sm">
@@ -429,7 +431,7 @@
                             <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Objetivo de la Formación *</label>
                             <textarea id="sfObjetivo" required rows="3" class="input-brand w-full px-3 py-2 text-sm"></textarea>
                         </div>
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-medium mb-1" style="color: var(--color-text);">Sede Preferida</label>
                                 <select id="sfSede" class="input-brand w-full px-3 py-2 text-sm">

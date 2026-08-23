@@ -53,7 +53,7 @@
     function render(container) {
         function pintar() {
             container.innerHTML = `
-                <div class="max-w-2xl mx-auto flex flex-col" style="height: calc(100vh - 180px);">
+                <div class="max-w-2xl mx-auto flex flex-col h-[calc(100vh-260px)] sm:h-[calc(100vh-220px)] lg:h-[calc(100vh-180px)]">
                     <div class="bg-white rounded-t-xl shadow-lg p-4 flex items-center gap-3" style="border-bottom: 1px solid var(--color-border);">
                         <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: var(--color-primary-50);"><i class="fas fa-robot" style="color: var(--color-primary);"></i></div>
                         <div>

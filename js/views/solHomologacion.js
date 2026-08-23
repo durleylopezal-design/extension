@@ -89,7 +89,7 @@
                     <h3 class="text-lg font-bold" style="color: var(--color-primary-dark);">Nueva solicitud de homologación</h3>
                     <button data-hom-cerrar class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
                 </div>
-                <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                     <div><label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Solicitante *</label><input id="homSolicitante" type="text" class="input-brand w-full px-3 py-2 text-sm"></div>
                     <div><label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Programa destino *</label><input id="homProgramaDestino" type="text" class="input-brand w-full px-3 py-2 text-sm"></div>
                     <div><label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Institución de origen</label><input id="homInstitucion" type="text" class="input-brand w-full px-3 py-2 text-sm"></div>

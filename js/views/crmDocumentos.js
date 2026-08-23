@@ -10,8 +10,8 @@
         container.innerHTML = `
             <div class="space-y-4">
                 <h2 class="text-2xl font-bold" style="color: var(--color-primary-dark);">Documentos</h2>
-                <div class="flex items-start gap-4">
-                    <div class="bg-white rounded-xl shadow-lg p-4 w-64 flex-shrink-0">
+                <div class="flex flex-col lg:flex-row items-start gap-4">
+                    <div class="bg-white rounded-xl shadow-lg p-4 w-full lg:w-64 lg:flex-shrink-0">
                         <div id="listaCarpetasDoc"></div>
                         <div class="mt-4 pt-3" style="border-top: 1px solid var(--color-border);">
                             <a href="#" id="abrirWorkdrive" class="text-xs font-medium hover:underline flex items-center gap-1" style="color: var(--color-primary);">
@@ -19,7 +19,7 @@
                             </a>
                         </div>
                     </div>
-                    <div id="panelArchivos" class="flex-1 min-w-0 bg-white rounded-xl shadow-lg p-6"></div>
+                    <div id="panelArchivos" class="flex-1 min-w-0 w-full bg-white rounded-xl shadow-lg p-4 sm:p-6"></div>
                 </div>
             </div>`;
 
@@ -74,12 +74,12 @@
                     ${archivos.length ? `
                         <div class="space-y-1">
                             ${archivos.map((d) => `
-                                <div class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50">
-                                    <i class="fas ${ICONO_TIPO[d.tipo] || 'fa-file'}" style="color: ${COLOR_TIPO[d.tipo] || 'var(--color-text-muted)'};"></i>
-                                    <span class="flex-1 text-sm" style="color: var(--color-text);">${d.nombre}</span>
-                                    <span class="text-xs" style="color: var(--color-text-muted);">${d.propietario}</span>
-                                    <span class="text-xs w-16 text-right" style="color: var(--color-text-muted);">${d.tamano}</span>
-                                    <span class="text-xs w-24 text-right" style="color: var(--color-text-muted);">${UCLA.utils.formatoFecha(d.fechaModificacion)}</span>
+                                <div class="flex items-center gap-2 sm:gap-3 px-2 sm:px-3 py-2.5 rounded-lg hover:bg-gray-50">
+                                    <i class="fas ${ICONO_TIPO[d.tipo] || 'fa-file'} flex-shrink-0" style="color: ${COLOR_TIPO[d.tipo] || 'var(--color-text-muted)'};"></i>
+                                    <span class="flex-1 min-w-0 truncate text-sm" style="color: var(--color-text);">${d.nombre}</span>
+                                    <span class="hidden sm:block text-xs flex-shrink-0" style="color: var(--color-text-muted);">${d.propietario}</span>
+                                    <span class="hidden md:block text-xs w-16 text-right flex-shrink-0" style="color: var(--color-text-muted);">${d.tamano}</span>
+                                    <span class="text-xs w-20 sm:w-24 text-right flex-shrink-0" style="color: var(--color-text-muted);">${UCLA.utils.formatoFecha(d.fechaModificacion)}</span>
                                 </div>`).join('')}
                         </div>` : `<p class="text-sm text-center py-10" style="color: var(--color-text-muted);">Esta carpeta no tiene archivos todavía.</p>`}
                 `;

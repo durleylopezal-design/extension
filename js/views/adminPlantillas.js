@@ -78,7 +78,7 @@
         }
         modal.innerHTML = `
             <div class="fixed inset-0 bg-black opacity-40" data-pv-cerrar></div>
-            <div class="relative bg-white rounded-xl shadow-2xl max-w-lg w-full mx-4 p-6">
+            <div class="relative bg-white rounded-xl shadow-2xl max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto p-4 sm:p-6">
                 <h3 class="text-lg font-bold mb-1" style="color: var(--color-primary-dark);">${plantilla.nombre}</h3>
                 <p class="text-xs mb-4" style="color: var(--color-text-muted);">Módulo: ${plantilla.modulo}</p>
                 <div class="rounded-lg p-4" style="border: 1px solid var(--color-border);">

@@ -41,9 +41,9 @@
                         </div>
                     </div>
 
-                    <div class="flex gap-1 mt-5" style="border-bottom: 1px solid var(--color-border);">
+                    <div class="flex gap-1 mt-5 overflow-x-auto" style="border-bottom: 1px solid var(--color-border);">
                         ${pestanas.map((p) => `
-                            <button data-detail-tab="${p.id}" class="px-4 py-2 text-sm font-medium" style="color: ${p.id === activa ? 'var(--color-primary)' : 'var(--color-text-muted)'}; border-bottom: 2px solid ${p.id === activa ? 'var(--color-primary)' : 'transparent'};">
+                            <button data-detail-tab="${p.id}" class="px-4 py-2 text-sm font-medium whitespace-nowrap flex-shrink-0" style="color: ${p.id === activa ? 'var(--color-primary)' : 'var(--color-text-muted)'}; border-bottom: 2px solid ${p.id === activa ? 'var(--color-primary)' : 'transparent'};">
                                 ${p.etiqueta}
                             </button>
                         `).join('')}

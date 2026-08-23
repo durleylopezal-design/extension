@@ -84,7 +84,7 @@
         const candidatos = pagosSinConciliar();
         modal.innerHTML = `
             <div class="fixed inset-0 bg-black opacity-40" data-cc-cerrar></div>
-            <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 p-6">
+            <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto p-4 sm:p-6">
                 <h3 class="text-lg font-bold mb-1" style="color: var(--color-primary-dark);">Conciliar movimiento</h3>
                 <p class="text-sm mb-4" style="color: var(--color-text-muted);">${mov.referencia} · ${UCLA.utils.formatoCOP(mov.valor)} · ${UCLA.utils.formatoFecha(mov.fecha)}</p>
                 <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Pago asociado</label>
@@ -121,7 +121,7 @@
         const diferencia = pago ? mov.valor - pago.valor : 0;
         modal.innerHTML = `
             <div class="fixed inset-0 bg-black opacity-40" data-cd-cerrar></div>
-            <div class="relative bg-white rounded-xl shadow-2xl max-w-sm w-full mx-4 p-6">
+            <div class="relative bg-white rounded-xl shadow-2xl max-w-sm w-full mx-4 max-h-[90vh] overflow-y-auto p-4 sm:p-6">
                 <h3 class="text-lg font-bold mb-4" style="color: var(--color-primary-dark);">Diferencia detectada</h3>
                 <div class="space-y-2 text-sm mb-4">
                     <div class="flex justify-between"><span style="color: var(--color-text-muted);">Valor en extracto</span><span class="font-medium">${UCLA.utils.formatoCOP(mov.valor)}</span></div>

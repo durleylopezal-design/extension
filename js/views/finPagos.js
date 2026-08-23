@@ -74,7 +74,7 @@
                     </div>
                     <div class="space-y-3">
                         <div><label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Estudiante *</label><input id="rpEstudiante" type="text" class="input-brand w-full px-3 py-2 text-sm"></div>
-                        <div class="grid grid-cols-2 gap-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div><label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Programa</label><input id="rpPrograma" type="text" class="input-brand w-full px-3 py-2 text-sm"></div>
                             <div><label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Concepto</label>
                                 <select id="rpConcepto" class="input-brand w-full px-3 py-2 text-sm">
@@ -99,7 +99,7 @@
                             <div class="flex justify-between font-bold text-base mt-1 pt-1" style="border-top: 1px solid var(--color-border); color: var(--color-primary);"><span>Neto a pagar</span><span id="rpResNeto">$ 0</span></div>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div><label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Medio de pago</label>
                                 <select id="rpMedio" class="input-brand w-full px-3 py-2 text-sm">
                                     <option>Efectivo</option><option>Transferencia</option><option>PSE</option><option>Tarjeta</option><option>Convenio</option>

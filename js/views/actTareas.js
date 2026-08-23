@@ -200,7 +200,7 @@
                     <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Nombre de la vista Kanban *</label>
                     <input id="kcNombre" type="text" value="${configKanban ? configKanban.nombre : ''}" class="input-brand w-full px-3 py-2 text-sm mb-4" style="border-color: var(--color-border);">
 
-                    <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Categorizar por</label>
                             <select id="kcCategorizarPor" class="input-brand w-full px-3 py-2 text-sm">
@@ -218,7 +218,7 @@
                     </div>
 
                     <p class="text-xs font-semibold uppercase mb-2" style="color: var(--color-text-muted);">Seleccionar campos</p>
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div class="border rounded-lg p-3" style="border-color: var(--color-border);">
                             <p class="text-xs font-semibold mb-2" style="color: var(--color-text);">Disponible</p>
                             <input id="kcBuscarCampo" type="text" placeholder="Buscar campo..." class="input-brand w-full px-2 py-1 text-xs mb-2">

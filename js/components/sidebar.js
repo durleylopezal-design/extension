@@ -204,12 +204,33 @@
                 chevron.style.transform = abierta ? 'rotate(180deg)' : '';
             });
         });
+        // En móvil/tablet el sidebar es un panel superpuesto (off-canvas): al
+        // navegar a una ruta se cierra solo para no tapar el contenido. En
+        // escritorio (lg+) esta clase queda anulada por lg:translate-x-0.
+        container.querySelectorAll('a[href^="#/"]').forEach((a) => a.addEventListener('click', cerrarMovil));
+    }
+
+    // ---------- Off-canvas móvil ----------
+    function abrirMovil() {
+        document.getElementById('sidebar')?.classList.remove('-translate-x-full');
+        document.getElementById('sidebarBackdrop')?.classList.remove('hidden');
+    }
+
+    function cerrarMovil() {
+        document.getElementById('sidebar')?.classList.add('-translate-x-full');
+        document.getElementById('sidebarBackdrop')?.classList.add('hidden');
+    }
+
+    function toggleMovil() {
+        const abierto = document.getElementById('sidebar') && !document.getElementById('sidebar').classList.contains('-translate-x-full');
+        if (abierto) cerrarMovil(); else abrirMovil();
     }
 
     function render(container) {
         if (!container) return;
         container.innerHTML = html(UCLA.router.rutaActual());
         bind(container);
+        document.getElementById('sidebarBackdrop')?.addEventListener('click', cerrarMovil);
     }
 
     function setActive(ruta) {
@@ -229,5 +250,5 @@
         }
     }
 
-    UCLA.components.sidebar = { render, setActive };
+    UCLA.components.sidebar = { render, setActive, abrirMovil, cerrarMovil, toggleMovil };
 })();

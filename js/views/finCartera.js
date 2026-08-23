@@ -108,7 +108,7 @@
         }
         modal.innerHTML = `
             <div class="fixed inset-0 bg-black opacity-40" data-gc-cerrar></div>
-            <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 p-6">
+            <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto p-4 sm:p-6">
                 <h3 class="text-lg font-bold mb-1" style="color: var(--color-primary-dark);">Registrar gestión de cobro</h3>
                 <p class="text-sm mb-4" style="color: var(--color-text-muted);">${cuenta.estudiante} · ${UCLA.utils.formatoCOP(cuenta.saldo)}</p>
                 <label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Tipo de gestión</label>
@@ -162,10 +162,10 @@
         function pintar() {
             modal.innerHTML = `
                 <div class="fixed inset-0 bg-black opacity-40" data-ap-cerrar></div>
-                <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 p-6">
+                <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto p-4 sm:p-6">
                     <h3 class="text-lg font-bold mb-1" style="color: var(--color-primary-dark);">Crear acuerdo de pago</h3>
                     <p class="text-sm mb-4" style="color: var(--color-text-muted);">${cuenta.estudiante} · Saldo ${UCLA.utils.formatoCOP(cuenta.saldo)}</p>
-                    <div class="grid grid-cols-2 gap-3 mb-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
                         <div><label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Número de cuotas</label><input id="apCuotas" type="number" min="1" max="12" value="3" class="input-brand w-full px-3 py-2 text-sm"></div>
                         <div><label class="block text-xs font-medium mb-1" style="color: var(--color-text-muted);">Fecha primera cuota</label><input id="apFecha" type="date" class="input-brand w-full px-3 py-2 text-sm"></div>
                     </div>
@@ -188,10 +188,12 @@
                     return { numero: i + 1, valor: i === n - 1 ? cuenta.saldo - valorCuota * (n - 1) : valorCuota, fecha: f.toISOString().slice(0, 10), estado: 'Pendiente' };
                 });
                 modal.querySelector('#apPlan').innerHTML = `
+                    <div class="overflow-x-auto">
                     <table class="w-full text-xs mb-2">
                         <thead><tr style="color: var(--color-text-muted);"><th class="text-left">Cuota</th><th class="text-left">Valor</th><th class="text-left">Fecha</th></tr></thead>
                         <tbody>${cuotasGeneradas.map((c) => `<tr><td>${c.numero}</td><td>${UCLA.utils.formatoCOP(c.valor)}</td><td>${UCLA.utils.formatoFecha(c.fecha)}</td></tr>`).join('')}</tbody>
-                    </table>`;
+                    </table>
+                    </div>`;
                 modal.querySelector('#apGuardar').disabled = false;
                 modal.querySelector('#apGuardar').classList.remove('opacity-50');
             });

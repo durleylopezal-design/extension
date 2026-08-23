@@ -49,22 +49,27 @@
     function html() {
         const sedes = UCLA.state.SEDES.map((s) => `<option value="${s.codigo}">${s.nombre} (${s.codigo})</option>`).join('');
         return `
-            <div class="flex items-center justify-between px-8 py-4 gap-4">
-                <h2 id="pageTitle" class="text-xl font-bold flex-shrink-0" style="color: var(--color-primary-dark);"></h2>
+            <div class="flex items-center flex-wrap px-4 sm:px-6 lg:px-8 py-3 lg:py-4 gap-3 sm:gap-4">
+                <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0 order-1">
+                    <button id="btnSidebarToggle" type="button" class="lg:hidden -ml-1 p-2 rounded-lg hover:bg-gray-100 flex-shrink-0" style="color: var(--color-primary);" title="Abrir menú" aria-label="Abrir menú">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                    <h2 id="pageTitle" class="text-lg sm:text-xl font-bold truncate max-w-[45vw] sm:max-w-none" style="color: var(--color-primary-dark);"></h2>
+                </div>
 
-                <div class="relative flex-1 max-w-md">
+                <div class="relative w-full basis-full order-3 lg:order-2 lg:basis-0 lg:flex-1 lg:max-w-md lg:w-auto">
                     <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-sm" style="color: var(--color-text-muted);"></i>
                     <input type="text" id="globalSearch" placeholder="Buscar cuentas, eventos, certificados..."
                            class="input-brand w-full pl-9 pr-4 py-2 text-sm" autocomplete="off">
                     <div id="globalSearchResults" class="hidden absolute left-0 right-0 mt-1 bg-white rounded-lg shadow-xl border overflow-y-auto z-20" style="max-height: 320px; border-color: var(--color-border);"></div>
                 </div>
 
-                <div class="flex items-center gap-4 flex-shrink-0">
+                <div class="flex items-center gap-2 sm:gap-4 flex-shrink-0 order-2 lg:order-3 ml-auto lg:ml-0">
                     <div class="relative">
-                        <select id="sedeSelector" class="input-brand appearance-none bg-white py-2 pl-3 pr-8 text-sm font-medium" style="color: var(--color-primary);">
+                        <select id="sedeSelector" class="input-brand appearance-none bg-white py-1.5 sm:py-2 pl-2 sm:pl-3 pr-6 sm:pr-8 text-xs sm:text-sm font-medium w-24 sm:w-auto" style="color: var(--color-primary);">
                             ${sedes}
                         </select>
-                        <i class="fas fa-chevron-down absolute right-3 top-3 pointer-events-none text-xs" style="color: var(--color-primary);"></i>
+                        <i class="fas fa-chevron-down absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none text-xs" style="color: var(--color-primary);"></i>
                     </div>
 
                     <button id="btnNotificaciones" class="relative p-2 transition-colors" style="color: var(--color-primary);" title="Notificaciones">
@@ -75,9 +80,9 @@
 
                     <div class="relative">
                         <button id="btnNuevo" class="btn-accent flex items-center gap-2">
-                            <i class="fas fa-plus"></i> Nuevo
+                            <i class="fas fa-plus"></i> <span class="hidden sm:inline">Nuevo</span>
                         </button>
-                        <div id="menuNuevo" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border py-2 z-20" style="border-color: var(--color-border);">
+                        <div id="menuNuevo" class="hidden absolute right-0 mt-2 w-56 max-w-[90vw] bg-white rounded-lg shadow-xl border py-2 z-20" style="border-color: var(--color-border);">
                             <button type="button" data-ruta="crm/oportunidades" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 flex items-center gap-2"><i class="fas fa-bullseye w-4" style="color: var(--color-primary);"></i> Nueva Oportunidad</button>
                             <button type="button" data-modal="nuevoEventoModal" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 flex items-center gap-2"><i class="fas fa-calendar-plus w-4" style="color: var(--color-primary);"></i> Nuevo Evento</button>
                             <button type="button" data-modal="nuevaSolicitudModal" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 flex items-center gap-2"><i class="fas fa-file-circle-plus w-4" style="color: var(--color-primary);"></i> Nueva Solicitud</button>
@@ -88,7 +93,7 @@
                         <button id="btnPerfil" class="flex items-center gap-2">
                             <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(UCLA.state.usuarioActual.nombre)}&background=1C7FA8&color=fff" class="w-9 h-9 rounded-full">
                         </button>
-                        <div id="menuPerfil" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border py-3 z-20" style="border-color: var(--color-border);">
+                        <div id="menuPerfil" class="hidden absolute right-0 mt-2 w-64 max-w-[90vw] bg-white rounded-lg shadow-xl border py-3 z-20" style="border-color: var(--color-border);">
                             <div class="px-4 pb-2 mb-2" style="border-bottom: 1px solid var(--color-border);">
                                 <p class="text-sm font-semibold" style="color: var(--color-text);">${UCLA.state.usuarioActual.nombre}</p>
                                 <p class="text-xs" style="color: var(--color-text-muted);">${UCLA.state.usuarioActual.cargo}</p>
@@ -110,6 +115,8 @@
     }
 
     function bind(container) {
+        container.querySelector('#btnSidebarToggle').addEventListener('click', () => UCLA.components.sidebar.toggleMovil());
+
         const buscador = container.querySelector('#globalSearch');
         const panelResultados = container.querySelector('#globalSearchResults');
         buscador.addEventListener('input', UCLA.utils.debounce((e) => {
