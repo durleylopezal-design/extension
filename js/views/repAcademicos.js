@@ -9,7 +9,7 @@
             <div id="raStats" class="mb-4"></div>
             <div class="bg-white rounded-xl shadow-lg p-6 mb-4">
                 <h3 class="section-title text-base mb-4">Estudiantes vs. Graduados por Mes</h3>
-                <div class="chart-container" style="height: 280px;"><canvas id="chartAcademico"></canvas></div>
+                <div class="relative h-[200px] sm:h-[240px] lg:h-[280px]"><canvas id="chartAcademico"></canvas></div>
             </div>
             <div class="bg-white rounded-xl shadow-lg p-6">
                 <h3 class="section-title text-base mb-4">Detalle Mensual</h3>

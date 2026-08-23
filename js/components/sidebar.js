@@ -178,7 +178,7 @@
             <div class="p-4" style="border-top: 1px solid rgba(255,255,255,0.1);">
                 <div class="flex items-center gap-3">
                     <div class="relative">
-                        <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(UCLA.state.usuarioActual.nombre)}&background=1C7FA8&color=F5821F" class="w-10 h-10 rounded-full">
+                        <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(UCLA.state.usuarioActual.nombre)}&background=1C7FA8&color=F5821F" class="w-10 h-10 rounded-full" alt="">
                         <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2" style="background: var(--color-success); border-color: var(--color-primary-dark);"></span>
                     </div>
                     <div class="flex-1 min-w-0">

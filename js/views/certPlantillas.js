@@ -2,7 +2,9 @@
 // emisión (UCLA.data.plantillasCertificado). No usa listShell: es una
 // cuadrícula visual de tarjetas, no un listado tabular.
 (function () {
+    const POR_PAGINA = 5;
     let clickHandler = null;
+    let paginaActual = 1;
 
     function tarjeta(p) {
         return `
@@ -40,13 +42,25 @@
 
     function render(container) {
         function pintar() {
+            const total = UCLA.data.plantillasCertificado.length;
+            const totalPaginas = Math.max(1, Math.ceil(total / POR_PAGINA));
+            if (paginaActual > totalPaginas) paginaActual = totalPaginas;
+            const inicio = (paginaActual - 1) * POR_PAGINA;
+            const pagina = UCLA.data.plantillasCertificado.slice(inicio, inicio + POR_PAGINA);
+
             container.innerHTML = `
                 <div class="flex items-center justify-end mb-4">
                     <button id="cpNueva" class="btn-accent"><i class="fas fa-plus"></i> Nueva plantilla</button>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    ${UCLA.data.plantillasCertificado.map(tarjeta).join('')}
-                </div>`;
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                    ${pagina.map(tarjeta).join('')}
+                </div>
+                <div data-paginacion></div>`;
+
+            UCLA.components.pagination.render(container.querySelector('[data-paginacion]'), {
+                paginaActual, totalPaginas, totalRegistros: total, etiquetaRegistro: 'plantilla',
+                onCambiar: (p) => { paginaActual = p; pintar(); },
+            });
 
             container.querySelector('#cpNueva').addEventListener('click', () => UCLA.components.recordForm.abrir({
                 titulo: 'Nueva plantilla de certificado',
@@ -56,6 +70,10 @@
                         id: 'pc-' + Date.now(), nombre: datos.nombre || 'Sin nombre', tipo: datos.tipo || 'Diplomado',
                         colorPrincipal: /^#[0-9a-fA-F]{6}$/.test(datos.colorPrincipal || '') ? datos.colorPrincipal : '#1C7FA8', activa: true, usosEsteAnio: 0,
                     });
+                    // La nueva plantilla se agrega al final del arreglo: se salta
+                    // a la última página para que quede visible de inmediato en
+                    // vez de dejar al usuario sin ver el resultado de su alta.
+                    paginaActual = Math.max(1, Math.ceil((UCLA.data.plantillasCertificado.length) / POR_PAGINA));
                     pintar();
                 },
             }));

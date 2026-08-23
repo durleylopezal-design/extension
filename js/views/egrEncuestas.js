@@ -19,6 +19,7 @@
     function render(container) {
         container.innerHTML = `<div id="eeLista"></div>`;
         UCLA.components.listShell.render(container.querySelector('#eeLista'), {
+            claveEstado: 'egresados/encuestas',
             titulo: 'Encuestas de Seguimiento',
             columnas: columnas(),
             filas: UCLA.data.encuestasEgresados,
@@ -47,7 +48,7 @@
             <div class="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto p-4 sm:p-6">
                 <h3 class="text-lg font-bold mb-1" style="color: var(--color-primary-dark);">${encuesta.nombre}</h3>
                 <p class="text-sm mb-4" style="color: var(--color-text-muted);">Cohorte ${encuesta.cohorte} · ${encuesta.respondidas} de ${encuesta.enviadas} respuestas</p>
-                <div class="chart-container" style="height: 200px;"><canvas id="chartResultadosEgresados"></canvas></div>
+                <div class="relative h-[180px] sm:h-[200px]"><canvas id="chartResultadosEgresados"></canvas></div>
                 <div class="flex justify-end pt-4">
                     <button data-re-cerrar class="px-4 py-2 text-sm rounded-lg" style="color: var(--color-text-muted);">Cerrar</button>
                 </div>

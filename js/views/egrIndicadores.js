@@ -14,6 +14,10 @@
         egresados.forEach((e) => { situaciones[e.situacionLaboral] = (situaciones[e.situacionLaboral] || 0) + 1; });
 
         const rangos = ['$2.000.000 - $3.000.000', '$3.000.000 - $4.500.000', '$4.500.000 - $6.000.000', 'Más de $6.000.000'];
+        // Los rótulos completos (con puntos de miles) desbordan y se superponen
+        // en el eje X de la barra, sobre todo en pantallas angostas; se usa una
+        // forma corta solo para el eje, el filtro sigue comparando contra `rangos`.
+        const rangosCorto = ['$2M - $3M', '$3M - $4,5M', '$4,5M - $6M', '+ $6M'];
         const porRango = rangos.map((r) => empleados.filter((e) => e.rangoSalarial === r).length);
 
         container.innerHTML = `
@@ -21,11 +25,11 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div class="bg-white rounded-xl shadow-lg p-6">
                     <h3 class="section-title text-base mb-4">Situación Laboral</h3>
-                    <div class="chart-container" style="height: 260px;"><canvas id="chartSituacionLaboral"></canvas></div>
+                    <div class="relative h-[210px] sm:h-[240px] lg:h-[260px]"><canvas id="chartSituacionLaboral"></canvas></div>
                 </div>
                 <div class="bg-white rounded-xl shadow-lg p-6">
                     <h3 class="section-title text-base mb-4">Distribución Salarial (empleados)</h3>
-                    <div class="chart-container" style="height: 260px;"><canvas id="chartRangoSalarial"></canvas></div>
+                    <div class="relative h-[210px] sm:h-[240px] lg:h-[260px]"><canvas id="chartRangoSalarial"></canvas></div>
                 </div>
             </div>`;
 
@@ -38,8 +42,8 @@
 
         UCLA.components.charts.initDoughnut('chartSituacionLaboral', { labels: Object.keys(situaciones), data: Object.values(situaciones) });
         UCLA.components.charts.initBar('chartRangoSalarial', {
-            labels: rangos,
-            datasets: [{ label: 'Egresados', data: porRango, backgroundColor: 'rgba(28, 127, 168, 0.82)', borderRadius: 6 }],
+            labels: rangosCorto,
+            datasets: [{ label: 'Egresados', data: porRango, backgroundColor: 'rgba(28, 127, 168, 0.82)' }],
         });
     }
 

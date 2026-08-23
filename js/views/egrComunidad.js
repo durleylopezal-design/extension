@@ -2,13 +2,19 @@
 // social, no una tabla CRUD). autorEgresadoId referencia UCLA.data.egresados.
 (function () {
     const ICONO_TIPO = { oferta: { icono: 'fa-briefcase', color: 'var(--color-accent)' }, testimonio: { icono: 'fa-quote-left', color: 'var(--color-primary)' }, anuncio: { icono: 'fa-bullhorn', color: 'var(--color-success)' } };
+    const POR_PAGINA = 5;
     let clickHandler = null;
+    let paginaActual = 1;
 
     function egresadoDe(id) { return UCLA.data.egresados.find((e) => e.id === id); }
 
     function render(container) {
         function pintar() {
-            const publicaciones = UCLA.data.publicacionesComunidad.slice().sort((a, b) => (a.fecha < b.fecha ? 1 : -1));
+            const todas = UCLA.data.publicacionesComunidad.slice().sort((a, b) => (a.fecha < b.fecha ? 1 : -1));
+            const totalPaginas = Math.max(1, Math.ceil(todas.length / POR_PAGINA));
+            if (paginaActual > totalPaginas) paginaActual = totalPaginas;
+            const inicio = (paginaActual - 1) * POR_PAGINA;
+            const publicaciones = todas.slice(inicio, inicio + POR_PAGINA);
             container.innerHTML = `
                 <div class="max-w-2xl mx-auto space-y-4">
                     <div class="bg-white rounded-xl shadow-lg p-4 flex items-center justify-between">
@@ -18,6 +24,7 @@
                         </div>
                         <button id="ecNuevaPublicacion" class="btn-accent whitespace-nowrap"><i class="fas fa-plus"></i> Nueva publicación</button>
                     </div>
+                    ${!todas.length ? `<div class="bg-white rounded-xl shadow-lg p-10 text-center text-sm" style="color: var(--color-text-muted);">Todavía no hay publicaciones en la comunidad.</div>` : ''}
                     ${publicaciones.map((p) => {
                         const autor = egresadoDe(p.autorEgresadoId);
                         const meta = ICONO_TIPO[p.tipo] || { icono: 'fa-circle-dot', color: 'var(--color-neutral)' };
@@ -40,9 +47,22 @@
                                 </div>
                             </div>`;
                     }).join('')}
+                    <div data-paginacion></div>
                 </div>`;
 
-            container.querySelector('#ecNuevaPublicacion').addEventListener('click', () => abrirNuevaPublicacion(pintar));
+            UCLA.components.pagination.render(container.querySelector('[data-paginacion]'), {
+                paginaActual, totalPaginas, totalRegistros: todas.length, etiquetaRegistro: 'publicación', etiquetaRegistroPlural: 'publicaciones',
+                onCambiar: (p) => { paginaActual = p; pintar(); },
+            });
+
+            container.querySelector('#ecNuevaPublicacion').addEventListener('click', () => abrirNuevaPublicacion(() => {
+                // Las publicaciones nuevas quedan fechadas hoy y el muro ordena
+                // por fecha descendente, así que siempre aparecen primero: se
+                // vuelve a la página 1 para que el usuario vea de inmediato lo
+                // que acaba de publicar.
+                paginaActual = 1;
+                pintar();
+            }));
         }
 
         if (clickHandler) container.removeEventListener('click', clickHandler);

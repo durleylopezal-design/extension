@@ -49,6 +49,7 @@
                 <div id="ecLista"></div>`;
             UCLA.components.statCards.render(container.querySelector('#ecStats'), stats(eventos));
             UCLA.components.listShell.render(container.querySelector('#ecLista'), {
+                claveEstado: 'eventos/cupos',
                 titulo: 'Control de Cupos y Lista de Espera',
                 columnas: columnas(),
                 filas: eventos,

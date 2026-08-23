@@ -12,7 +12,7 @@
             <div id="rfStats" class="mb-4"></div>
             <div class="bg-white rounded-xl shadow-lg p-6 mb-4">
                 <h3 class="section-title text-base mb-4">Ingresos por Mes (Millones COP)</h3>
-                <div class="chart-container" style="height: 280px;"><canvas id="chartFinanciero"></canvas></div>
+                <div class="relative h-[200px] sm:h-[240px] lg:h-[280px]"><canvas id="chartFinanciero"></canvas></div>
             </div>
             <div class="bg-white rounded-xl shadow-lg p-6">
                 <h3 class="section-title text-base mb-4">Detalle Mensual</h3>
@@ -28,7 +28,8 @@
 
         UCLA.components.charts.initBar('chartFinanciero', {
             labels: data.map((d) => d.mes),
-            datasets: [{ label: 'Ingresos (M COP)', data: data.map((d) => d.ingresos), backgroundColor: 'rgba(28, 127, 168, 0.82)', borderRadius: 6 }],
+            datasets: [{ label: 'Ingresos (M COP)', data: data.map((d) => d.ingresos), backgroundColor: 'rgba(28, 127, 168, 0.82)' }],
+            formatoValor: (v) => `$${v.toLocaleString('es-CO')}M`,
         });
 
         UCLA.components.dataTable.render(container.querySelector('#rfTabla'), {

@@ -72,14 +72,14 @@
                         <i class="fas fa-chevron-down absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none text-xs" style="color: var(--color-primary);"></i>
                     </div>
 
-                    <button id="btnNotificaciones" class="relative p-2 transition-colors" style="color: var(--color-primary);" title="Notificaciones">
+                    <button id="btnNotificaciones" class="relative p-2 transition-colors" style="color: var(--color-primary);" title="Notificaciones" aria-label="Notificaciones">
                         <i class="fas fa-bell text-xl"></i>
                         <span class="notification-dot"></span>
                         <span id="notifBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
                     </button>
 
                     <div class="relative">
-                        <button id="btnNuevo" class="btn-accent flex items-center gap-2">
+                        <button id="btnNuevo" class="btn-accent flex items-center gap-2" aria-label="Crear nuevo registro" aria-haspopup="true">
                             <i class="fas fa-plus"></i> <span class="hidden sm:inline">Nuevo</span>
                         </button>
                         <div id="menuNuevo" class="hidden absolute right-0 mt-2 w-56 max-w-[90vw] bg-white rounded-lg shadow-xl border py-2 z-20" style="border-color: var(--color-border);">
@@ -90,8 +90,8 @@
                     </div>
 
                     <div class="relative">
-                        <button id="btnPerfil" class="flex items-center gap-2">
-                            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(UCLA.state.usuarioActual.nombre)}&background=1C7FA8&color=fff" class="w-9 h-9 rounded-full">
+                        <button id="btnPerfil" class="flex items-center gap-2" aria-label="Menú de perfil de ${UCLA.state.usuarioActual.nombre}" aria-haspopup="true">
+                            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(UCLA.state.usuarioActual.nombre)}&background=1C7FA8&color=fff" class="w-9 h-9 rounded-full" alt="">
                         </button>
                         <div id="menuPerfil" class="hidden absolute right-0 mt-2 w-64 max-w-[90vw] bg-white rounded-lg shadow-xl border py-3 z-20" style="border-color: var(--color-border);">
                             <div class="px-4 pb-2 mb-2" style="border-bottom: 1px solid var(--color-border);">

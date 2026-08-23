@@ -50,6 +50,7 @@
                 <div id="fcLista"></div>`;
             UCLA.components.statCards.render(container.querySelector('#fcStats'), stats(UCLA.data.movimientosBancarios));
             UCLA.components.listShell.render(container.querySelector('#fcLista'), {
+                claveEstado: 'financiero/conciliacion',
                 titulo: 'Conciliación de Pagos',
                 columnas: columnas(),
                 filas: UCLA.data.movimientosBancarios,

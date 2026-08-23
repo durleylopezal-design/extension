@@ -53,6 +53,7 @@
         function pintar() {
             container.innerHTML = `<div id="eaLista"></div>`;
             UCLA.components.listShell.render(container.querySelector('#eaLista'), {
+                claveEstado: 'eventos/asistentes',
                 titulo: 'Registro de Asistentes',
                 columnas: columnas(),
                 filas: filasFiltradas(),

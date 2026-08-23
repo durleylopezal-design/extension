@@ -60,10 +60,11 @@
                 <div id="finCarteraLista" class="mb-4"></div>
                 <div class="bg-white rounded-xl shadow-lg p-6">
                     <h3 class="section-title text-base mb-4">Edades de Cartera</h3>
-                    <div class="chart-container" style="height: 260px;"><canvas id="chartEdadesCartera"></canvas></div>
+                    <div class="relative h-[210px] sm:h-[240px] lg:h-[260px]"><canvas id="chartEdadesCartera"></canvas></div>
                 </div>`;
             UCLA.components.statCards.render(container.querySelector('#finCarteraStats'), stats(filas));
             UCLA.components.listShell.render(container.querySelector('#finCarteraLista'), {
+                claveEstado: 'financiero/cartera',
                 titulo: 'Cartera y Cuentas por Cobrar',
                 columnas: columnas(),
                 filas,
@@ -81,8 +82,8 @@
                     label: 'Saldo por antigüedad',
                     data: [b.corriente, b.d1_30, b.d31_60, b.d61_90, b.d90mas],
                     backgroundColor: ['rgba(46, 204, 113, 0.75)', 'rgba(28, 127, 168, 0.75)', 'rgba(245, 130, 31, 0.75)', 'rgba(233, 107, 90, 0.75)', 'rgba(233, 107, 90, 0.95)'],
-                    borderRadius: 6,
                 }],
+                formatoValor: UCLA.utils.formatoCOP,
             });
         }
 

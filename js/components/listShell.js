@@ -16,8 +16,34 @@
     // quitarlo antes de registrar uno nuevo y no acumularlos en document.
     let cerrarMenusHandler = null;
 
+    // Cada vista vuelve a llamar a listShell.render(container, config) desde
+    // cero después de crear/editar/eliminar un registro (patrón "pintar()" en
+    // los ~35 módulos que usan este componente). Sin esto, ese remount
+    // reconstruía `estado` con sus valores por defecto en cada CRUD y el
+    // usuario perdía la búsqueda, el orden y la vista activa que tenía antes
+    // de guardar — se conserva por contenedor para que sobreviva al remount.
+    const estadoPorContenedor = new WeakMap();
+
+    // Un puñado de módulos (Cartera, Becas, Conciliación, Pagos, Convenios,
+    // Seguimiento de Alianzas, Cupos, Registro de Asistentes, Encuestas de
+    // Eventos/Egresados) arman estadísticas o una gráfica junto al listado, y
+    // por eso su propio `pintar()` regenera con `container.innerHTML = ...`
+    // el <div> que le pasan a listShell en cada repintado — un nodo nuevo en
+    // cada CRUD, así que estadoPorContenedor (indexado por identidad de nodo)
+    // nunca lo reconoce. Para esos casos, la vista puede pasar `claveEstado`
+    // (un string estable, p. ej. el nombre de la ruta) y el estado se guarda
+    // ahí en vez de por nodo — sigue reseteándose al navegar a otra ruta y
+    // volver, porque el router reemplaza #contentArea por un nodo nuevo y esa
+    // vista vuelve a montarse desde cero.
+    const estadoPorClave = {};
+
     function render(container, config) {
-        const estado = { filtroTexto: '', panelAbierto: false, ordenAsc: true, vista: config.vistaInicial || 'lista', camposActivos: [] };
+        const previo = config.claveEstado ? estadoPorClave[config.claveEstado] : estadoPorContenedor.get(container);
+        const estado = previo
+            ? Object.assign({}, previo, { panelAbierto: false })
+            : { filtroTexto: '', panelAbierto: false, ordenAsc: true, vista: config.vistaInicial || 'lista', camposActivos: [], pagina: 1 };
+        if (config.claveEstado) estadoPorClave[config.claveEstado] = estado;
+        else estadoPorContenedor.set(container, estado);
 
         container.innerHTML = `
             <div class="space-y-4">
@@ -114,6 +140,8 @@
                 filas: filasVisibles(),
                 filaId: config.filaId,
                 onFilaClick: config.onFilaClick,
+                paginaControlada: estado.pagina,
+                onPaginaCambiada: (p) => { estado.pagina = p; pintarCuerpo(); },
             });
         }
 
@@ -130,9 +158,10 @@
             if (estado.panelAbierto) {
                 UCLA.components.filterPanel.render(panel, {
                     camposModulo: config.camposModulo || [],
-                    onBuscar: (texto) => { estado.filtroTexto = texto; UCLA.components.dataTable.resetPagina(container.querySelector('#lsCuerpo')); pintarCuerpo(); },
+                    textoActual: estado.filtroTexto,
+                    onBuscar: (texto) => { estado.filtroTexto = texto; estado.pagina = 1; pintarCuerpo(); },
                     camposActivos: estado.camposActivos,
-                    onCambioCampos: config.filtrarPorCampos ? (activos) => { estado.camposActivos = activos; pintarCuerpo(); } : undefined,
+                    onCambioCampos: config.filtrarPorCampos ? (activos) => { estado.camposActivos = activos; estado.pagina = 1; pintarCuerpo(); } : undefined,
                 });
             }
         });

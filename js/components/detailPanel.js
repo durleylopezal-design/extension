@@ -21,7 +21,7 @@
                         <div class="flex items-center gap-4">
                             <div class="w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0" style="background: var(--color-primary-50);">
                                 ${encabezado.avatarUrl
-                                    ? `<img src="${encabezado.avatarUrl}" class="w-16 h-16 rounded-full">`
+                                    ? `<img src="${encabezado.avatarUrl}" class="w-16 h-16 rounded-full" alt="">`
                                     : `<i class="fas ${encabezado.icono || 'fa-user'} text-2xl" style="color: var(--color-primary);"></i>`}
                             </div>
                             <div>

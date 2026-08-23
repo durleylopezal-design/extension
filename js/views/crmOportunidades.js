@@ -45,7 +45,7 @@
                 <span class="text-gray-500"><i class="far fa-calendar"></i> ${f.fecha}</span>
             </div>
             <div class="mt-3 flex items-center gap-2">
-                <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(f.propietario)}&background=random" class="w-6 h-6 rounded-full">
+                <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(f.propietario)}&background=random" class="w-6 h-6 rounded-full" alt="">
                 <span class="text-xs text-gray-500">${f.propietario}</span>
             </div>`;
     }
@@ -318,7 +318,7 @@
                 extraToolbarHtml: `
                     <div class="flex items-center gap-1 px-3 py-1.5 text-sm rounded-lg border" style="border-color: var(--color-border); color: var(--color-text);">
                         <span class="font-semibold uppercase text-xs" style="color: var(--color-text-muted);">STAGEVIEW</span>
-                        <select id="oppStageview" class="ml-2 text-sm border-0 bg-transparent" style="color: var(--color-primary); outline: none;">
+                        <select id="oppStageview" class="ml-2 text-sm border-0 bg-transparent rounded" style="color: var(--color-primary);">
                             <option value="todas" ${stageviewActivo === 'todas' ? 'selected' : ''}>Todas las etapas</option>
                             ${ETAPAS.map((e) => `<option value="${e.id}" ${stageviewActivo === e.id ? 'selected' : ''}>${e.etiqueta}</option>`).join('')}
                         </select>

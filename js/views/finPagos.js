@@ -37,6 +37,7 @@
             container.innerHTML = `<div id="finPagosStats" class="mb-4"></div><div id="finPagosLista"></div>`;
             UCLA.components.statCards.render(container.querySelector('#finPagosStats'), stats(filas));
             UCLA.components.listShell.render(container.querySelector('#finPagosLista'), {
+                claveEstado: 'financiero/pagos',
                 titulo: 'Pagos y Matrículas',
                 columnas: columnas(),
                 filas,

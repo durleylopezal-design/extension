@@ -24,6 +24,7 @@
     function render(container) {
         container.innerHTML = `<div id="eeLista"></div>`;
         UCLA.components.listShell.render(container.querySelector('#eeLista'), {
+            claveEstado: 'eventos/encuestas',
             titulo: 'Encuestas de Satisfacción',
             columnas: columnas(),
             filas: UCLA.data.eventosEncuestas,
@@ -52,7 +53,7 @@
             <div class="relative bg-white rounded-xl shadow-2xl max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto p-4 sm:p-6">
                 <h3 class="text-lg font-bold mb-1" style="color: var(--color-primary-dark);">${encuesta.nombre}</h3>
                 <p class="text-sm mb-4" style="color: var(--color-text-muted);">${encuesta.respondidas} respuestas de ${encuesta.enviadas} envíos · Promedio general ${encuesta.promedioGeneral.toFixed(1)}</p>
-                <div class="chart-container" style="height: 220px;"><canvas id="chartResultadosEncuesta"></canvas></div>
+                <div class="relative h-[190px] sm:h-[220px]"><canvas id="chartResultadosEncuesta"></canvas></div>
                 <div class="flex justify-end pt-4">
                     <button data-re-cerrar class="px-4 py-2 text-sm rounded-lg" style="color: var(--color-text-muted);">Cerrar</button>
                 </div>
@@ -61,7 +62,7 @@
         modal.classList.remove('hidden');
         UCLA.components.charts.initBar('chartResultadosEncuesta', {
             labels: encuesta.preguntas.map((p) => p.texto),
-            datasets: [{ label: 'Promedio (1-5)', data: encuesta.preguntas.map((p) => p.promedio), backgroundColor: 'rgba(28, 127, 168, 0.82)', borderRadius: 6 }],
+            datasets: [{ label: 'Promedio (1-5)', data: encuesta.preguntas.map((p) => p.promedio), backgroundColor: 'rgba(28, 127, 168, 0.82)' }],
         });
     }
 

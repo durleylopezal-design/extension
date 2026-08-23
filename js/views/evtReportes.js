@@ -32,11 +32,11 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
                 <div class="bg-white rounded-xl shadow-lg p-6">
                     <h3 class="section-title text-base mb-4">Participación por Evento</h3>
-                    <div class="chart-container" style="height: 260px;"><canvas id="chartParticipacion"></canvas></div>
+                    <div class="relative h-[210px] sm:h-[240px] lg:h-[260px]"><canvas id="chartParticipacion"></canvas></div>
                 </div>
                 <div class="bg-white rounded-xl shadow-lg p-6">
                     <h3 class="section-title text-base mb-4">Eventos por Modalidad</h3>
-                    <div class="chart-container" style="height: 260px;"><canvas id="chartModalidad"></canvas></div>
+                    <div class="relative h-[210px] sm:h-[240px] lg:h-[260px]"><canvas id="chartModalidad"></canvas></div>
                 </div>
             </div>
             <div class="bg-white rounded-xl shadow-lg p-6">
@@ -49,8 +49,8 @@
         UCLA.components.charts.initBar('chartParticipacion', {
             labels: conRegistro.map((e) => e.codigo),
             datasets: [
-                { label: 'Inscritos', data: conRegistro.map((e) => inscritos(e.codigo).length), backgroundColor: 'rgba(28, 127, 168, 0.82)', borderRadius: 6 },
-                { label: 'Asistieron', data: conRegistro.map((e) => inscritos(e.codigo).filter((a) => a.asistio).length), backgroundColor: 'rgba(245, 130, 31, 0.82)', borderRadius: 6 },
+                { label: 'Inscritos', data: conRegistro.map((e) => inscritos(e.codigo).length), backgroundColor: 'rgba(28, 127, 168, 0.82)' },
+                { label: 'Asistieron', data: conRegistro.map((e) => inscritos(e.codigo).filter((a) => a.asistio).length), backgroundColor: 'rgba(245, 130, 31, 0.82)' },
             ],
         });
 

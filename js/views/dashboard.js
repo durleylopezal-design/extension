@@ -45,6 +45,66 @@
             </div>`;
     }
 
+    // Mismo criterio que ya usa el Asistente Virtual para "convenios próximos a
+    // vencer" (UCLA.views['alianzas/convenios'].estadoConvenio, ventana de 60
+    // días) y para solicitudes de admisión pendientes de revisión — así el
+    // Dashboard no inventa un umbral propio ni una alerta sin datos reales
+    // detrás (los convenios no traen sedeId directo, se cruzan por cuentaId).
+    function alertasSede(sede) {
+        const alertas = [];
+
+        const alianzasPorVencer = UCLA.data.convenios.filter((c) => {
+            const cuenta = UCLA.data.cuentas.find((x) => x.id === c.cuentaId);
+            return cuenta && cuenta.sedeId === sede.codigo && UCLA.views['alianzas/convenios'].estadoConvenio(c) === 'Por vencer';
+        });
+        if (alianzasPorVencer.length) {
+            alertas.push({
+                icono: 'fa-handshake', color: 'var(--color-danger)', fondo: 'var(--color-danger-50, #FDF0EF)',
+                titulo: `${alianzasPorVencer.length} alianza${alianzasPorVencer.length === 1 ? '' : 's'} próxima${alianzasPorVencer.length === 1 ? '' : 's'} a vencer`,
+                detalle: 'Vencen en los próximos 60 días', ruta: 'alianzas/convenios',
+            });
+        }
+
+        const pagosPendientes = UCLA.data.pagos.filter((p) => p.sedeId === sede.codigo && p.estado === 'Pendiente');
+        if (pagosPendientes.length) {
+            alertas.push({
+                icono: 'fa-money-bill-wave', color: 'var(--color-accent-dark)', fondo: 'var(--color-accent-50)',
+                titulo: `${pagosPendientes.length} pago${pagosPendientes.length === 1 ? '' : 's'} pendiente${pagosPendientes.length === 1 ? '' : 's'} de procesar`,
+                detalle: 'Pagos y Matrículas', ruta: 'financiero/pagos',
+            });
+        }
+
+        const solicitudesPendientes = UCLA.data.solicitudesAdmision.filter((s) => s.sedeId === sede.codigo && (s.estado === 'En revisión' || s.estado === 'Recibida'));
+        if (solicitudesPendientes.length) {
+            alertas.push({
+                icono: 'fa-file-signature', color: 'var(--color-primary)', fondo: 'var(--color-primary-50)',
+                titulo: `${solicitudesPendientes.length} solicitud${solicitudesPendientes.length === 1 ? '' : 'es'} de admisión esperando revisión`,
+                detalle: 'Solicitudes de Admisión', ruta: 'solicitudes/admision',
+            });
+        }
+
+        return alertas;
+    }
+
+    function alertasHtml(alertas) {
+        if (!alertas.length) {
+            return `
+                <div class="p-8 text-center">
+                    <i class="fas fa-circle-check text-2xl mb-2" style="color: var(--color-success);"></i>
+                    <p class="text-sm" style="color: var(--color-text-muted);">Sin alertas pendientes en esta sede.</p>
+                </div>`;
+        }
+        return `<div class="space-y-3">${alertas.map((a) => `
+            <div class="flex items-start gap-3 p-3 rounded-lg border-l-4" style="background: ${a.fondo}; border-color: ${a.color};">
+                <i class="fas ${a.icono} mt-1" style="color: ${a.color};"></i>
+                <div class="flex-1">
+                    <p class="font-medium" style="color: var(--color-text);">${a.titulo}</p>
+                    <p class="text-sm" style="color: var(--color-text-muted);">${a.detalle}</p>
+                </div>
+                <button data-alerta-ir="${a.ruta}" class="text-sm font-semibold hover:underline flex-shrink-0" style="color: var(--color-primary);">Ver</button>
+            </div>`).join('')}</div>`;
+    }
+
     function top5Html(eventos, sede) {
         if (!eventos.length) {
             return `<div class="p-8 text-center text-sm" style="color: var(--color-text-muted);">Sin eventos con excedente registrado en ${sede.nombre} todavía.</div>`;
@@ -73,6 +133,7 @@
         const ingresosAcumulados = filas.reduce((s, f) => s + f.ingresos, 0);
         const totalParticipantes = filas.reduce((s, f) => s + f.total, 0);
         const top5 = top5Excedente(eventos);
+        const alertas = alertasSede(sede);
 
         container.innerHTML = `
             <div class="space-y-6">
@@ -118,38 +179,10 @@
                             <h3 class="text-base font-bold flex items-center gap-2 text-white">
                                 <i class="fas fa-exclamation-triangle" style="color: var(--color-accent);"></i> Alertas del Sistema
                             </h3>
-                            <span class="text-xs font-semibold px-2 py-1 rounded-full" style="background: rgba(255,255,255,0.2); color: #fff;">3 pendientes</span>
+                            ${alertas.length ? `<span class="text-xs font-semibold px-2 py-1 rounded-full" style="background: rgba(255,255,255,0.2); color: #fff;">${alertas.length} pendiente${alertas.length === 1 ? '' : 's'}</span>` : ''}
                         </div>
                         <div class="p-6 pt-4">
-                        <div class="space-y-3">
-                            <div class="flex items-start gap-3 p-3 bg-red-50 rounded-lg border-l-4 border-red-500">
-                                <i class="fas fa-handshake text-red-500 mt-1"></i>
-                                <div class="flex-1">
-                                    <p class="font-medium text-gray-800">3 alianzas próximas a vencer</p>
-                                    <p class="text-sm text-gray-600">Vencen en los próximos 30 días</p>
-                                    <p class="text-xs text-gray-500 mt-1">Hace 2 horas</p>
-                                </div>
-                                <button class="text-sm font-semibold hover:underline" style="color: var(--color-primary);">Ver</button>
-                            </div>
-                            <div class="flex items-start gap-3 p-3 rounded-lg border-l-4" style="background: var(--color-accent-50); border-color: var(--color-accent);">
-                                <i class="fas fa-money-bill-wave mt-1" style="color: var(--color-accent-dark);"></i>
-                                <div class="flex-1">
-                                    <p class="font-medium text-gray-800">5 pagos a docentes pendientes</p>
-                                    <p class="text-sm text-gray-600">&gt; 30 días sin procesar</p>
-                                    <p class="text-xs text-gray-500 mt-1">Hace 5 horas</p>
-                                </div>
-                                <button class="text-sm font-semibold hover:underline" style="color: var(--color-primary);">Ver</button>
-                            </div>
-                            <div class="flex items-start gap-3 p-3 bg-accent-50 rounded-lg border-l-4 border-accent-500">
-                                <i class="fas fa-file-signature mt-1" style="color: var(--color-primary);"></i>
-                                <div class="flex-1">
-                                    <p class="font-medium text-gray-800">2 solicitudes esperando Vo.Bo.</p>
-                                    <p class="text-sm text-gray-600">Financiera y Programa</p>
-                                    <p class="text-xs text-gray-500 mt-1">Hace 1 día</p>
-                                </div>
-                                <button class="text-sm font-semibold hover:underline" style="color: var(--color-primary);">Ver</button>
-                            </div>
-                        </div>
+                            ${alertasHtml(alertas)}
                         </div>
                     </div>
 
@@ -163,6 +196,10 @@
                 </div>
             </div>
         `;
+
+        container.querySelectorAll('[data-alerta-ir]').forEach((btn) => {
+            btn.addEventListener('click', () => UCLA.router.navigate(btn.getAttribute('data-alerta-ir')));
+        });
 
         // Alterna bar/línea según la sede para que la combinación de gráficos
         // sea perceptiblemente distinta entre sedes, no solo los datos.
@@ -180,6 +217,7 @@
                 fill: tipoIngresos === 'line' ? false : undefined,
             }],
             tipo: tipoIngresos,
+            formatoValor: (v) => `$${v.toLocaleString('es-CO')}M`,
         });
 
         const totalesSegmento = filas.reduce((acc, f) => {

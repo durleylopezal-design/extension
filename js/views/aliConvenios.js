@@ -58,6 +58,7 @@
         function pintar() {
             container.innerHTML = `<div id="acLista"></div>`;
             UCLA.components.listShell.render(container.querySelector('#acLista'), {
+                claveEstado: 'alianzas/convenios',
                 titulo: 'Convenios Institucionales',
                 columnas: columnas(),
                 filas: UCLA.data.convenios,

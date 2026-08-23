@@ -10,13 +10,13 @@
         'Último estado de correo electrónico', 'Cadencias',
     ];
 
-    function render(container, { camposModulo, onBuscar, onCambioCampos, camposActivos }) {
+    function render(container, { camposModulo, onBuscar, onCambioCampos, camposActivos, textoActual }) {
         const activos = camposActivos || [];
         container.innerHTML = `
             <div class="bg-white rounded-xl shadow-lg p-4 w-full lg:w-64 lg:flex-shrink-0">
                 <div class="relative mb-4">
                     <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-xs" style="color: var(--color-text-muted);"></i>
-                    <input id="filtroBuscador" type="text" placeholder="Buscar en esta vista" class="input-brand w-full pl-8 pr-3 py-2 text-sm">
+                    <input id="filtroBuscador" type="text" placeholder="Buscar en esta vista" value="${(textoActual || '').replace(/"/g, '&quot;')}" class="input-brand w-full pl-8 pr-3 py-2 text-sm">
                 </div>
 
                 <div class="mb-4">

@@ -36,6 +36,7 @@
                 <div id="asLista"></div>`;
             UCLA.components.statCards.render(container.querySelector('#asStats'), stats());
             UCLA.components.listShell.render(container.querySelector('#asLista'), {
+                claveEstado: 'alianzas/seguimiento',
                 titulo: 'Seguimiento de Acuerdos y Vigencias',
                 columnas: columnas(),
                 filas: ordenados,

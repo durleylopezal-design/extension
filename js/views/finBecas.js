@@ -53,7 +53,7 @@
                     <div id="finBecasLista" class="lg:col-span-2"></div>
                     <div class="bg-white rounded-xl shadow-lg p-6">
                         <h3 class="section-title text-base mb-4">Monto Condonado por Modalidad</h3>
-                        <div class="chart-container" style="height: 220px;"><canvas id="chartBecasModalidad"></canvas></div>
+                        <div class="relative h-[190px] sm:h-[220px]"><canvas id="chartBecasModalidad"></canvas></div>
                     </div>
                 </div>`;
 
@@ -65,6 +65,7 @@
             ]);
 
             UCLA.components.listShell.render(container.querySelector('#finBecasLista'), {
+                claveEstado: 'financiero/becas',
                 titulo: 'Becas y Descuentos Aplicados',
                 columnas: columnas(),
                 filas,
@@ -98,6 +99,7 @@
             UCLA.components.charts.initDoughnut('chartBecasModalidad', {
                 labels: Object.keys(porModalidad),
                 data: Object.values(porModalidad),
+                formatoValor: UCLA.utils.formatoCOP,
             });
         }
 
